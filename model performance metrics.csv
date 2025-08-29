@@ -1,0 +1,203 @@
+TNFA-XGBoost
+seed: 793
+"Best Parameters: {'colsample_bytree': 0.9, 'learning_rate': 0.1, 'max_depth': 4, 'n_estimators': 200, 'reg_alpha': 0.1, 'reg_lambda': 1.5, 'subsample': 0.9}"
+R? on test set (log scale): 0.7347
+R? on training set (original scale): 0.9946
+R? on test set (original scale): 0.9023
+Test MSE: 21294.32
+Test MAE: 77.21
+Test MAPE (%): 37.53
+
+
+
+
+seed: 235
+"Best Parameters: {'colsample_bytree': 0.9, 'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 200, 'reg_alpha': 0.1, 'reg_lambda': 1, 'subsample': 0.8}"
+R? on test set (log scale): 0.7868
+R? on training set (original scale): 0.9970
+R? on test set (original scale): 0.9302
+Test MSE: 28882.16
+Test MAE: 108.15
+Test MAPE (%): 33.05
+
+
+
+seed: 42
+"Best Parameters: {'colsample_bytree': 0.8, 'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 300, 'reg_alpha': 0.1, 'reg_lambda': 1.5, 'subsample': 0.8}"
+R? on test set (log scale): 0.5003
+R? on training set (original scale): 0.9919
+R? on test set (original scale): 0.9540
+Test MSE: 17821.68
+Test MAE: 80.93
+Test MAPE (%): 86.50
+
+Average Test R? (original scale): 0.9288 ¡À 0.0259
+Average Test R? (log scale): 0.6740 ¡À 0.1526
+Average Test MSE: 22666.05 ¡À 5656.39
+Average Test MAE: 88.76 ¡À 16.89
+Average Test MAPE (%): 52.36 ¡À 29.65
+
+
+
+
+
+TNFA-RF
+seed: 42
+"Best Parameters: {'bootstrap': True, 'max_depth': 20, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 500}"
+R? on test set (log scale) : 0.6951
+R? on training set (original scale): 0.9011
+R? on test set (original scale): 0.9050
+Test MSE: 36821.31
+Test MAE: 118.47
+Test MAPE (%): 109.13
+
+
+seed: 793
+"Best Parameters: {'bootstrap': True, 'max_depth': 10, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 300}"
+R? on test set (log scale): 0.7739
+R? on training set (original scale): 0.8832
+R? on test set (original scale): 0.8091
+Test MSE: 41617.48
+Test MAE: 106.03
+Test MAPE (%): 38.50
+
+
+seed: 235
+"Best Parameters: {'bootstrap': True, 'max_depth': None, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 300}"
+R? on test set (log scale): 0.7641
+R? on test set (original scale): 0.8705
+R? on test set (original scale): 0.8291
+Test MSE: 70668.69
+Test MAE: 155.35
+Test MAPE (%): 44.31
+
+
+Average Test R? (original scale): 0.8478 ¡À 0.0506
+Average Test R? (log scale): 0.7443 ¡À 0.0429
+Average Test MSE: 49702.50 ¡À 18314.93
+Average Test MAE: 126.62 ¡À 25.65
+Average Test MAPE (%): 63.98 ¡À 39.21
+
+
+
+TNFA-MLP
+seed: 42
+"Best Parameters: {'reg__regressor__activation': 'relu', 'reg__regressor__alpha': 0.0005, 'reg__regressor__batch_size': 64, 'reg__regressor__hidden_layer_sizes': (128, 64), 'reg__regressor__learning_rate_init': 0.0005, 'reg__regressor__solver': 'adam'}"
+R? on test set (log scale): 0.6606
+R? on training set (original scale): 0.8254
+R? on test set (original scale): 0.9162
+Test MSE: 32506.24
+Test MAE: 117.35
+Test MAPE (%): 126.93
+
+seed: 793
+"Best Parameters: {'reg__regressor__activation': 'relu', 'reg__regressor__alpha': 0.0005, 'reg__regressor__batch_size': 32, 'reg__regressor__hidden_layer_sizes': (128, 64), 'reg__regressor__learning_rate_init': 0.0005, 'reg__regressor__solver': 'adam'}"
+R? on test set (log scale): 0.6316
+R? on training set (original scale): 0.6680
+R? on test set (original scale): 0.7650
+Test MSE: 51234.92
+Test MAE: 126.95
+Test MAPE (%): 52.98
+
+seed: 1579
+"Best Parameters: {'reg__regressor__activation': 'relu', 'reg__regressor__alpha': 0.0005, 'reg__regressor__batch_size': 32, 'reg__regressor__hidden_layer_sizes': (256, 128, 64), 'reg__regressor__learning_rate_init': 0.0005, 'reg__regressor__solver': 'adam'}"
+R? on test set (log scale): 0.6906
+R? on training set (original scale): 0.7927
+R? on test set (original scale): 0.6654
+Test MSE: 116024.54
+Test MAE: 214.31
+Test MAPE (%): 68.81
+
+"========= Mean ¡À Std (Test Set, Original Scale) ========="
+Average Test R? (original scale): 0.7822 ¡À 0.1263
+Average Test R? (log scale): 0.6609 ¡À 0.0295
+Average Test MSE: 66588.57 ¡À 43824.96
+Average Test MAE: 152.87 ¡À 53.43
+Average Test MAPE (%): 82.91 ¡À 38.94
+
+
+
+
+IL-10 XGBoost
+Running with random seed: 42
+Train R?: 0.8862
+Test R?: 0.7077
+Test MSE: 29216.08
+Test MAE: 109.46
+Test MAPE (%): 37.78
+
+Running with random seed: 173
+Train R?: 0.8567
+Test R?: 0.8111
+Test MSE: 18360.08
+Test MAE: 96.34
+Test MAPE (%): 66.50
+
+Running with random seed: 382
+Train R?: 0.8503
+Test R?: 0.8309
+Test MSE: 20670.59
+Test MAE: 94.96
+Test MAPE (%): 70.26
+
+Average Test R?: 0.7832 ¡À 0.0662
+Average Test MSE: 22748.92 ¡À 5718.63
+Average Test MAE: 100.25 ¡À 8.01
+Average Test MAPE (%): 58.18 ¡À 17.76
+
+
+
+IL-10 RF
+Running with random seed: 1
+Train R?: 0.8238
+Test R?: 0.8075
+Test MSE: 23635.01
+Test MAE: 123.03
+Test MAPE (%): 86.92
+
+Running with random seed: 173
+Train R?: 0.8101
+Test R?: 0.8276
+Test MSE: 16753.27
+Test MAE: 116.62
+Test MAPE (%): 116.28
+
+Running with random seed: 98
+Train R?: 0.8028
+Test R?: 0.7368
+Test MSE: 41253.77
+Test MAE: 152.62
+Test MAPE (%): 93.95
+
+
+Average Test R?: 0.7907 ¡À 0.0477
+Average Test MSE: 27214.02 ¡À 12636.29
+Average Test MAE: 130.75 ¡À 19.20
+Average Test MAPE (%): 99.05 ¡À 15.33
+
+
+IL-10 MLP
+Running with seed: 79
+R? on test set (log/transformed scale): 0.3012
+R? on training set (original scale): 0.9206
+R? on test set (original scale): 0.7377
+Test MSE: 699181.58
+Test MAE: 427.93
+Test MAPE (%): 188.35
+"Best Parameters: {'reg__regressor__activation': 'relu', 'reg__regressor__alpha': 0.0001, 'reg__regressor__batch_size': 32, 'reg__regressor__hidden_layer_sizes': (128, 64), 'reg__regressor__learning_rate_init': 0.001, 'reg__regressor__solver': 'adam'}"
+
+
+Running with seed: 955
+R? on test set (log/transformed scale): 0.7412
+R? on training set (original scale): 0.9275
+R? on test set (original scale): 0.9547
+Test MSE: 120872.77
+Test MAE: 233.01
+Test MAPE (%): 53.68
+"Best Parameters: {'reg__regressor__activation': 'relu', 'reg__regressor__alpha': 0.0001, 'reg__regressor__batch_size': 32, 'reg__regressor__hidden_layer_sizes': (256, 128, 64), 'reg__regressor__learning_rate_init': 0.0005, 'reg__regressor__solver': 'adam'}"
+
+Average Test R? (original scale): 0.8462 ¡À 0.1534
+Average Test R? (log scale): 0.5212 ¡À 0.3111
+Average Test MSE: 410027.18 ¡À 408926.08
+Average Test MAE: 330.47 ¡À 137.83
+Average Test MAPE (%): 121.01 ¡À 95.23
