@@ -1,0 +1,114 @@
+{
+  "revision": "thermal_harmonisation_v2",
+  "scope": "Only thermal_gelation is merged in the primary branch. No estimator or numeric imputer has been fitted here.",
+  "target_column": "corrected_value_pg_ml",
+  "id_column": "dataset_row_id",
+  "target_unit": "pg/mL",
+  "raw_feature_column_order": [
+    "polymer_origin_class",
+    "modulus_value_kPa",
+    "pore_size_um",
+    "material_bioactive_cue_class",
+    "gelation_or_crosslinking_mechanism",
+    "network_density_proxy",
+    "macrophage_model_class",
+    "stimulation_context",
+    "cell_material_interaction_mode",
+    "culture_or_exposure_duration_h"
+  ],
+  "numeric_feature_columns_in_recovered_preprocessing_order": [
+    "modulus_value_kPa",
+    "pore_size_um",
+    "culture_or_exposure_duration_h"
+  ],
+  "categorical_feature_columns": [
+    "polymer_origin_class",
+    "material_bioactive_cue_class",
+    "gelation_or_crosslinking_mechanism",
+    "network_density_proxy",
+    "macrophage_model_class",
+    "stimulation_context",
+    "cell_material_interaction_mode"
+  ],
+  "allowed_categories": {
+    "polymer_origin_class": [
+      "natural_polymer",
+      "synthetic_polymer",
+      "hybrid_natural_synthetic"
+    ],
+    "material_bioactive_cue_class": [
+      "none",
+      "anti_inflammatory_material_cue",
+      "anti_inflammatory_plus_growth_factor_material_cues",
+      "combined_pro_and_anti_inflammatory_material_cues",
+      "growth_factor_or_neuropeptide_material_cue",
+      "pro_inflammatory_material_cue"
+    ],
+    "gelation_or_crosslinking_mechanism": [
+      "enzymatic_crosslinking",
+      "other",
+      "photo_crosslinking",
+      "physical_self_assembly"
+    ],
+    "network_density_proxy": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "macrophage_model_class": [
+      "RAW264_7",
+      "THP_1",
+      "BMDM",
+      "human_monocyte_derived_macrophage",
+      "murine_primary_or_in_vivo_context"
+    ],
+    "stimulation_context": [
+      "IL4_IL13",
+      "LPS",
+      "LPS_IFNg",
+      "other_stimulation",
+      "unclear",
+      "unstimulated_or_basal"
+    ],
+    "cell_material_interaction_mode": [
+      "direct_surface_contact",
+      "encapsulated_3D",
+      "hydrogel_extract_or_eluate",
+      "in_vivo_tissue_or_systemic",
+      "transwell_or_indirect",
+      "unclear"
+    ]
+  },
+  "shared_alias_map": {
+    "gelation_or_crosslinking_mechanism": {
+      "thermal_gelation": "physical_self_assembly"
+    }
+  },
+  "case_constraints": {
+    "macrophage_model_class": "RAW264_7",
+    "group2_cue": "anti_inflammatory_material_cue",
+    "group4_cue": "anti_inflammatory_plus_growth_factor_material_cues",
+    "all_other_case_features_identical_across_targets": true
+  },
+  "encoding": "Keep recovered per-fit training-only OneHotEncoder behaviour. Shared raw vocabulary/order does not require identical fitted one-hot dimensions across different targets/folds. Do not fit vocabulary on Test/case.",
+  "numeric_semantics": {
+    "modulus_value_kPa": {
+      "display_name": "Modulus",
+      "definition": "Recorded mechanical modulus, converted to kPa; includes storage, compressive and other reported modulus types.",
+      "units": "kPa"
+    },
+    "pore_size_um": {
+      "display_name": "Pore size",
+      "definition": "Characteristic hydrogel pore size, as reported or digitised from the source.",
+      "units": "µm"
+    },
+    "culture_or_exposure_duration_h": {
+      "display_name": "Exposure time",
+      "definition": "Recorded duration of culture or material exposure; distinct from material preparation or prior LPS priming.",
+      "units": "h"
+    }
+  },
+  "not_changed": "All target values, record membership, other feature cells, splits and folds. Existing categorical-missing sentinels differ across historical target pipelines, but current categorical data contain no blanks; do not introduce a separate unlogged change.",
+  "unresolved_exceptions_preserved": true,
+  "alias_applicability_scope": "Apply the thermal-to-physical merge to the documented P05 C-only records and the C4 HPA case in this package. For future materials, confirm non-covalent physical gelation; heating-induced covalent chemistry is not automatically physical self-assembly."
+}

@@ -1,3 +1,6 @@
-Pareto_candidates_with_CI.csv
-Pareto_candidates_with_CI.csv
-datasets example.csv
+__pycache__/
+*.pyc
+.venv/
+outputs/retrained_models/
+outputs/optional_grid_search/
+outputs/runtime_provenance/

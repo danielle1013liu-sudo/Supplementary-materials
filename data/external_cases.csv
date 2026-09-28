@@ -1,0 +1,5 @@
+﻿target,hydrogel_group,Figure3D_plotted_group,formulation,polymer_origin_class,modulus_value_kPa,pore_size_um,material_bioactive_cue_class,gelation_or_crosslinking_mechanism,network_density_proxy,macrophage_model_class,stimulation_context,cell_material_interaction_mode,culture_or_exposure_duration_h,cue_display_code,approval_status
+tnf,2,4,HPA@SIN-GM,natural_polymer,10.0,7.5,anti_inflammatory_material_cue,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,B,PROPOSED_NOT_APPROVED
+tnf,4,6,HPA@SIN-GM@DR,natural_polymer,10.0,7.5,anti_inflammatory_plus_growth_factor_material_cues,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,C,PROPOSED_NOT_APPROVED
+il10,2,4,HPA@SIN-GM,natural_polymer,10.0,7.5,anti_inflammatory_material_cue,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,B,PROPOSED_NOT_APPROVED
+il10,4,6,HPA@SIN-GM@DR,natural_polymer,10.0,7.5,anti_inflammatory_plus_growth_factor_material_cues,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,C,PROPOSED_NOT_APPROVED
