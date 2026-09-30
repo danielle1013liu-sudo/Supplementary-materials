@@ -1,0 +1,57 @@
+{
+  "candidate_n": 385237,
+  "candidate_table_sha256": "b83a70d963beb412fb64b23552d7948bb26b4d5a256eea5d53dadb8a90bfd41c",
+  "configuration_sha256": "8fad0f662493460ffae7e6465f2e1f72506367e6ae848270001d84edb914a2ba",
+  "coverage_sha256": "dd5e8d2732ce1dbf06c0687a835b2adc8fe05807dcf0730f9189e7d3e1fa884c",
+  "all_ten_descriptors_vary": true,
+  "inference_not_started": true,
+  "unique_values": {
+    "polymer_origin_class": 3,
+    "modulus_value_kPa": 17,
+    "pore_size_um": 17,
+    "material_bioactive_cue_class": 5,
+    "gelation_or_crosslinking_mechanism": 4,
+    "network_density_proxy": 3,
+    "macrophage_model_class": 3,
+    "stimulation_context": 5,
+    "cell_material_interaction_mode": 5,
+    "culture_or_exposure_duration_h": 9
+  },
+  "context_values": {
+    "macrophage_model_class": [
+      "RAW264_7",
+      "THP_1",
+      "murine_primary_or_in_vivo_context"
+    ],
+    "stimulation_context": [
+      "IL4_IL13",
+      "LPS",
+      "LPS_IFNg",
+      "other_stimulation",
+      "unstimulated_or_basal"
+    ],
+    "cell_material_interaction_mode": [
+      "direct_surface_contact",
+      "encapsulated_3D",
+      "hydrogel_extract_or_eluate",
+      "in_vivo_tissue_or_systemic",
+      "transwell_or_indirect"
+    ],
+    "culture_or_exposure_duration_h": [
+      12.0,
+      18.0,
+      24.0,
+      36.0,
+      48.0,
+      72.0,
+      96.0,
+      120.0,
+      168.0
+    ]
+  },
+  "source_supported_material_tuples_before_exclusions": 44,
+  "source_supported_experimental_tuples_before_exclusions": 22,
+  "excluded_material_tuples": 1,
+  "excluded_experimental_tuples": 6,
+  "excluded_experiment_time_tuples": 6
+}

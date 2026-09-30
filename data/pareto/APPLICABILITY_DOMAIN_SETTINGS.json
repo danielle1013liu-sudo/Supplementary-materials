@@ -1,0 +1,621 @@
+[
+  {
+    "target": "tnf",
+    "fit_scope": "Diagnostic only, exact Training IDs; no target values; not predictive preprocessing",
+    "Training_ID_hash": "3788607f32e280ef87aa18fb3ec163258a53412cd26a85a2f117e742558dabd4",
+    "Training_IDs": [
+      "TNF-0064",
+      "TNF-0047",
+      "TNF-0053",
+      "TNF-0055",
+      "TNF-0035",
+      "TNF-0052",
+      "TNF-0122",
+      "TNF-0032",
+      "TNF-0118",
+      "TNF-0096",
+      "TNF-0042",
+      "TNF-0016",
+      "TNF-0101",
+      "TNF-0081",
+      "TNF-0117",
+      "TNF-0141",
+      "TNF-0099",
+      "TNF-0056",
+      "TNF-0075",
+      "TNF-0048",
+      "TNF-0088",
+      "TNF-0143",
+      "TNF-0017",
+      "TNF-0031",
+      "TNF-0009",
+      "TNF-0112",
+      "TNF-0140",
+      "TNF-0004",
+      "TNF-0027",
+      "TNF-0050",
+      "TNF-0094",
+      "TNF-0051",
+      "TNF-0084",
+      "TNF-0115",
+      "TNF-0127",
+      "TNF-0085",
+      "TNF-0071",
+      "TNF-0139",
+      "TNF-0020",
+      "TNF-0091",
+      "TNF-0125",
+      "TNF-0093",
+      "TNF-0123",
+      "TNF-0083",
+      "TNF-0121",
+      "TNF-0069",
+      "TNF-0080",
+      "TNF-0038",
+      "TNF-0110",
+      "TNF-0109",
+      "TNF-0063",
+      "TNF-0076",
+      "TNF-0006",
+      "TNF-0120",
+      "TNF-0074",
+      "TNF-0054",
+      "TNF-0073",
+      "TNF-0018",
+      "TNF-0065",
+      "TNF-0044",
+      "TNF-0114",
+      "TNF-0005",
+      "TNF-0087",
+      "TNF-0010",
+      "TNF-0124",
+      "TNF-0012",
+      "TNF-0057",
+      "TNF-0003",
+      "TNF-0002",
+      "TNF-0102",
+      "TNF-0015",
+      "TNF-0011",
+      "TNF-0133",
+      "TNF-0108",
+      "TNF-0103",
+      "TNF-0130",
+      "TNF-0126",
+      "TNF-0107",
+      "TNF-0106",
+      "TNF-0043",
+      "TNF-0007",
+      "TNF-0034",
+      "TNF-0079",
+      "TNF-0100",
+      "TNF-0138",
+      "TNF-0070",
+      "TNF-0039",
+      "TNF-0066",
+      "TNF-0030",
+      "TNF-0128",
+      "TNF-0049",
+      "TNF-0092",
+      "TNF-0022",
+      "TNF-0023",
+      "TNF-0129",
+      "TNF-0078",
+      "TNF-0046",
+      "TNF-0041",
+      "TNF-0045",
+      "TNF-0136",
+      "TNF-0019",
+      "TNF-0077",
+      "TNF-0067",
+      "TNF-0116",
+      "TNF-0105",
+      "TNF-0028",
+      "TNF-0036",
+      "TNF-0134",
+      "TNF-0001",
+      "TNF-0021",
+      "TNF-0086"
+    ],
+    "threshold_q95": 2.6443313265202915,
+    "self_exclusion": "Only same row index excluded; duplicate but distinct Training rows remain neighbours",
+    "constructor": {
+      "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+      "parameters": {
+        "force_int_remainder_cols": "deprecated",
+        "n_jobs": null,
+        "remainder": "drop",
+        "sparse_threshold": 0,
+        "transformer_weights": null,
+        "transformers": [
+          {
+            "__tuple__": [
+              "numeric",
+              {
+                "__estimator__": "sklearn.pipeline.Pipeline",
+                "parameters": {
+                  "memory": null,
+                  "steps": [
+                    {
+                      "__tuple__": [
+                        "median",
+                        {
+                          "__estimator__": "sklearn.impute._base.SimpleImputer",
+                          "parameters": {
+                            "add_indicator": false,
+                            "copy": true,
+                            "fill_value": null,
+                            "keep_empty_features": false,
+                            "missing_values": {
+                              "__float__": "nan"
+                            },
+                            "strategy": "median"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "__tuple__": [
+                        "standardise",
+                        {
+                          "__estimator__": "sklearn.preprocessing._data.StandardScaler",
+                          "parameters": {
+                            "copy": true,
+                            "with_mean": true,
+                            "with_std": true
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "transform_input": null,
+                  "verbose": false
+                }
+              },
+              [
+                "modulus_value_kPa",
+                "pore_size_um",
+                "culture_or_exposure_duration_h"
+              ]
+            ]
+          },
+          {
+            "__tuple__": [
+              "categorical",
+              {
+                "__estimator__": "sklearn.pipeline.Pipeline",
+                "parameters": {
+                  "memory": null,
+                  "steps": [
+                    {
+                      "__tuple__": [
+                        "missing",
+                        {
+                          "__estimator__": "sklearn.impute._base.SimpleImputer",
+                          "parameters": {
+                            "add_indicator": false,
+                            "copy": true,
+                            "fill_value": "__missing__",
+                            "keep_empty_features": false,
+                            "missing_values": {
+                              "__float__": "nan"
+                            },
+                            "strategy": "constant"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "__tuple__": [
+                        "OHE",
+                        {
+                          "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                          "parameters": {
+                            "categories": "auto",
+                            "drop": null,
+                            "dtype": {
+                              "__type__": "numpy.float64"
+                            },
+                            "feature_name_combiner": "concat",
+                            "handle_unknown": "ignore",
+                            "max_categories": null,
+                            "min_frequency": null,
+                            "sparse_output": false
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "transform_input": null,
+                  "verbose": false
+                }
+              },
+              [
+                "polymer_origin_class",
+                "material_bioactive_cue_class",
+                "gelation_or_crosslinking_mechanism",
+                "network_density_proxy",
+                "macrophage_model_class",
+                "stimulation_context",
+                "cell_material_interaction_mode"
+              ]
+            ]
+          }
+        ],
+        "verbose": false,
+        "verbose_feature_names_out": true
+      }
+    },
+    "imputation_statistics": [
+      2.83085,
+      59.5405,
+      24.0
+    ],
+    "standardisation_mean": [
+      5.953410540540542,
+      72.00691171171172,
+      50.14414414414414
+    ],
+    "standardisation_scale": [
+      7.346026907349101,
+      64.58417541404833,
+      42.02591368029857
+    ],
+    "OHE_categories": [
+      [
+        "hybrid_natural_synthetic",
+        "natural_polymer",
+        "synthetic_polymer"
+      ],
+      [
+        "anti_inflammatory_material_cue",
+        "anti_inflammatory_plus_growth_factor_material_cues",
+        "combined_pro_and_anti_inflammatory_material_cues",
+        "growth_factor_or_neuropeptide_material_cue",
+        "none",
+        "pro_inflammatory_material_cue"
+      ],
+      [
+        "enzymatic_crosslinking",
+        "other",
+        "photo_crosslinking",
+        "physical_self_assembly"
+      ],
+      [
+        "high",
+        "low",
+        "medium"
+      ],
+      [
+        "BMDM",
+        "RAW264_7",
+        "THP_1",
+        "human_monocyte_derived_macrophage",
+        "murine_primary_or_in_vivo_context"
+      ],
+      [
+        "IL4_IL13",
+        "LPS",
+        "LPS_IFNg",
+        "other_stimulation",
+        "unclear",
+        "unstimulated_or_basal"
+      ],
+      [
+        "direct_surface_contact",
+        "encapsulated_3D",
+        "hydrogel_extract_or_eluate",
+        "in_vivo_tissue_or_systemic",
+        "transwell_or_indirect",
+        "unclear"
+      ]
+    ],
+    "transformed_Training_hash": "ec7f6d12a4efabc335cdf3f3248fe3efa55247d2a0ae063139606bf87f6ca959",
+    "sha256": "b2c8e5e815f87c06fe99b5c4d710556a10a0b547f666129fbb9c85fb58899949"
+  },
+  {
+    "target": "il10",
+    "fit_scope": "Diagnostic only, exact Training IDs; no target values; not predictive preprocessing",
+    "Training_ID_hash": "f21ae9a8ca4a5db79718ef85b67b5947a29afe4a09968f4f9a5e449c0cbe5c71",
+    "Training_IDs": [
+      "IL10-0044",
+      "IL10-0039",
+      "IL10-0138",
+      "IL10-0067",
+      "IL10-0128",
+      "IL10-0021",
+      "IL10-0059",
+      "IL10-0006",
+      "IL10-0129",
+      "IL10-0056",
+      "IL10-0088",
+      "IL10-0037",
+      "IL10-0005",
+      "IL10-0091",
+      "IL10-0057",
+      "IL10-0110",
+      "IL10-0034",
+      "IL10-0084",
+      "IL10-0065",
+      "IL10-0013",
+      "IL10-0132",
+      "IL10-0121",
+      "IL10-0004",
+      "IL10-0053",
+      "IL10-0089",
+      "IL10-0124",
+      "IL10-0080",
+      "IL10-0131",
+      "IL10-0073",
+      "IL10-0046",
+      "IL10-0055",
+      "IL10-0018",
+      "IL10-0003",
+      "IL10-0008",
+      "IL10-0026",
+      "IL10-0052",
+      "IL10-0070",
+      "IL10-0054",
+      "IL10-0042",
+      "IL10-0061",
+      "IL10-0038",
+      "IL10-0107",
+      "IL10-0079",
+      "IL10-0100",
+      "IL10-0133",
+      "IL10-0111",
+      "IL10-0047",
+      "IL10-0102",
+      "IL10-0066",
+      "IL10-0098",
+      "IL10-0112",
+      "IL10-0036",
+      "IL10-0077",
+      "IL10-0072",
+      "IL10-0023",
+      "IL10-0012",
+      "IL10-0025",
+      "IL10-0043",
+      "IL10-0117",
+      "IL10-0069",
+      "IL10-0122",
+      "IL10-0033",
+      "IL10-0028",
+      "IL10-0058",
+      "IL10-0093",
+      "IL10-0134",
+      "IL10-0123",
+      "IL10-0135",
+      "IL10-0048",
+      "IL10-0118",
+      "IL10-0114",
+      "IL10-0002",
+      "IL10-0016",
+      "IL10-0068",
+      "IL10-0045",
+      "IL10-0010",
+      "IL10-0020",
+      "IL10-0120",
+      "IL10-0081",
+      "IL10-0083",
+      "IL10-0082",
+      "IL10-0116",
+      "IL10-0078",
+      "IL10-0015",
+      "IL10-0105",
+      "IL10-0074",
+      "IL10-0032",
+      "IL10-0051",
+      "IL10-0064",
+      "IL10-0136",
+      "IL10-0060",
+      "IL10-0125",
+      "IL10-0007",
+      "IL10-0029",
+      "IL10-0115",
+      "IL10-0119",
+      "IL10-0011",
+      "IL10-0062",
+      "IL10-0035",
+      "IL10-0063",
+      "IL10-0009",
+      "IL10-0014",
+      "IL10-0041",
+      "IL10-0049",
+      "IL10-0137",
+      "IL10-0101"
+    ],
+    "threshold_q95": 2.551737422726635,
+    "self_exclusion": "Only same row index excluded; duplicate but distinct Training rows remain neighbours",
+    "constructor": {
+      "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+      "parameters": {
+        "force_int_remainder_cols": "deprecated",
+        "n_jobs": null,
+        "remainder": "drop",
+        "sparse_threshold": 0,
+        "transformer_weights": null,
+        "transformers": [
+          {
+            "__tuple__": [
+              "numeric",
+              {
+                "__estimator__": "sklearn.pipeline.Pipeline",
+                "parameters": {
+                  "memory": null,
+                  "steps": [
+                    {
+                      "__tuple__": [
+                        "median",
+                        {
+                          "__estimator__": "sklearn.impute._base.SimpleImputer",
+                          "parameters": {
+                            "add_indicator": false,
+                            "copy": true,
+                            "fill_value": null,
+                            "keep_empty_features": false,
+                            "missing_values": {
+                              "__float__": "nan"
+                            },
+                            "strategy": "median"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "__tuple__": [
+                        "standardise",
+                        {
+                          "__estimator__": "sklearn.preprocessing._data.StandardScaler",
+                          "parameters": {
+                            "copy": true,
+                            "with_mean": true,
+                            "with_std": true
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "transform_input": null,
+                  "verbose": false
+                }
+              },
+              [
+                "modulus_value_kPa",
+                "pore_size_um",
+                "culture_or_exposure_duration_h"
+              ]
+            ]
+          },
+          {
+            "__tuple__": [
+              "categorical",
+              {
+                "__estimator__": "sklearn.pipeline.Pipeline",
+                "parameters": {
+                  "memory": null,
+                  "steps": [
+                    {
+                      "__tuple__": [
+                        "missing",
+                        {
+                          "__estimator__": "sklearn.impute._base.SimpleImputer",
+                          "parameters": {
+                            "add_indicator": false,
+                            "copy": true,
+                            "fill_value": "__missing__",
+                            "keep_empty_features": false,
+                            "missing_values": {
+                              "__float__": "nan"
+                            },
+                            "strategy": "constant"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "__tuple__": [
+                        "OHE",
+                        {
+                          "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                          "parameters": {
+                            "categories": "auto",
+                            "drop": null,
+                            "dtype": {
+                              "__type__": "numpy.float64"
+                            },
+                            "feature_name_combiner": "concat",
+                            "handle_unknown": "ignore",
+                            "max_categories": null,
+                            "min_frequency": null,
+                            "sparse_output": false
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "transform_input": null,
+                  "verbose": false
+                }
+              },
+              [
+                "polymer_origin_class",
+                "material_bioactive_cue_class",
+                "gelation_or_crosslinking_mechanism",
+                "network_density_proxy",
+                "macrophage_model_class",
+                "stimulation_context",
+                "cell_material_interaction_mode"
+              ]
+            ]
+          }
+        ],
+        "verbose": false,
+        "verbose_feature_names_out": true
+      }
+    },
+    "imputation_statistics": [
+      3.004,
+      53.4208,
+      36.0
+    ],
+    "standardisation_mean": [
+      35.73726924528301,
+      72.73090188679245,
+      58.509433962264154
+    ],
+    "standardisation_scale": [
+      188.12599969625137,
+      74.36551438645772,
+      56.343998237748885
+    ],
+    "OHE_categories": [
+      [
+        "hybrid_natural_synthetic",
+        "natural_polymer",
+        "synthetic_polymer"
+      ],
+      [
+        "anti_inflammatory_material_cue",
+        "anti_inflammatory_plus_growth_factor_material_cues",
+        "combined_pro_and_anti_inflammatory_material_cues",
+        "growth_factor_or_neuropeptide_material_cue",
+        "none"
+      ],
+      [
+        "enzymatic_crosslinking",
+        "other",
+        "photo_crosslinking",
+        "physical_self_assembly"
+      ],
+      [
+        "high",
+        "low",
+        "medium"
+      ],
+      [
+        "RAW264_7",
+        "THP_1",
+        "human_monocyte_derived_macrophage",
+        "murine_primary_or_in_vivo_context"
+      ],
+      [
+        "IL4_IL13",
+        "LPS",
+        "LPS_IFNg",
+        "other_stimulation",
+        "unclear",
+        "unstimulated_or_basal"
+      ],
+      [
+        "direct_surface_contact",
+        "encapsulated_3D",
+        "hydrogel_extract_or_eluate",
+        "in_vivo_tissue_or_systemic",
+        "transwell_or_indirect",
+        "unclear"
+      ]
+    ],
+    "transformed_Training_hash": "c3a5b4c051332b9d3d29fda1e46bb282e89d84dd238c4025013c61a81b4adc57",
+    "sha256": "def8808c4032bbb18d1e2a29fead6d0c6afe7c329424ef48bf64c6e7bd782df1"
+  }
+]

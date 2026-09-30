@@ -4,3 +4,5 @@ __pycache__/
 outputs/retrained_models/
 outputs/optional_grid_search/
 outputs/runtime_provenance/
+outputs/all10_replay/
+.pytest_cache/

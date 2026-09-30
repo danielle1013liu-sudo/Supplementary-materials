@@ -1,0 +1,115 @@
+{
+  "schema_version": "thermal_harmonisation_v2_all10_search_v1",
+  "ordered_features": [
+    "polymer_origin_class",
+    "modulus_value_kPa",
+    "pore_size_um",
+    "material_bioactive_cue_class",
+    "gelation_or_crosslinking_mechanism",
+    "network_density_proxy",
+    "macrophage_model_class",
+    "stimulation_context",
+    "cell_material_interaction_mode",
+    "culture_or_exposure_duration_h"
+  ],
+  "dataset_sha256": {
+    "tnf": "289d85de602cf9277ba2cbce368439db2019df78b58bada7200fa9e855397429",
+    "il10": "8aef2ec5bcae3b966559531c8ecbda9ec939a68686fa300d4a1b70293d03a018"
+  },
+  "schema_sha256": "2a285420024a61d0aed54b51e06917daca6f56527599b8b8061d6b66f95e6720",
+  "model_sha256": {
+    "tnf_3089": "68bfb1a3e3e17151839e869a71c1a3159c9ef5df29ec8d0db3a58be4851c5fb5",
+    "tnf_4280": "837abd452d13e4e375f708ff16975851febbfcd7c22a6b767a8afdfce31f4112",
+    "tnf_5793": "7537bb850fe8a3a76e00388a93a80b39fc50ad6510b380f4d5bed614d300eb4d",
+    "il10_85": "83af1051d11bb9d1e78748b94684ef6c583d7b09698515148e1192a87d9386c7",
+    "il10_115": "a2dcefd4e7785f1b10831eab6b14ec206fce9e8f6bda167aca8721a24d5a32b8",
+    "il10_158": "255d7c62e1e40a66ffd63479519eca93d3a1de6c45db2245d2b2736938982afd"
+  },
+  "numeric_grids": [
+    {
+      "descriptor": "modulus_value_kPa",
+      "lower": 0.227,
+      "upper": 19.2166,
+      "values": [
+        0.227,
+        0.2800578947368421,
+        0.3,
+        0.4262768421052631,
+        0.5484421052631578,
+        0.8788736842105263,
+        1.0,
+        1.1265,
+        1.3997631578947365,
+        2.6481736842105246,
+        3.004,
+        3.9921578947368475,
+        6.794736842105261,
+        9.31507,
+        11.2329,
+        14.343,
+        19.2166
+      ],
+      "max_reconstruction_residual": 0.0
+    },
+    {
+      "descriptor": "pore_size_um",
+      "lower": 3.0,
+      "upper": 197.0981499999999,
+      "values": [
+        3.0,
+        5.409473684210526,
+        10.101105263157892,
+        16.033494736842105,
+        20.0,
+        26.690736842105263,
+        42.26805263157894,
+        58.94552631578948,
+        70.7182,
+        84.437,
+        87.94,
+        90.0,
+        100.0,
+        130.1491,
+        142.614,
+        159.87989473684212,
+        197.0981499999999
+      ],
+      "max_reconstruction_residual": 0.0
+    }
+  ],
+  "common_observed_exposure_times_h": [
+    12.0,
+    18.0,
+    24.0,
+    36.0,
+    48.0,
+    72.0,
+    96.0,
+    120.0,
+    144.0,
+    168.0
+  ],
+  "n_material_tuples": 43,
+  "n_experimental_tuples": 16,
+  "n_experiment_time_combinations": 31,
+  "rules": [
+    "Material tuples are the union observed in either original Training subset, retaining levels supported in both targets and both saved encoders.",
+    "Experimental triplets are jointly observed in either Training subset. Unclear or missing categories are excluded; none and basal remain.",
+    "Time must be observed in both target Training domains and paired with that experimental triplet in at least one Training subset.",
+    "Every retained material tuple is crossed with every retained experimental-time tuple and both verified numerical grids. No further material-context exclusion has a documented basis in the codebook; none is invented.",
+    "Observed experimental triplets preserve supported cell-model/exposure compatibility. Residual other categories are retained as coded, without treating them as specific biochemical interventions.",
+    "No Test or case outcomes are used to define the search. No minimum category count or composition quota is applied."
+  ],
+  "representative_rule": {
+    "P1": "minimum mean TNF, then maximum mean IL10, then candidate ID",
+    "P3": "maximum mean IL10, then minimum mean TNF, then candidate ID",
+    "P2": "interior location nearest half cumulative arc length after objective min-max scaling and ascending TNF ordering; endpoints excluded; remaining ties by candidate ID"
+  },
+  "dominance": "minimise TNF and maximise IL10; no worse on both, strict improvement on at least one; exact ties retained",
+  "eligibility": "both saved Training-reference AD ratios <=1 and all six predictions >=0",
+  "final_membership": "mean-front membership across all eligible candidates AND non-dominance in at least 6 of 9 model pairings against that same universe",
+  "batch_size": 16384,
+  "prediction_fits": 0,
+  "declared_finite_grid_size": 385237,
+  "cache_key": "ea5027933a2bbd28f3893528ff464ce37076ea7a7029bcb39026b1753f8f22a8"
+}

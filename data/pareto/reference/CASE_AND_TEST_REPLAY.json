@@ -1,0 +1,134 @@
+{
+  "checks": [
+    {
+      "target": "tnf",
+      "realisation": 3089,
+      "scope": "Test",
+      "n": 28,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 3089,
+      "scope": "C4",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 4280,
+      "scope": "Test",
+      "n": 28,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 4280,
+      "scope": "C4",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 5793,
+      "scope": "Test",
+      "n": 28,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 5793,
+      "scope": "C4",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 85,
+      "scope": "Test",
+      "n": 27,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 85,
+      "scope": "C4",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 115,
+      "scope": "Test",
+      "n": 27,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 115,
+      "scope": "C4",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 158,
+      "scope": "Test",
+      "n": 27,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 158,
+      "scope": "C4",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 3089,
+      "scope": "P15 whole-study exclusion",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 4280,
+      "scope": "P15 whole-study exclusion",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "tnf",
+      "realisation": 5793,
+      "scope": "P15 whole-study exclusion",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 85,
+      "scope": "P15 whole-study exclusion",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 115,
+      "scope": "P15 whole-study exclusion",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    },
+    {
+      "target": "il10",
+      "realisation": 158,
+      "scope": "P15 whole-study exclusion",
+      "n": 2,
+      "max_absolute_difference_pg_ml": 0.0
+    }
+  ],
+  "predictive_fits": 0,
+  "preprocessing_fits": 0,
+  "primary_Test_and_C4_same_objects": true,
+  "P15_separate_study_excluded_models": true
+}

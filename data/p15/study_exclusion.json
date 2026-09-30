@@ -1,0 +1,1735 @@
+{
+  "analysis": "retrospective whole-study-exclusion sensitivity/mechanism analysis",
+  "study": "P15",
+  "DOI": "10.1002/btm2.10217",
+  "condition": "basal THP-1 medium",
+  "data_release": "thermal_harmonisation_v2",
+  "model_configuration_release": "accepted_train80_release_v1",
+  "fit_scope": "All remaining observations after whole-study removal from full target-specific dataset; not the original 80% split",
+  "previous_selection_exposure": true,
+  "independent_validation": false,
+  "hyperparameter_tuning": false,
+  "seed_search": false,
+  "target_transform": null,
+  "regressor_numeric_scaling": null,
+  "environment": {
+    "python": "3.13.9",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "scikit_learn": "1.7.2",
+    "shap": "0.49.1"
+  },
+  "tolerances": {
+    "prediction_replay_abs": 1e-10,
+    "SHAP_additivity_abs": 1e-06,
+    "arithmetic_abs": 1e-10,
+    "AD_abs": 1e-07
+  },
+  "targets": {
+    "tnf": {
+      "full_rows": 139,
+      "excluded_rows": 6,
+      "retained_rows": 133,
+      "retained_studies": 40,
+      "excluded_IDs": [
+        "TNF-0035",
+        "TNF-0036",
+        "TNF-0037",
+        "TNF-0038",
+        "TNF-0039",
+        "TNF-0040"
+      ],
+      "fit_IDs_ordered": [
+        "TNF-0001",
+        "TNF-0002",
+        "TNF-0003",
+        "TNF-0004",
+        "TNF-0005",
+        "TNF-0006",
+        "TNF-0007",
+        "TNF-0008",
+        "TNF-0009",
+        "TNF-0010",
+        "TNF-0011",
+        "TNF-0012",
+        "TNF-0013",
+        "TNF-0014",
+        "TNF-0015",
+        "TNF-0016",
+        "TNF-0017",
+        "TNF-0018",
+        "TNF-0019",
+        "TNF-0020",
+        "TNF-0021",
+        "TNF-0022",
+        "TNF-0023",
+        "TNF-0024",
+        "TNF-0025",
+        "TNF-0026",
+        "TNF-0027",
+        "TNF-0028",
+        "TNF-0029",
+        "TNF-0030",
+        "TNF-0031",
+        "TNF-0032",
+        "TNF-0033",
+        "TNF-0034",
+        "TNF-0041",
+        "TNF-0042",
+        "TNF-0043",
+        "TNF-0044",
+        "TNF-0045",
+        "TNF-0046",
+        "TNF-0047",
+        "TNF-0048",
+        "TNF-0049",
+        "TNF-0050",
+        "TNF-0051",
+        "TNF-0052",
+        "TNF-0053",
+        "TNF-0054",
+        "TNF-0055",
+        "TNF-0056",
+        "TNF-0057",
+        "TNF-0062",
+        "TNF-0063",
+        "TNF-0064",
+        "TNF-0065",
+        "TNF-0066",
+        "TNF-0067",
+        "TNF-0068",
+        "TNF-0069",
+        "TNF-0070",
+        "TNF-0071",
+        "TNF-0072",
+        "TNF-0073",
+        "TNF-0074",
+        "TNF-0075",
+        "TNF-0076",
+        "TNF-0077",
+        "TNF-0078",
+        "TNF-0079",
+        "TNF-0080",
+        "TNF-0081",
+        "TNF-0082",
+        "TNF-0083",
+        "TNF-0084",
+        "TNF-0085",
+        "TNF-0086",
+        "TNF-0087",
+        "TNF-0088",
+        "TNF-0089",
+        "TNF-0090",
+        "TNF-0091",
+        "TNF-0092",
+        "TNF-0093",
+        "TNF-0094",
+        "TNF-0095",
+        "TNF-0096",
+        "TNF-0097",
+        "TNF-0098",
+        "TNF-0099",
+        "TNF-0100",
+        "TNF-0101",
+        "TNF-0102",
+        "TNF-0103",
+        "TNF-0104",
+        "TNF-0105",
+        "TNF-0106",
+        "TNF-0107",
+        "TNF-0108",
+        "TNF-0109",
+        "TNF-0110",
+        "TNF-0111",
+        "TNF-0112",
+        "TNF-0113",
+        "TNF-0114",
+        "TNF-0115",
+        "TNF-0116",
+        "TNF-0117",
+        "TNF-0118",
+        "TNF-0119",
+        "TNF-0120",
+        "TNF-0121",
+        "TNF-0122",
+        "TNF-0123",
+        "TNF-0124",
+        "TNF-0125",
+        "TNF-0126",
+        "TNF-0127",
+        "TNF-0128",
+        "TNF-0129",
+        "TNF-0130",
+        "TNF-0131",
+        "TNF-0132",
+        "TNF-0133",
+        "TNF-0134",
+        "TNF-0135",
+        "TNF-0136",
+        "TNF-0137",
+        "TNF-0138",
+        "TNF-0139",
+        "TNF-0140",
+        "TNF-0141",
+        "TNF-0142",
+        "TNF-0143"
+      ],
+      "pair_IDs": [
+        "TNF-0035",
+        "TNF-0036"
+      ],
+      "input_sha256": "289d85de602cf9277ba2cbce368439db2019df78b58bada7200fa9e855397429",
+      "fixed_estimator_seeds": [
+        3089,
+        4280,
+        5793
+      ],
+      "AD_independent_max_difference": 2.395861287141088e-13,
+      "AD_constructor_spec": {
+        "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+        "parameters": {
+          "force_int_remainder_cols": "deprecated",
+          "n_jobs": null,
+          "remainder": "drop",
+          "sparse_threshold": 0,
+          "transformer_weights": null,
+          "transformers": [
+            {
+              "__tuple__": [
+                "numeric",
+                {
+                  "__estimator__": "sklearn.pipeline.Pipeline",
+                  "parameters": {
+                    "memory": null,
+                    "steps": [
+                      {
+                        "__tuple__": [
+                          "median",
+                          {
+                            "__estimator__": "sklearn.impute._base.SimpleImputer",
+                            "parameters": {
+                              "add_indicator": false,
+                              "copy": true,
+                              "fill_value": null,
+                              "keep_empty_features": false,
+                              "missing_values": {
+                                "__float__": "nan"
+                              },
+                              "strategy": "median"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "standardise",
+                          {
+                            "__estimator__": "sklearn.preprocessing._data.StandardScaler",
+                            "parameters": {
+                              "copy": true,
+                              "with_mean": true,
+                              "with_std": true
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "transform_input": null,
+                    "verbose": false
+                  }
+                },
+                [
+                  "modulus_value_kPa",
+                  "pore_size_um",
+                  "culture_or_exposure_duration_h"
+                ]
+              ]
+            },
+            {
+              "__tuple__": [
+                "categorical",
+                {
+                  "__estimator__": "sklearn.pipeline.Pipeline",
+                  "parameters": {
+                    "memory": null,
+                    "steps": [
+                      {
+                        "__tuple__": [
+                          "missing",
+                          {
+                            "__estimator__": "sklearn.impute._base.SimpleImputer",
+                            "parameters": {
+                              "add_indicator": false,
+                              "copy": true,
+                              "fill_value": "__missing__",
+                              "keep_empty_features": false,
+                              "missing_values": {
+                                "__float__": "nan"
+                              },
+                              "strategy": "constant"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "OHE",
+                          {
+                            "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                            "parameters": {
+                              "categories": "auto",
+                              "drop": null,
+                              "dtype": {
+                                "__type__": "numpy.float64"
+                              },
+                              "feature_name_combiner": "concat",
+                              "handle_unknown": "ignore",
+                              "max_categories": null,
+                              "min_frequency": null,
+                              "sparse_output": false
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "transform_input": null,
+                    "verbose": false
+                  }
+                },
+                [
+                  "polymer_origin_class",
+                  "material_bioactive_cue_class",
+                  "gelation_or_crosslinking_mechanism",
+                  "network_density_proxy",
+                  "macrophage_model_class",
+                  "stimulation_context",
+                  "cell_material_interaction_mode"
+                ]
+              ]
+            }
+          ],
+          "verbose": false,
+          "verbose_feature_names_out": true
+        }
+      }
+    },
+    "il10": {
+      "full_rows": 133,
+      "excluded_rows": 5,
+      "retained_rows": 128,
+      "retained_studies": 35,
+      "excluded_IDs": [
+        "IL10-0029",
+        "IL10-0030",
+        "IL10-0032",
+        "IL10-0033",
+        "IL10-0034"
+      ],
+      "fit_IDs_ordered": [
+        "IL10-0001",
+        "IL10-0002",
+        "IL10-0003",
+        "IL10-0004",
+        "IL10-0005",
+        "IL10-0006",
+        "IL10-0007",
+        "IL10-0008",
+        "IL10-0009",
+        "IL10-0010",
+        "IL10-0011",
+        "IL10-0012",
+        "IL10-0013",
+        "IL10-0014",
+        "IL10-0015",
+        "IL10-0016",
+        "IL10-0017",
+        "IL10-0018",
+        "IL10-0019",
+        "IL10-0020",
+        "IL10-0021",
+        "IL10-0022",
+        "IL10-0023",
+        "IL10-0025",
+        "IL10-0026",
+        "IL10-0027",
+        "IL10-0028",
+        "IL10-0035",
+        "IL10-0036",
+        "IL10-0037",
+        "IL10-0038",
+        "IL10-0039",
+        "IL10-0040",
+        "IL10-0041",
+        "IL10-0042",
+        "IL10-0043",
+        "IL10-0044",
+        "IL10-0045",
+        "IL10-0046",
+        "IL10-0047",
+        "IL10-0048",
+        "IL10-0049",
+        "IL10-0050",
+        "IL10-0051",
+        "IL10-0052",
+        "IL10-0053",
+        "IL10-0054",
+        "IL10-0055",
+        "IL10-0056",
+        "IL10-0057",
+        "IL10-0058",
+        "IL10-0059",
+        "IL10-0060",
+        "IL10-0061",
+        "IL10-0062",
+        "IL10-0063",
+        "IL10-0064",
+        "IL10-0065",
+        "IL10-0066",
+        "IL10-0067",
+        "IL10-0068",
+        "IL10-0069",
+        "IL10-0070",
+        "IL10-0071",
+        "IL10-0072",
+        "IL10-0073",
+        "IL10-0074",
+        "IL10-0075",
+        "IL10-0076",
+        "IL10-0077",
+        "IL10-0078",
+        "IL10-0079",
+        "IL10-0080",
+        "IL10-0081",
+        "IL10-0082",
+        "IL10-0083",
+        "IL10-0084",
+        "IL10-0085",
+        "IL10-0086",
+        "IL10-0087",
+        "IL10-0088",
+        "IL10-0089",
+        "IL10-0090",
+        "IL10-0091",
+        "IL10-0092",
+        "IL10-0093",
+        "IL10-0098",
+        "IL10-0099",
+        "IL10-0100",
+        "IL10-0101",
+        "IL10-0102",
+        "IL10-0103",
+        "IL10-0104",
+        "IL10-0105",
+        "IL10-0106",
+        "IL10-0107",
+        "IL10-0108",
+        "IL10-0109",
+        "IL10-0110",
+        "IL10-0111",
+        "IL10-0112",
+        "IL10-0113",
+        "IL10-0114",
+        "IL10-0115",
+        "IL10-0116",
+        "IL10-0117",
+        "IL10-0118",
+        "IL10-0119",
+        "IL10-0120",
+        "IL10-0121",
+        "IL10-0122",
+        "IL10-0123",
+        "IL10-0124",
+        "IL10-0125",
+        "IL10-0126",
+        "IL10-0127",
+        "IL10-0128",
+        "IL10-0129",
+        "IL10-0130",
+        "IL10-0131",
+        "IL10-0132",
+        "IL10-0133",
+        "IL10-0134",
+        "IL10-0135",
+        "IL10-0136",
+        "IL10-0137",
+        "IL10-0138",
+        "IL10-0139"
+      ],
+      "pair_IDs": [
+        "IL10-0029",
+        "IL10-0030"
+      ],
+      "input_sha256": "8aef2ec5bcae3b966559531c8ecbda9ec939a68686fa300d4a1b70293d03a018",
+      "fixed_estimator_seeds": [
+        85,
+        115,
+        158
+      ],
+      "AD_independent_max_difference": 1.9952928198563313e-12,
+      "AD_constructor_spec": {
+        "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+        "parameters": {
+          "force_int_remainder_cols": "deprecated",
+          "n_jobs": null,
+          "remainder": "drop",
+          "sparse_threshold": 0,
+          "transformer_weights": null,
+          "transformers": [
+            {
+              "__tuple__": [
+                "numeric",
+                {
+                  "__estimator__": "sklearn.pipeline.Pipeline",
+                  "parameters": {
+                    "memory": null,
+                    "steps": [
+                      {
+                        "__tuple__": [
+                          "median",
+                          {
+                            "__estimator__": "sklearn.impute._base.SimpleImputer",
+                            "parameters": {
+                              "add_indicator": false,
+                              "copy": true,
+                              "fill_value": null,
+                              "keep_empty_features": false,
+                              "missing_values": {
+                                "__float__": "nan"
+                              },
+                              "strategy": "median"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "standardise",
+                          {
+                            "__estimator__": "sklearn.preprocessing._data.StandardScaler",
+                            "parameters": {
+                              "copy": true,
+                              "with_mean": true,
+                              "with_std": true
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "transform_input": null,
+                    "verbose": false
+                  }
+                },
+                [
+                  "modulus_value_kPa",
+                  "pore_size_um",
+                  "culture_or_exposure_duration_h"
+                ]
+              ]
+            },
+            {
+              "__tuple__": [
+                "categorical",
+                {
+                  "__estimator__": "sklearn.pipeline.Pipeline",
+                  "parameters": {
+                    "memory": null,
+                    "steps": [
+                      {
+                        "__tuple__": [
+                          "missing",
+                          {
+                            "__estimator__": "sklearn.impute._base.SimpleImputer",
+                            "parameters": {
+                              "add_indicator": false,
+                              "copy": true,
+                              "fill_value": "__missing__",
+                              "keep_empty_features": false,
+                              "missing_values": {
+                                "__float__": "nan"
+                              },
+                              "strategy": "constant"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "OHE",
+                          {
+                            "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                            "parameters": {
+                              "categories": "auto",
+                              "drop": null,
+                              "dtype": {
+                                "__type__": "numpy.float64"
+                              },
+                              "feature_name_combiner": "concat",
+                              "handle_unknown": "ignore",
+                              "max_categories": null,
+                              "min_frequency": null,
+                              "sparse_output": false
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "transform_input": null,
+                    "verbose": false
+                  }
+                },
+                [
+                  "polymer_origin_class",
+                  "material_bioactive_cue_class",
+                  "gelation_or_crosslinking_mechanism",
+                  "network_density_proxy",
+                  "macrophage_model_class",
+                  "stimulation_context",
+                  "cell_material_interaction_mode"
+                ]
+              ]
+            }
+          ],
+          "verbose": false,
+          "verbose_feature_names_out": true
+        }
+      }
+    }
+  },
+  "fitted_models": [
+    {
+      "target": "tnf",
+      "seed": 3089,
+      "file": "models/p15/tnf_3089_P15_excluded.pklz",
+      "sha256": "a02a60454be6016345aa716814d11d74f8213f20208e88baa2638f0df0225b56",
+      "accepted_source_model_sha256": "68bfb1a3e3e17151839e869a71c1a3159c9ef5df29ec8d0db3a58be4851c5fb5",
+      "complete_constructor_spec": {
+        "__estimator__": "sklearn.pipeline.Pipeline",
+        "parameters": {
+          "memory": null,
+          "steps": [
+            {
+              "__tuple__": [
+                "preprocess",
+                {
+                  "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+                  "parameters": {
+                    "force_int_remainder_cols": "deprecated",
+                    "n_jobs": null,
+                    "remainder": "drop",
+                    "sparse_threshold": 0.3,
+                    "transformer_weights": null,
+                    "transformers": [
+                      {
+                        "__tuple__": [
+                          "numerical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": null,
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "median"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "modulus_value_kPa",
+                            "pore_size_um",
+                            "culture_or_exposure_duration_h"
+                          ]
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "categorical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": "__missing__",
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "constant"
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "__tuple__": [
+                                    "onehot",
+                                    {
+                                      "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                                      "parameters": {
+                                        "categories": "auto",
+                                        "drop": null,
+                                        "dtype": {
+                                          "__type__": "numpy.float64"
+                                        },
+                                        "feature_name_combiner": "concat",
+                                        "handle_unknown": "ignore",
+                                        "max_categories": null,
+                                        "min_frequency": null,
+                                        "sparse_output": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "polymer_origin_class",
+                            "material_bioactive_cue_class",
+                            "gelation_or_crosslinking_mechanism",
+                            "network_density_proxy",
+                            "macrophage_model_class",
+                            "stimulation_context",
+                            "cell_material_interaction_mode"
+                          ]
+                        ]
+                      }
+                    ],
+                    "verbose": false,
+                    "verbose_feature_names_out": false
+                  }
+                }
+              ]
+            },
+            {
+              "__tuple__": [
+                "model",
+                {
+                  "__estimator__": "sklearn.ensemble._gb.GradientBoostingRegressor",
+                  "parameters": {
+                    "alpha": 0.9,
+                    "ccp_alpha": 0.0,
+                    "criterion": "friedman_mse",
+                    "init": null,
+                    "learning_rate": 0.08,
+                    "loss": "squared_error",
+                    "max_depth": 3,
+                    "max_features": null,
+                    "max_leaf_nodes": null,
+                    "min_impurity_decrease": 0.0,
+                    "min_samples_leaf": 8,
+                    "min_samples_split": 2,
+                    "min_weight_fraction_leaf": 0.0,
+                    "n_estimators": 1000,
+                    "n_iter_no_change": null,
+                    "random_state": 3089,
+                    "subsample": 0.7,
+                    "tol": 0.0001,
+                    "validation_fraction": 0.1,
+                    "verbose": 0,
+                    "warm_start": false
+                  }
+                }
+              ]
+            }
+          ],
+          "transform_input": null,
+          "verbose": false
+        }
+      },
+      "fit_started_utc": "2026-09-29T14:36:53.004581+00:00",
+      "fit_completed_utc": "2026-09-29T14:36:53.346931+00:00",
+      "fit_IDs_sha256": "6eb87e539e3f0f7b4e8fb8738167d03fc1eda20430c33de121fa162f354e4bbc",
+      "preprocessor_fitted_from_scratch": true
+    },
+    {
+      "target": "tnf",
+      "seed": 4280,
+      "file": "models/p15/tnf_4280_P15_excluded.pklz",
+      "sha256": "2a0b0d793f6360362c755f5bd045b4058911fb96f93a9c29ac4e75b6e11bbdbe",
+      "accepted_source_model_sha256": "837abd452d13e4e375f708ff16975851febbfcd7c22a6b767a8afdfce31f4112",
+      "complete_constructor_spec": {
+        "__estimator__": "sklearn.pipeline.Pipeline",
+        "parameters": {
+          "memory": null,
+          "steps": [
+            {
+              "__tuple__": [
+                "preprocess",
+                {
+                  "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+                  "parameters": {
+                    "force_int_remainder_cols": "deprecated",
+                    "n_jobs": null,
+                    "remainder": "drop",
+                    "sparse_threshold": 0.3,
+                    "transformer_weights": null,
+                    "transformers": [
+                      {
+                        "__tuple__": [
+                          "numerical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": null,
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "median"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "modulus_value_kPa",
+                            "pore_size_um",
+                            "culture_or_exposure_duration_h"
+                          ]
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "categorical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": "__missing__",
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "constant"
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "__tuple__": [
+                                    "onehot",
+                                    {
+                                      "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                                      "parameters": {
+                                        "categories": "auto",
+                                        "drop": null,
+                                        "dtype": {
+                                          "__type__": "numpy.float64"
+                                        },
+                                        "feature_name_combiner": "concat",
+                                        "handle_unknown": "ignore",
+                                        "max_categories": null,
+                                        "min_frequency": null,
+                                        "sparse_output": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "polymer_origin_class",
+                            "material_bioactive_cue_class",
+                            "gelation_or_crosslinking_mechanism",
+                            "network_density_proxy",
+                            "macrophage_model_class",
+                            "stimulation_context",
+                            "cell_material_interaction_mode"
+                          ]
+                        ]
+                      }
+                    ],
+                    "verbose": false,
+                    "verbose_feature_names_out": false
+                  }
+                }
+              ]
+            },
+            {
+              "__tuple__": [
+                "model",
+                {
+                  "__estimator__": "sklearn.ensemble._gb.GradientBoostingRegressor",
+                  "parameters": {
+                    "alpha": 0.9,
+                    "ccp_alpha": 0.0,
+                    "criterion": "friedman_mse",
+                    "init": null,
+                    "learning_rate": 0.08,
+                    "loss": "squared_error",
+                    "max_depth": 3,
+                    "max_features": null,
+                    "max_leaf_nodes": null,
+                    "min_impurity_decrease": 0.0,
+                    "min_samples_leaf": 8,
+                    "min_samples_split": 2,
+                    "min_weight_fraction_leaf": 0.0,
+                    "n_estimators": 1000,
+                    "n_iter_no_change": null,
+                    "random_state": 4280,
+                    "subsample": 0.7,
+                    "tol": 0.0001,
+                    "validation_fraction": 0.1,
+                    "verbose": 0,
+                    "warm_start": false
+                  }
+                }
+              ]
+            }
+          ],
+          "transform_input": null,
+          "verbose": false
+        }
+      },
+      "fit_started_utc": "2026-09-29T14:36:53.414346+00:00",
+      "fit_completed_utc": "2026-09-29T14:36:53.763932+00:00",
+      "fit_IDs_sha256": "6eb87e539e3f0f7b4e8fb8738167d03fc1eda20430c33de121fa162f354e4bbc",
+      "preprocessor_fitted_from_scratch": true
+    },
+    {
+      "target": "tnf",
+      "seed": 5793,
+      "file": "models/p15/tnf_5793_P15_excluded.pklz",
+      "sha256": "649003e7570070fcfa3d354439334a4935aa08fb3f3eed05fe40bb3e7823f123",
+      "accepted_source_model_sha256": "7537bb850fe8a3a76e00388a93a80b39fc50ad6510b380f4d5bed614d300eb4d",
+      "complete_constructor_spec": {
+        "__estimator__": "sklearn.pipeline.Pipeline",
+        "parameters": {
+          "memory": null,
+          "steps": [
+            {
+              "__tuple__": [
+                "preprocess",
+                {
+                  "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+                  "parameters": {
+                    "force_int_remainder_cols": "deprecated",
+                    "n_jobs": null,
+                    "remainder": "drop",
+                    "sparse_threshold": 0.3,
+                    "transformer_weights": null,
+                    "transformers": [
+                      {
+                        "__tuple__": [
+                          "numerical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": null,
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "median"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "modulus_value_kPa",
+                            "pore_size_um",
+                            "culture_or_exposure_duration_h"
+                          ]
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "categorical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": "__missing__",
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "constant"
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "__tuple__": [
+                                    "onehot",
+                                    {
+                                      "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                                      "parameters": {
+                                        "categories": "auto",
+                                        "drop": null,
+                                        "dtype": {
+                                          "__type__": "numpy.float64"
+                                        },
+                                        "feature_name_combiner": "concat",
+                                        "handle_unknown": "ignore",
+                                        "max_categories": null,
+                                        "min_frequency": null,
+                                        "sparse_output": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "polymer_origin_class",
+                            "material_bioactive_cue_class",
+                            "gelation_or_crosslinking_mechanism",
+                            "network_density_proxy",
+                            "macrophage_model_class",
+                            "stimulation_context",
+                            "cell_material_interaction_mode"
+                          ]
+                        ]
+                      }
+                    ],
+                    "verbose": false,
+                    "verbose_feature_names_out": false
+                  }
+                }
+              ]
+            },
+            {
+              "__tuple__": [
+                "model",
+                {
+                  "__estimator__": "sklearn.ensemble._gb.GradientBoostingRegressor",
+                  "parameters": {
+                    "alpha": 0.9,
+                    "ccp_alpha": 0.0,
+                    "criterion": "friedman_mse",
+                    "init": null,
+                    "learning_rate": 0.08,
+                    "loss": "squared_error",
+                    "max_depth": 3,
+                    "max_features": null,
+                    "max_leaf_nodes": null,
+                    "min_impurity_decrease": 0.0,
+                    "min_samples_leaf": 8,
+                    "min_samples_split": 2,
+                    "min_weight_fraction_leaf": 0.0,
+                    "n_estimators": 1000,
+                    "n_iter_no_change": null,
+                    "random_state": 5793,
+                    "subsample": 0.7,
+                    "tol": 0.0001,
+                    "validation_fraction": 0.1,
+                    "verbose": 0,
+                    "warm_start": false
+                  }
+                }
+              ]
+            }
+          ],
+          "transform_input": null,
+          "verbose": false
+        }
+      },
+      "fit_started_utc": "2026-09-29T14:36:53.838820+00:00",
+      "fit_completed_utc": "2026-09-29T14:36:54.199973+00:00",
+      "fit_IDs_sha256": "6eb87e539e3f0f7b4e8fb8738167d03fc1eda20430c33de121fa162f354e4bbc",
+      "preprocessor_fitted_from_scratch": true
+    },
+    {
+      "target": "il10",
+      "seed": 85,
+      "file": "models/p15/il10_85_P15_excluded.pklz",
+      "sha256": "63fd8993c613fe83f1ca5c1ed5ca12499b80c5c98522cc39cceb3e064eda413b",
+      "accepted_source_model_sha256": "83af1051d11bb9d1e78748b94684ef6c583d7b09698515148e1192a87d9386c7",
+      "complete_constructor_spec": {
+        "__estimator__": "sklearn.pipeline.Pipeline",
+        "parameters": {
+          "memory": null,
+          "steps": [
+            {
+              "__tuple__": [
+                "preprocess",
+                {
+                  "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+                  "parameters": {
+                    "force_int_remainder_cols": "deprecated",
+                    "n_jobs": null,
+                    "remainder": "drop",
+                    "sparse_threshold": 0.3,
+                    "transformer_weights": null,
+                    "transformers": [
+                      {
+                        "__tuple__": [
+                          "numerical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._iterative.IterativeImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "estimator": {
+                                          "__estimator__": "sklearn.linear_model._bayes.BayesianRidge",
+                                          "parameters": {
+                                            "alpha_1": 1e-06,
+                                            "alpha_2": 1e-06,
+                                            "alpha_init": null,
+                                            "compute_score": false,
+                                            "copy_X": true,
+                                            "fit_intercept": true,
+                                            "lambda_1": 1e-06,
+                                            "lambda_2": 1e-06,
+                                            "lambda_init": null,
+                                            "max_iter": 300,
+                                            "tol": 0.001,
+                                            "verbose": false
+                                          }
+                                        },
+                                        "fill_value": null,
+                                        "imputation_order": "ascending",
+                                        "initial_strategy": "mean",
+                                        "keep_empty_features": false,
+                                        "max_iter": 20,
+                                        "max_value": {
+                                          "__float__": "inf"
+                                        },
+                                        "min_value": {
+                                          "__float__": "-inf"
+                                        },
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "n_nearest_features": null,
+                                        "random_state": 42,
+                                        "sample_posterior": false,
+                                        "skip_complete": false,
+                                        "tol": 0.001,
+                                        "verbose": 0
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "modulus_value_kPa",
+                            "pore_size_um",
+                            "culture_or_exposure_duration_h"
+                          ]
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "categorical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": "**missing**",
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "constant"
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "__tuple__": [
+                                    "onehot",
+                                    {
+                                      "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                                      "parameters": {
+                                        "categories": "auto",
+                                        "drop": null,
+                                        "dtype": {
+                                          "__type__": "numpy.float64"
+                                        },
+                                        "feature_name_combiner": "concat",
+                                        "handle_unknown": "ignore",
+                                        "max_categories": null,
+                                        "min_frequency": null,
+                                        "sparse_output": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "polymer_origin_class",
+                            "material_bioactive_cue_class",
+                            "gelation_or_crosslinking_mechanism",
+                            "network_density_proxy",
+                            "macrophage_model_class",
+                            "stimulation_context",
+                            "cell_material_interaction_mode"
+                          ]
+                        ]
+                      }
+                    ],
+                    "verbose": false,
+                    "verbose_feature_names_out": false
+                  }
+                }
+              ]
+            },
+            {
+              "__tuple__": [
+                "model",
+                {
+                  "__estimator__": "sklearn.ensemble._forest.RandomForestRegressor",
+                  "parameters": {
+                    "bootstrap": false,
+                    "ccp_alpha": 0.0,
+                    "criterion": "squared_error",
+                    "max_depth": 9,
+                    "max_features": 0.7,
+                    "max_leaf_nodes": null,
+                    "max_samples": null,
+                    "min_impurity_decrease": 0.0,
+                    "min_samples_leaf": 1,
+                    "min_samples_split": 2,
+                    "min_weight_fraction_leaf": 0.0,
+                    "monotonic_cst": null,
+                    "n_estimators": 250,
+                    "n_jobs": 1,
+                    "oob_score": false,
+                    "random_state": 85,
+                    "verbose": 0,
+                    "warm_start": false
+                  }
+                }
+              ]
+            }
+          ],
+          "transform_input": null,
+          "verbose": false
+        }
+      },
+      "fit_started_utc": "2026-09-29T14:36:54.286992+00:00",
+      "fit_completed_utc": "2026-09-29T14:36:54.473958+00:00",
+      "fit_IDs_sha256": "905e69d687047f51bbe4e32515f77c901c2d59bc57c24c841d6670ca78b74ad4",
+      "preprocessor_fitted_from_scratch": true
+    },
+    {
+      "target": "il10",
+      "seed": 115,
+      "file": "models/p15/il10_115_P15_excluded.pklz",
+      "sha256": "e80c9a9bb1a4cba5649c5f6e06c24a097e2c414f9bc3014a62e223a1f1a550b8",
+      "accepted_source_model_sha256": "a2dcefd4e7785f1b10831eab6b14ec206fce9e8f6bda167aca8721a24d5a32b8",
+      "complete_constructor_spec": {
+        "__estimator__": "sklearn.pipeline.Pipeline",
+        "parameters": {
+          "memory": null,
+          "steps": [
+            {
+              "__tuple__": [
+                "preprocess",
+                {
+                  "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+                  "parameters": {
+                    "force_int_remainder_cols": "deprecated",
+                    "n_jobs": null,
+                    "remainder": "drop",
+                    "sparse_threshold": 0.3,
+                    "transformer_weights": null,
+                    "transformers": [
+                      {
+                        "__tuple__": [
+                          "numerical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._iterative.IterativeImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "estimator": {
+                                          "__estimator__": "sklearn.linear_model._bayes.BayesianRidge",
+                                          "parameters": {
+                                            "alpha_1": 1e-06,
+                                            "alpha_2": 1e-06,
+                                            "alpha_init": null,
+                                            "compute_score": false,
+                                            "copy_X": true,
+                                            "fit_intercept": true,
+                                            "lambda_1": 1e-06,
+                                            "lambda_2": 1e-06,
+                                            "lambda_init": null,
+                                            "max_iter": 300,
+                                            "tol": 0.001,
+                                            "verbose": false
+                                          }
+                                        },
+                                        "fill_value": null,
+                                        "imputation_order": "ascending",
+                                        "initial_strategy": "mean",
+                                        "keep_empty_features": false,
+                                        "max_iter": 20,
+                                        "max_value": {
+                                          "__float__": "inf"
+                                        },
+                                        "min_value": {
+                                          "__float__": "-inf"
+                                        },
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "n_nearest_features": null,
+                                        "random_state": 42,
+                                        "sample_posterior": false,
+                                        "skip_complete": false,
+                                        "tol": 0.001,
+                                        "verbose": 0
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "modulus_value_kPa",
+                            "pore_size_um",
+                            "culture_or_exposure_duration_h"
+                          ]
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "categorical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": "**missing**",
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "constant"
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "__tuple__": [
+                                    "onehot",
+                                    {
+                                      "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                                      "parameters": {
+                                        "categories": "auto",
+                                        "drop": null,
+                                        "dtype": {
+                                          "__type__": "numpy.float64"
+                                        },
+                                        "feature_name_combiner": "concat",
+                                        "handle_unknown": "ignore",
+                                        "max_categories": null,
+                                        "min_frequency": null,
+                                        "sparse_output": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "polymer_origin_class",
+                            "material_bioactive_cue_class",
+                            "gelation_or_crosslinking_mechanism",
+                            "network_density_proxy",
+                            "macrophage_model_class",
+                            "stimulation_context",
+                            "cell_material_interaction_mode"
+                          ]
+                        ]
+                      }
+                    ],
+                    "verbose": false,
+                    "verbose_feature_names_out": false
+                  }
+                }
+              ]
+            },
+            {
+              "__tuple__": [
+                "model",
+                {
+                  "__estimator__": "sklearn.ensemble._forest.RandomForestRegressor",
+                  "parameters": {
+                    "bootstrap": false,
+                    "ccp_alpha": 0.0,
+                    "criterion": "squared_error",
+                    "max_depth": 9,
+                    "max_features": 0.7,
+                    "max_leaf_nodes": null,
+                    "max_samples": null,
+                    "min_impurity_decrease": 0.0,
+                    "min_samples_leaf": 1,
+                    "min_samples_split": 2,
+                    "min_weight_fraction_leaf": 0.0,
+                    "monotonic_cst": null,
+                    "n_estimators": 250,
+                    "n_jobs": 1,
+                    "oob_score": false,
+                    "random_state": 115,
+                    "verbose": 0,
+                    "warm_start": false
+                  }
+                }
+              ]
+            }
+          ],
+          "transform_input": null,
+          "verbose": false
+        }
+      },
+      "fit_started_utc": "2026-09-29T14:36:54.532030+00:00",
+      "fit_completed_utc": "2026-09-29T14:36:54.688169+00:00",
+      "fit_IDs_sha256": "905e69d687047f51bbe4e32515f77c901c2d59bc57c24c841d6670ca78b74ad4",
+      "preprocessor_fitted_from_scratch": true
+    },
+    {
+      "target": "il10",
+      "seed": 158,
+      "file": "models/p15/il10_158_P15_excluded.pklz",
+      "sha256": "40453f39949ea63339242af152f00918805c136caa0ccfa247e061e1050a5647",
+      "accepted_source_model_sha256": "255d7c62e1e40a66ffd63479519eca93d3a1de6c45db2245d2b2736938982afd",
+      "complete_constructor_spec": {
+        "__estimator__": "sklearn.pipeline.Pipeline",
+        "parameters": {
+          "memory": null,
+          "steps": [
+            {
+              "__tuple__": [
+                "preprocess",
+                {
+                  "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
+                  "parameters": {
+                    "force_int_remainder_cols": "deprecated",
+                    "n_jobs": null,
+                    "remainder": "drop",
+                    "sparse_threshold": 0.3,
+                    "transformer_weights": null,
+                    "transformers": [
+                      {
+                        "__tuple__": [
+                          "numerical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._iterative.IterativeImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "estimator": {
+                                          "__estimator__": "sklearn.linear_model._bayes.BayesianRidge",
+                                          "parameters": {
+                                            "alpha_1": 1e-06,
+                                            "alpha_2": 1e-06,
+                                            "alpha_init": null,
+                                            "compute_score": false,
+                                            "copy_X": true,
+                                            "fit_intercept": true,
+                                            "lambda_1": 1e-06,
+                                            "lambda_2": 1e-06,
+                                            "lambda_init": null,
+                                            "max_iter": 300,
+                                            "tol": 0.001,
+                                            "verbose": false
+                                          }
+                                        },
+                                        "fill_value": null,
+                                        "imputation_order": "ascending",
+                                        "initial_strategy": "mean",
+                                        "keep_empty_features": false,
+                                        "max_iter": 20,
+                                        "max_value": {
+                                          "__float__": "inf"
+                                        },
+                                        "min_value": {
+                                          "__float__": "-inf"
+                                        },
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "n_nearest_features": null,
+                                        "random_state": 42,
+                                        "sample_posterior": false,
+                                        "skip_complete": false,
+                                        "tol": 0.001,
+                                        "verbose": 0
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "modulus_value_kPa",
+                            "pore_size_um",
+                            "culture_or_exposure_duration_h"
+                          ]
+                        ]
+                      },
+                      {
+                        "__tuple__": [
+                          "categorical",
+                          {
+                            "__estimator__": "sklearn.pipeline.Pipeline",
+                            "parameters": {
+                              "memory": null,
+                              "steps": [
+                                {
+                                  "__tuple__": [
+                                    "imputer",
+                                    {
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
+                                      "parameters": {
+                                        "add_indicator": false,
+                                        "copy": true,
+                                        "fill_value": "**missing**",
+                                        "keep_empty_features": false,
+                                        "missing_values": {
+                                          "__float__": "nan"
+                                        },
+                                        "strategy": "constant"
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "__tuple__": [
+                                    "onehot",
+                                    {
+                                      "__estimator__": "sklearn.preprocessing._encoders.OneHotEncoder",
+                                      "parameters": {
+                                        "categories": "auto",
+                                        "drop": null,
+                                        "dtype": {
+                                          "__type__": "numpy.float64"
+                                        },
+                                        "feature_name_combiner": "concat",
+                                        "handle_unknown": "ignore",
+                                        "max_categories": null,
+                                        "min_frequency": null,
+                                        "sparse_output": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              ],
+                              "transform_input": null,
+                              "verbose": false
+                            }
+                          },
+                          [
+                            "polymer_origin_class",
+                            "material_bioactive_cue_class",
+                            "gelation_or_crosslinking_mechanism",
+                            "network_density_proxy",
+                            "macrophage_model_class",
+                            "stimulation_context",
+                            "cell_material_interaction_mode"
+                          ]
+                        ]
+                      }
+                    ],
+                    "verbose": false,
+                    "verbose_feature_names_out": false
+                  }
+                }
+              ]
+            },
+            {
+              "__tuple__": [
+                "model",
+                {
+                  "__estimator__": "sklearn.ensemble._forest.RandomForestRegressor",
+                  "parameters": {
+                    "bootstrap": false,
+                    "ccp_alpha": 0.0,
+                    "criterion": "squared_error",
+                    "max_depth": 9,
+                    "max_features": 0.7,
+                    "max_leaf_nodes": null,
+                    "max_samples": null,
+                    "min_impurity_decrease": 0.0,
+                    "min_samples_leaf": 1,
+                    "min_samples_split": 2,
+                    "min_weight_fraction_leaf": 0.0,
+                    "monotonic_cst": null,
+                    "n_estimators": 250,
+                    "n_jobs": 1,
+                    "oob_score": false,
+                    "random_state": 158,
+                    "verbose": 0,
+                    "warm_start": false
+                  }
+                }
+              ]
+            }
+          ],
+          "transform_input": null,
+          "verbose": false
+        }
+      },
+      "fit_started_utc": "2026-09-29T14:36:54.766423+00:00",
+      "fit_completed_utc": "2026-09-29T14:36:54.934461+00:00",
+      "fit_IDs_sha256": "905e69d687047f51bbe4e32515f77c901c2d59bc57c24c841d6670ca78b74ad4",
+      "preprocessor_fitted_from_scratch": true
+    }
+  ],
+  "shap": {
+    "feature_perturbation": "tree_path_dependent",
+    "model_output": "raw",
+    "background": null,
+    "approximate": false,
+    "check_additivity": true,
+    "grouping": "Sum signed one-hot contributions by unique internal name prefix; numeric columns mapped by exact name",
+    "ensemble": "arithmetic mean of three fixed realisations; sample SD ddof=1",
+    "explained_rows": {
+      "tnf": [
+        "TNF-0035",
+        "TNF-0036"
+      ],
+      "il10": [
+        "IL10-0029",
+        "IL10-0030"
+      ]
+    }
+  },
+  "AD": {
+    "reference": "all remaining observations after P15 removal",
+    "k": 5,
+    "distance": "Euclidean in median-imputed standard-scaled numeric + constant-imputed dense one-hot categorical representation",
+    "threshold": "linear 0.95 quantile of reference self-excluded mean-five distances; duplicate rows retained",
+    "inside_rule": "distance <= threshold",
+    "unseen_levels_reported": true
+  }
+}
