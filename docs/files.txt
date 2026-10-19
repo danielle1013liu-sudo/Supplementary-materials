@@ -99,6 +99,8 @@ outputs/verification.json
 requirements-grid.txt
 requirements-test.txt
 requirements.txt
+results/model_comparison/test.csv
+results/model_comparison/validation.csv
 results/publication_codes_20261019/case_and_test_replay.csv
 results/publication_codes_20261019/category_counts.csv
 results/publication_codes_20261019/category_partition_count_audit.csv
@@ -117,6 +119,7 @@ src/case_replay.py
 src/data.py
 src/grid_search.py
 src/hydrogel_immune_ml/__init__.py
+src/hydrogel_immune_ml/model_comparison.py
 src/hydrogel_immune_ml/public_encoding.py
 src/hydrogel_immune_ml/publication_audit.py
 src/hydrogel_immune_ml/publication_exports.py
@@ -136,6 +139,7 @@ src/train.py
 src/validation.py
 src/verify.py
 tests/conftest.py
+tests/test_model_comparison.py
 tests/test_pareto.py
 tests/test_public_encoding.py
 tests/test_supplementary.py
