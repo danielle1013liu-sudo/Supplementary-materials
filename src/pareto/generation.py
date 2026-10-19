@@ -31,6 +31,8 @@ import itertools
 import importlib.metadata
 import platform
 from sklearn.metrics import pairwise_distances
+from ..data import check_inputs
+from ..hydrogel_immune_ml.public_encoding import LEGACY_PATH
 
 SCHEMA_VERSION = "thermal_harmonisation_v2_all10_search_v1"
 
@@ -38,14 +40,17 @@ SCHEMA_VERSION = "thermal_harmonisation_v2_all10_search_v1"
 def verify_models(output):
     """Check saved parameters, memberships, transforms and software without fitting."""
     lock = read(DATA / "PRIMARY_SCIENTIFIC_RELEASE_LOCK.json")
+    check_inputs()
     records = read(DATA / "original_model_records.json")
     versions = {"python": platform.python_version()}
     for name in lock["software_versions"]:
         if name != "python":
             versions[name] = importlib.metadata.version(name)
     assert versions == lock["software_versions"], versions
-    for item in lock["datasets"] + [lock["codebook"], lock["feature_schema"]]:
+    for item in lock["datasets"] + [lock["feature_schema"]]:
         assert sha(ROOT / item["path"]) == item["sha256"]
+    # The historical scientific lock retains the byte-identical legacy codebook.
+    assert sha(ROOT / LEGACY_PATH) == lock["codebook"]["sha256"]
     checks, learned = [], {}
     for target in SEEDS:
         d = dataset(target)

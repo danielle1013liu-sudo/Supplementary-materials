@@ -3,7 +3,7 @@
   "data/il10.csv": "8aef2ec5bcae3b966559531c8ecbda9ec939a68686fa300d4a1b70293d03a018",
   "data/external_cases.csv": "8615aca1a5935ee98ee7feeca0f8fd585beef8a55fb547ce313443eb9ccb0406",
   "data/feature_schema.json": "2a285420024a61d0aed54b51e06917daca6f56527599b8b8061d6b66f95e6720",
-  "data/category_codebook.csv": "b10ae08d8fb5c7a83d8b9099d1cebb23851f574abfbf93aa1b409fa6c483fe00",
+  "data/category_codebook.csv": "fb8f932b6b95e14a1bbdddff9ae06779247e11c0230e23addbd785ab9afb1625",
   "models/tnf_3089.pklz": "68bfb1a3e3e17151839e869a71c1a3159c9ef5df29ec8d0db3a58be4851c5fb5",
   "models/tnf_4280.pklz": "837abd452d13e4e375f708ff16975851febbfcd7c22a6b767a8afdfce31f4112",
   "models/tnf_5793.pklz": "7537bb850fe8a3a76e00388a93a80b39fc50ad6510b380f4d5bed614d300eb4d",
@@ -30,5 +30,14 @@
   "data/validation_evidence/controlled_grid_reproduction.csv": "2704d8ad2371ec81fbdccaf3a9dd197db2b3fefc8dfdec9c9053422a1d4c041e",
   "data/validation_evidence/controlled_grid_status.json": "0264424b88186632ed0ca37fce0dbb434bb7ce4b0b8129097f1fd214c43c189b",
   "data/validation_evidence/grid_original_checkpoint_comparisons.csv": "92363e3fecc869d8d54062b433c32add05b91491c181bf1976bccdbbd9a4e4d1",
-  "models/manifest.json": "b09d4fc5476710f40c4c3b379aa75744cc0cd53740cc6fe8fcc841006b34fe88"
+  "models/manifest.json": "b09d4fc5476710f40c4c3b379aa75744cc0cd53740cc6fe8fcc841006b34fe88",
+  "data/public_codebooks/category_code_changes_20261019.csv": "7f5d09637386e7645147ba18db02f7460b54a3914946e4ccf3a5bbdb3d13c223",
+  "data/public_codebooks/frequency_codes_20261019.json": "58a3bf3d66c22c71f6389e1a66990ece032cd74dc83b82ca6e8bb06e9d9fef80",
+  "data/public_codebooks/legacy_codes_v1.csv": "b10ae08d8fb5c7a83d8b9099d1cebb23851f574abfbf93aa1b409fa6c483fe00",
+  "data/publication/il10_model_codes_20261019.csv": "24bbd64f36741c3c3b90409df74db0d6e5f80fd70b2c49e06331cb6c562a3a81",
+  "data/publication/tnf_model_codes_20261019.csv": "4eb13feb88a26b08edf227eaa413b44a9890a7bb07362b3cd35d6cb3da36b14d",
+  "data/publication/il10_supplementary_codes_20261019.csv": "b1a53d25716f104421ecb1abccc31d6394b45423b90c8b11a28a590afdf82b7d",
+  "data/publication/tnf_supplementary_codes_20261019.csv": "a2ff77f27ad2908b5533f718bfe9f8f3b23ca91456d4fb83c0006bc7a649ddbb",
+  "docs/source/Supplementary_01Oct26_YL.docx": "2ae231785c23986fb55c545656dd553463f0a708abe3c3633c095c89d207c189",
+  "docs/Supplementary_frequency_ordered_20261019.docx": "415e4731c52fa2ec59583d0dc96ef16c65fc50fdd6b45fc6e6322d2567c16275"
 }

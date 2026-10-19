@@ -10,9 +10,11 @@ This model-only submission retains the approved thermal-harmonised v2 input byte
 | IL-10 dataset | 8aef2ec5bcae3b966559531c8ecbda9ec939a68686fa300d4a1b70293d03a018 |
 | External cases | 8615aca1a5935ee98ee7feeca0f8fd585beef8a55fb547ce313443eb9ccb0406 |
 | Ten-feature schema | 2a285420024a61d0aed54b51e06917daca6f56527599b8b8061d6b66f95e6720 |
-| Category codebook | b10ae08d8fb5c7a83d8b9099d1cebb23851f574abfbf93aa1b409fa6c483fe00 |
+| Archived legacy category codebook | b10ae08d8fb5c7a83d8b9099d1cebb23851f574abfbf93aa1b409fa6c483fe00 |
 
 `data/checksums.json` locks all scientific inputs included in this repository, including the six fitted objects. The complete accepted parameter file is unchanged. Only the manifest's scope is reduced to the files distributed in this model-only package.
+
+The 19 October 2026 publication-code revision changes only the letters and presentation order in `data/category_codebook.csv`; its current hash is recorded in `data/checksums.json`. The original file is retained byte-for-byte as `data/public_codebooks/legacy_codes_v1.csv`, and Pareto verification checks it against the unchanged historical scientific lock. Current presentation metadata and publication exports have their own checksum entries. Definitions, boundaries, caveats, counts, canonical datasets, scientific reference outputs and fitted objects remain unchanged.
 
 ## Executable verification
 
@@ -35,7 +37,7 @@ The previously completed fixed-seed training reproduction produced exact Trainin
 
 `src/grid_search.py` is an executable refactoring of the declared model-specific local comparison. It uses fold-fitted preprocessing, identical saved folds, pooled OOF ranking and only the target's three final estimator seeds. It is not executed by default. Historical comparison results, final all-20 certification tables and previously completed controlled-grid reproduction evidence are distributed without rerunning a grid for this upload. See `grid_search.md` for the distinction between historical reference-seed evidence and optional final-seed execution.
 
-The upload preparation rechecked saved-model prediction, stored OOF and pipeline construction. It did not rerun training, grid comparison or seed selection. Python files contain no comments, plotting dependencies, controller code or scheduler logic. Machine-specific runtime provenance is generated locally in an ignored directory.
+The upload preparation rechecked saved-model prediction, stored OOF and pipeline construction. It did not rerun training, grid comparison or seed selection. Machine-specific runtime provenance is generated locally in an ignored directory.
 
 ## Scope of inference
 

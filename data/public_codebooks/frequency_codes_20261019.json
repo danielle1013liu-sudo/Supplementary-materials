@@ -1,0 +1,394 @@
+{
+  "display_codebook_version": "frequency_codes_20261019",
+  "legacy_version": "legacy_codes_v1",
+  "count_basis": "Pooled target-specific records in Tables S8-S9: all 139 TNF-alpha and 133 IL-10 records, without deduplication. Not independent studies or unique formulations.",
+  "policy": "Descending pooled occurrence, with other/mixed then unclear residual categories placed last. Letters are nominal identifiers, including crosslink level; low/medium/high scoring criteria are unchanged. None and unstimulated/basal are valid categories.",
+  "fields": [
+    {
+      "feature": "Hydrogel composition",
+      "machine_column": "polymer_origin_class",
+      "residual_categories": [],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "A",
+          "machine_value": "natural_polymer",
+          "display_label": "Natural polymer",
+          "display_rank": 1,
+          "tnf_n": 84,
+          "il10_n": 84,
+          "pooled_n": 168
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "C",
+          "machine_value": "hybrid_natural_synthetic",
+          "display_label": "Natural–synthetic hybrid",
+          "display_rank": 2,
+          "tnf_n": 41,
+          "il10_n": 41,
+          "pooled_n": 82
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "B",
+          "machine_value": "synthetic_polymer",
+          "display_label": "Synthetic polymer",
+          "display_rank": 3,
+          "tnf_n": 14,
+          "il10_n": 8,
+          "pooled_n": 22
+        }
+      ]
+    },
+    {
+      "feature": "Bioactive cue",
+      "machine_column": "material_bioactive_cue_class",
+      "residual_categories": [],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "A",
+          "machine_value": "none",
+          "display_label": "None",
+          "display_rank": 1,
+          "tnf_n": 62,
+          "il10_n": 62,
+          "pooled_n": 124
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "B",
+          "machine_value": "anti_inflammatory_material_cue",
+          "display_label": "Anti-inflammatory cue",
+          "display_rank": 2,
+          "tnf_n": 43,
+          "il10_n": 38,
+          "pooled_n": 81
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "C",
+          "machine_value": "anti_inflammatory_plus_growth_factor_material_cues",
+          "display_label": "Anti-inflammatory + pro-regenerative signalling cues",
+          "display_rank": 3,
+          "tnf_n": 25,
+          "il10_n": 19,
+          "pooled_n": 44
+        },
+        {
+          "new_code": "D",
+          "legacy_code": "E",
+          "machine_value": "growth_factor_or_neuropeptide_material_cue",
+          "display_label": "Pro-regenerative signalling cue",
+          "display_rank": 4,
+          "tnf_n": 3,
+          "il10_n": 7,
+          "pooled_n": 10
+        },
+        {
+          "new_code": "E",
+          "legacy_code": "D",
+          "machine_value": "combined_pro_and_anti_inflammatory_material_cues",
+          "display_label": "Pro- and anti-inflammatory cues",
+          "display_rank": 5,
+          "tnf_n": 3,
+          "il10_n": 6,
+          "pooled_n": 9
+        },
+        {
+          "new_code": "F",
+          "legacy_code": "F",
+          "machine_value": "pro_inflammatory_material_cue",
+          "display_label": "Pro-inflammatory cue",
+          "display_rank": 6,
+          "tnf_n": 3,
+          "il10_n": 1,
+          "pooled_n": 4
+        }
+      ]
+    },
+    {
+      "feature": "Crosslink method",
+      "machine_column": "gelation_or_crosslinking_mechanism",
+      "residual_categories": [
+        "other"
+      ],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "C",
+          "machine_value": "photo_crosslinking",
+          "display_label": "Photo-crosslinking",
+          "display_rank": 1,
+          "tnf_n": 74,
+          "il10_n": 71,
+          "pooled_n": 145
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "D",
+          "machine_value": "physical_self_assembly",
+          "display_label": "Physical self-assembly",
+          "display_rank": 2,
+          "tnf_n": 21,
+          "il10_n": 13,
+          "pooled_n": 34
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "A",
+          "machine_value": "enzymatic_crosslinking",
+          "display_label": "Enzymatic crosslinking",
+          "display_rank": 3,
+          "tnf_n": 9,
+          "il10_n": 9,
+          "pooled_n": 18
+        },
+        {
+          "new_code": "D",
+          "legacy_code": "B",
+          "machine_value": "other",
+          "display_label": "Other / mixed",
+          "display_rank": 4,
+          "tnf_n": 35,
+          "il10_n": 40,
+          "pooled_n": 75
+        }
+      ]
+    },
+    {
+      "feature": "Crosslink level",
+      "machine_column": "network_density_proxy",
+      "residual_categories": [],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "B",
+          "machine_value": "medium",
+          "display_label": "Medium",
+          "display_rank": 1,
+          "tnf_n": 68,
+          "il10_n": 61,
+          "pooled_n": 129
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "C",
+          "machine_value": "high",
+          "display_label": "High",
+          "display_rank": 2,
+          "tnf_n": 58,
+          "il10_n": 65,
+          "pooled_n": 123
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "A",
+          "machine_value": "low",
+          "display_label": "Low",
+          "display_rank": 3,
+          "tnf_n": 13,
+          "il10_n": 7,
+          "pooled_n": 20
+        }
+      ]
+    },
+    {
+      "feature": "Macrophage model",
+      "machine_column": "macrophage_model_class",
+      "residual_categories": [],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "A",
+          "machine_value": "RAW264_7",
+          "display_label": "RAW264.7",
+          "display_rank": 1,
+          "tnf_n": 90,
+          "il10_n": 95,
+          "pooled_n": 185
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "E",
+          "machine_value": "murine_primary_or_in_vivo_context",
+          "display_label": "Murine primary or in vivo context",
+          "display_rank": 2,
+          "tnf_n": 36,
+          "il10_n": 28,
+          "pooled_n": 64
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "B",
+          "machine_value": "THP_1",
+          "display_label": "THP-1",
+          "display_rank": 3,
+          "tnf_n": 9,
+          "il10_n": 7,
+          "pooled_n": 16
+        },
+        {
+          "new_code": "D",
+          "legacy_code": "D",
+          "machine_value": "human_monocyte_derived_macrophage",
+          "display_label": "Human monocyte-derived macrophages",
+          "display_rank": 4,
+          "tnf_n": 3,
+          "il10_n": 3,
+          "pooled_n": 6
+        },
+        {
+          "new_code": "E",
+          "legacy_code": "C",
+          "machine_value": "BMDM",
+          "display_label": "Bone-marrow-derived macrophages",
+          "display_rank": 5,
+          "tnf_n": 1,
+          "il10_n": 0,
+          "pooled_n": 1
+        }
+      ]
+    },
+    {
+      "feature": "Activation stimulus",
+      "machine_column": "stimulation_context",
+      "residual_categories": [
+        "other_stimulation",
+        "unclear"
+      ],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "B",
+          "machine_value": "LPS",
+          "display_label": "LPS",
+          "display_rank": 1,
+          "tnf_n": 62,
+          "il10_n": 59,
+          "pooled_n": 121
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "F",
+          "machine_value": "unstimulated_or_basal",
+          "display_label": "Unstimulated or basal",
+          "display_rank": 2,
+          "tnf_n": 24,
+          "il10_n": 24,
+          "pooled_n": 48
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "A",
+          "machine_value": "IL4_IL13",
+          "display_label": "IL-4/IL-13",
+          "display_rank": 3,
+          "tnf_n": 7,
+          "il10_n": 7,
+          "pooled_n": 14
+        },
+        {
+          "new_code": "D",
+          "legacy_code": "C",
+          "machine_value": "LPS_IFNg",
+          "display_label": "LPS + IFN-γ",
+          "display_rank": 4,
+          "tnf_n": 6,
+          "il10_n": 5,
+          "pooled_n": 11
+        },
+        {
+          "new_code": "E",
+          "legacy_code": "D",
+          "machine_value": "other_stimulation",
+          "display_label": "Other stimulation",
+          "display_rank": 5,
+          "tnf_n": 26,
+          "il10_n": 25,
+          "pooled_n": 51
+        },
+        {
+          "new_code": "F",
+          "legacy_code": "E",
+          "machine_value": "unclear",
+          "display_label": "Unclear",
+          "display_rank": 6,
+          "tnf_n": 14,
+          "il10_n": 13,
+          "pooled_n": 27
+        }
+      ]
+    },
+    {
+      "feature": "Exposure mode",
+      "machine_column": "cell_material_interaction_mode",
+      "residual_categories": [
+        "unclear"
+      ],
+      "categories": [
+        {
+          "new_code": "A",
+          "legacy_code": "A",
+          "machine_value": "direct_surface_contact",
+          "display_label": "Direct surface contact",
+          "display_rank": 1,
+          "tnf_n": 73,
+          "il10_n": 71,
+          "pooled_n": 144
+        },
+        {
+          "new_code": "B",
+          "legacy_code": "C",
+          "machine_value": "hydrogel_extract_or_eluate",
+          "display_label": "Hydrogel extract or eluate",
+          "display_rank": 2,
+          "tnf_n": 32,
+          "il10_n": 30,
+          "pooled_n": 62
+        },
+        {
+          "new_code": "C",
+          "legacy_code": "B",
+          "machine_value": "encapsulated_3D",
+          "display_label": "3D encapsulation / scaffold residence",
+          "display_rank": 3,
+          "tnf_n": 10,
+          "il10_n": 19,
+          "pooled_n": 29
+        },
+        {
+          "new_code": "D",
+          "legacy_code": "D",
+          "machine_value": "in_vivo_tissue_or_systemic",
+          "display_label": "In vivo tissue or systemic",
+          "display_rank": 4,
+          "tnf_n": 11,
+          "il10_n": 4,
+          "pooled_n": 15
+        },
+        {
+          "new_code": "E",
+          "legacy_code": "E",
+          "machine_value": "transwell_or_indirect",
+          "display_label": "Transwell or indirect",
+          "display_rank": 5,
+          "tnf_n": 4,
+          "il10_n": 4,
+          "pooled_n": 8
+        },
+        {
+          "new_code": "F",
+          "legacy_code": "F",
+          "machine_value": "unclear",
+          "display_label": "Unclear",
+          "display_rank": 6,
+          "tnf_n": 9,
+          "il10_n": 5,
+          "pooled_n": 14
+        }
+      ]
+    }
+  ]
+}

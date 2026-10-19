@@ -1,6 +1,6 @@
 # Hydrogel cytokine prediction and Pareto analysis
 
-Research code and data for predicting macrophage-associated TNF-alpha and IL-10 concentrations from ten material and experimental descriptors. The numerical workflow loads saved fitted pipelines and reproduces the completed all-ten-descriptor Pareto analysis. Plotting code and manuscript drafts are not included.
+Research code and data for predicting macrophage-associated TNF-alpha and IL-10 concentrations from ten material and experimental descriptors. The numerical workflow loads saved fitted pipelines and reproduces the completed all-ten-descriptor Pareto analysis. The supplementary document and its publication-code exports are included; plotting code is not included.
 
 ## Models and data
 
@@ -16,6 +16,29 @@ TNF-alpha uses 1000 trees, learning rate 0.08, maximum depth 3, minimum leaf siz
 `data/tnf.csv` and `data/il10.csv` contain the corrected thermal-harmonised v2 records. Concentrations are in pg/mL, modulus in kPa, pore size in micrometres and exposure time in hours. The schema and categorical definitions are supplied in `data/feature_schema.json` and `data/category_codebook.csv`.
 
 Some crosslink-level assignments differ between target datasets for source-matched formulations. These unresolved curation issues are described in [docs/cross_target_descriptor_notes.md](docs/cross_target_descriptor_notes.md). The release reproduces the existing numerical results without silently changing those categories; it must not be described as a fully reconciled cross-target dataset.
+
+## Publication category codes
+
+The [supplementary document](docs/Supplementary_frequency_ordered_20261019.docx), `data/category_codebook.csv` and [versioned mapping](data/public_codebooks/frequency_codes_20261019.json) use `frequency_codes_20261019`. Codes are nominal labels, ordered by pooled frequency in Tables S8-S9, with other/mixed and unclear categories placed last. Counts pool all 139 TNF-alpha and 133 IL-10 target-specific records without deduplication; they are not independent studies, unique formulations or literature prevalence. Crosslink-level codes A/B/C mean medium/high/low; the original low/medium/high scoring criteria are unchanged.
+
+[Old/new codes](data/public_codebooks/category_code_changes_20261019.csv) retain every machine value. The original [legacy codebook](data/public_codebooks/legacy_codes_v1.csv) preserves the historical release-lock bytes. The modelling schema, fitted encoder vocabularies and candidate-generation order remain unchanged. The compatibility machine string containing `growth_factor` retains the scientific meaning “anti-inflammatory + pro-regenerative signalling cues”.
+
+The codebook's pre-existing development/test count columns do not consistently match the frozen release's split memberships. Both are preserved. [The partition-count audit](results/publication_codes_20261019/category_partition_count_audit.csv) records those differences and current row IDs; aggregate historical counts do not identify earlier record-level memberships. Publication ordering uses the verified complete-target totals only.
+
+`data/publication/*_supplementary_codes_20261019.csv` preserve the Word tables' row order, displayed numerical text, DOI cells and missing-value markers. They are publication tables. `*_model_codes_20261019.csv` preserve canonical row order, row IDs and all numeric text, with an explicit `publication_codebook_version` column. These model-compatible exports decode back to canonical inputs before frozen-model prediction. The shared adapter preserves valid `none`, true missing values and both historical categorical-missing tokens separately.
+
+```text
+python -m src.public_predict data/tnf.csv --target tnf --output results/tnf_predictions.csv
+python -m src.public_predict data/publication/tnf_model_codes_20261019.csv --target tnf --codebook-version frequency_codes_20261019 --output results/tnf_coded_predictions.csv
+python -m src.hydrogel_immune_ml.publication_exports
+python -m src.hydrogel_immune_ml.supplementary
+```
+
+Canonical machine values remain the default. Letter-coded imports require the matching explicit version; `legacy_codes_v1` supports original letters. Invalid codes, conflicting version metadata and attempts to encode an already coded table fail. The document migration identifies the complete verified document version and leaves an already revised document unchanged. The original source is retained in `docs/source/`; the separately named revised attachment and dated CSV package were not available locally, so these outputs were regenerated from the verified original and canonical data.
+
+Publication verification results are in [results/publication_codes_20261019](results/publication_codes_20261019). Run `python -m src.hydrogel_immune_ml.publication_audit` for frozen-model round trips, isolated original-release verification, separate P15 replay and checks of stored Pareto/SHAP tables. This performs no fitting or candidate generation. Then run `python -m pytest tests --replay-dir tmp/publication_codes_20261019/pareto`. Existing numerical references and all protected scientific files retain their original bytes.
+
+The pinned-environment check passed all 35 tests without skips. All 82 protected scientific files were byte-identical. Maximum differences were zero for all six models' round-trip transforms and predictions, CLI imports, stored OOF/Test/C4 and separate P15 predictions, saved-domain round trips, and stored Pareto/SHAP comparisons. The unchanged stored SHAP additivity residual was 1.2278178473934531e-11 pg/mL, within the existing 1e-7 tolerance. All 1,904 categorical cells were checked, and every page of the 21-page Word render was visually inspected against the original. No new fits, candidate generation or SHAP analysis were performed.
 
 ## Environment
 
