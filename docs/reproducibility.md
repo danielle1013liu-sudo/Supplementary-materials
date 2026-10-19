@@ -1,6 +1,6 @@
 # Numerical reproducibility
 
-This model-only submission retains the approved thermal-harmonised v2 input bytes, exact split and CV definitions, fixed preprocessing and all six accepted fitted pipelines. It does not change scientific values or perform further model selection.
+The release retains the thermal-harmonised v2 data, saved split and CV definitions, fixed preprocessing and all six accepted fitted pipelines. The interpretation modules reproduce the SHAP explanations, case studies and t-SNE coordinates used with these models. The Pareto module reproduces the all-ten-descriptor analysis in Supplementary Table S6.
 
 ## Scientific locks
 
@@ -37,7 +37,7 @@ The previously completed fixed-seed training reproduction produced exact Trainin
 
 `src/grid_search.py` is an executable refactoring of the declared model-specific local comparison. It uses fold-fitted preprocessing, identical saved folds, pooled OOF ranking and only the target's three final estimator seeds. It is not executed by default. Historical comparison results, final all-20 certification tables and previously completed controlled-grid reproduction evidence are distributed without rerunning a grid for this upload. See `grid_search.md` for the distinction between historical reference-seed evidence and optional final-seed execution.
 
-The upload preparation rechecked saved-model prediction, stored OOF and pipeline construction. It did not rerun training, grid comparison or seed selection. Machine-specific runtime provenance is generated locally in an ignored directory.
+The current code audit also reran fixed training and recovered the accepted Training, OOF, Test and C4 arrays exactly. No new grid comparison or model selection was performed. Machine-specific runtime provenance is generated locally in an ignored directory.
 
 ## Scope of inference
 
@@ -99,6 +99,15 @@ The pre-existing primary-model check remains available as `python -m src.verify`
 
 ## Pareto front
 
+The current figures and publication-coded profile tables are in [`results/pareto`](../results/pareto). To render them from the supplied numerical references:
+
+```sh
+python -m pip install -r requirements-plots.txt
+python -m src.pareto.plotting --output results/pareto
+```
+
+After a complete numerical replay, add `--input outputs/all10_replay/results` to plot its results instead. Both paths use the same profile identities and representative selection.
+
 Candidate generation combines Training-supported material tuples with Training-supported macrophage, stimulus, exposure-mode and exposure-time combinations. The numerical grids and category support are recorded in `data/pareto/reference/SEARCH_CONFIGURATION.json` and regenerated under the selected output directory. Every one of the ten descriptors varies before prediction.
 
 The objectives are to minimise mean predicted TNF-alpha and maximise mean predicted IL-10. Eligibility requires both Training-reference applicability-domain ratios to be at most one and every individual prediction to be non-negative. Non-dominance is computed against the complete eligible universe. Retained profiles must belong to its mean-prediction front and be non-dominated in at least six of the nine cross-target model pairings, each using that same universe. Distinct input profiles with identical predictions remain separate.
@@ -114,6 +123,28 @@ The completed analysis generates 385,237 profiles, of which 224,895 are eligible
 P1 and P3 are the minimum-TNF and maximum-IL-10 endpoints. P2 is the interior objective location nearest half the cumulative arc length after min-max scaling; candidate IDs resolve design ties. P2 and P3 share modulus and pore size but differ in crosslink level and all four experimental descriptors. They do not constitute a controlled comparison of material effects or clinically optimal formulations.
 
 Signed grouped TreeSHAP uses the saved primary trees, tree-path-dependent perturbation and raw output. One-hot contributions are summed by descriptor and then averaged across the three realisations per target. Each explanation is checked against its prediction and the saved contributions.
+
+## SHAP, case studies and t-SNE
+
+Run these commands from the repository root after installing `requirements.txt`:
+
+```sh
+python -m src.shap_analysis
+python -m src.case_studies
+python -m src.tsne_analysis
+python -m pip install -r requirements-plots.txt
+python -m src.plot_interpretation
+```
+
+The numerical outputs are in [`outputs/shap`](../outputs/shap), [`outputs/case_studies`](../outputs/case_studies) and [`outputs/tsne`](../outputs/tsne). Figures are in [`outputs/figures`](../outputs/figures). Each numerical command accepts `--output`; t-SNE also accepts `--shap-dir`. The plotting command accepts `--input` for an alternative outputs root and `--output` for the figure directory.
+
+`shap_analysis` loads the six primary fitted objects and exports transformed-column and ten-descriptor contributions. It checks their exact equality with the archived SHAP arrays and verifies additivity. Global importance uses Test observations only; the all-row explanations are descriptive and include in-sample Training observations. They are not out-of-fold explanations.
+
+`case_studies` reproduces the four formulations in Supplementary Table S7. P15 uses separate whole-study-excluded models; C4 uses the primary Training-only objects. Predictions, individual-model variation, local SHAP and paired SHAP changes are exported separately. Both P15 formulations fall outside their corresponding applicability domains. Observed C4 intervals retain the source-figure estimates and archived asymmetric ranges; they should not all be interpreted as experimental standard deviations.
+
+`tsne_analysis` embeds the unstandardised, signed consensus SHAP vectors, with separate Test-only and all-row scopes. All twelve embeddings are checked against the archived numerical coordinates. The all-row plots use perplexity 30; ten-neighbour trustworthiness is 0.923677 for TNF-alpha and 0.977130 for IL-10, matching the rounded values in Supplementary Figures S2-S3. Five-neighbour diagnostics are reported separately. No external cases are embedded.
+
+The t-SNE step fits an embedding, but none of these commands refits predictive models or their preprocessing. Figure legends use the current publication codebook. Reference provenance and hashes are recorded in [`data/interpretation`](../data/interpretation).
 
 ## Outputs and checks
 

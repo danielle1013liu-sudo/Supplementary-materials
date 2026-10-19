@@ -220,7 +220,7 @@ def run(output, workspace):
     rows.append({'check': 'stored_SHAP_additivity_residual', 'maximum_absolute_difference': report['max_SHAP_additivity_residual_pg_ml'], 'scope': 'residual from unchanged stored SHAP table; tolerance 1e-7'})
     save_csv(pd.DataFrame(rows), output / 'numerical_checks.csv')
     count = verify_hashes(output)
-    print(f'Verified {count} protected hashes; six primary models, separate P15, stored Pareto/SHAP, and exact publication round trips. Replay directory: {replay.relative_to(ROOT)}')
+    print(f'Verified {count} protected hashes; six primary models, separate P15, stored Pareto/SHAP, and exact publication round trips. Replay directory: {replay.resolve()}')
 
 
 def main():

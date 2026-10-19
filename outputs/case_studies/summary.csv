@@ -1,0 +1,9 @@
+study,target,dataset_row_id,formulation,fit_scope,membership,observed_pg_ml,prediction_mean_pg_ml,prediction_sample_SD_pg_ml,absolute_error_pg_ml,mean_individual_absolute_error_pg_ml
+P15,tnf,TNF-0035,PEG microgel scaffold,Separate P15 whole-study-excluded models,whole-study-excluded,704.545,422.5549780178532,67.82036222646389,281.99002198214674,281.99002198214674
+P15,tnf,TNF-0036,PEG microgel scaffold with tethered IL-10,Separate P15 whole-study-excluded models,whole-study-excluded,428.03,190.88242516891873,92.44093599616197,237.14757483108124,237.14757483108124
+P15,il10,IL10-0029,PEG microgel scaffold,Separate P15 whole-study-excluded models,whole-study-excluded,208.522,441.68997335001563,27.39860822375322,233.16797335001564,233.16797335001561
+P15,il10,IL10-0030,PEG microgel scaffold with tethered IL-10,Separate P15 whole-study-excluded models,whole-study-excluded,552.807,486.7191026284282,31.399505807114277,66.08789737157184,66.08789737157183
+C4,tnf,C4_Group2,HPA@SIN-GM,Primary Training-only models,external,612.0,590.9726105992564,17.052151102571653,21.027389400743573,21.027389400743534
+C4,tnf,C4_Group4,HPA@SIN-GM@DR,Primary Training-only models,external,488.963,487.3481202859748,9.695554662938378,1.6148797140252213,7.574099213206277
+C4,il10,C4_Group2,HPA@SIN-GM,Primary Training-only models,external,155.0,194.93318521053368,6.2000752044258345,39.93318521053368,39.933185210533686
+C4,il10,C4_Group4,HPA@SIN-GM@DR,Primary Training-only models,external,188.06,228.3208009466673,11.9569977881289,40.2608009466673,40.26080094666728

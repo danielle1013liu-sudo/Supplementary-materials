@@ -1,0 +1,97 @@
+{
+  "model_release": "accepted_train80_release_v1",
+  "data_release": "thermal_harmonisation_v2",
+  "supplement": "Supplementary_frequency_ordered_20261019.docx",
+  "model_categories": "Canonical saved-model categories; public frequency codes are display/import labels.",
+  "primary_tSNE_trustworthiness_k10": {
+    "tnf": 0.9236769289022223,
+    "il10": 0.9771300591905295
+  },
+  "sources": [
+    {
+      "file": "tnf_ALL_ROWS_DESCRIPTIVE_SHAP.npz",
+      "source": "Supplementary-materials/data/reference/tnf_ALL_ROWS_DESCRIPTIVE_SHAP.npz"
+    },
+    {
+      "file": "tnf_TEST_ONLY_SHAP.npz",
+      "source": "Supplementary-materials/data/reference/tnf_TEST_ONLY_SHAP.npz"
+    },
+    {
+      "file": "tnf_C4_EXTERNAL_SHAP.npz",
+      "source": "Supplementary-materials/data/reference/tnf_C4_EXTERNAL_SHAP.npz"
+    },
+    {
+      "file": "tnf_ALL_ROWS_DESCRIPTIVE_p10.csv",
+      "source": "Supplementary-materials/data/reference/tnf_ALL_ROWS_DESCRIPTIVE_p10.csv"
+    },
+    {
+      "file": "tnf_ALL_ROWS_DESCRIPTIVE_p20.csv",
+      "source": "Supplementary-materials/data/reference/tnf_ALL_ROWS_DESCRIPTIVE_p20.csv"
+    },
+    {
+      "file": "tnf_ALL_ROWS_DESCRIPTIVE_p30.csv",
+      "source": "Supplementary-materials/data/reference/tnf_ALL_ROWS_DESCRIPTIVE_p30.csv"
+    },
+    {
+      "file": "tnf_TEST_ONLY_p5.csv",
+      "source": "Supplementary-materials/data/reference/tnf_TEST_ONLY_p5.csv"
+    },
+    {
+      "file": "tnf_TEST_ONLY_p10.csv",
+      "source": "Supplementary-materials/data/reference/tnf_TEST_ONLY_p10.csv"
+    },
+    {
+      "file": "tnf_TEST_ONLY_p15.csv",
+      "source": "Supplementary-materials/data/reference/tnf_TEST_ONLY_p15.csv"
+    },
+    {
+      "file": "il10_ALL_ROWS_DESCRIPTIVE_SHAP.npz",
+      "source": "Supplementary-materials/data/reference/il10_ALL_ROWS_DESCRIPTIVE_SHAP.npz"
+    },
+    {
+      "file": "il10_TEST_ONLY_SHAP.npz",
+      "source": "Supplementary-materials/data/reference/il10_TEST_ONLY_SHAP.npz"
+    },
+    {
+      "file": "il10_C4_EXTERNAL_SHAP.npz",
+      "source": "Supplementary-materials/data/reference/il10_C4_EXTERNAL_SHAP.npz"
+    },
+    {
+      "file": "il10_ALL_ROWS_DESCRIPTIVE_p10.csv",
+      "source": "Supplementary-materials/data/reference/il10_ALL_ROWS_DESCRIPTIVE_p10.csv"
+    },
+    {
+      "file": "il10_ALL_ROWS_DESCRIPTIVE_p20.csv",
+      "source": "Supplementary-materials/data/reference/il10_ALL_ROWS_DESCRIPTIVE_p20.csv"
+    },
+    {
+      "file": "il10_ALL_ROWS_DESCRIPTIVE_p30.csv",
+      "source": "Supplementary-materials/data/reference/il10_ALL_ROWS_DESCRIPTIVE_p30.csv"
+    },
+    {
+      "file": "il10_TEST_ONLY_p5.csv",
+      "source": "Supplementary-materials/data/reference/il10_TEST_ONLY_p5.csv"
+    },
+    {
+      "file": "il10_TEST_ONLY_p10.csv",
+      "source": "Supplementary-materials/data/reference/il10_TEST_ONLY_p10.csv"
+    },
+    {
+      "file": "il10_TEST_ONLY_p15.csv",
+      "source": "Supplementary-materials/data/reference/il10_TEST_ONLY_p15.csv"
+    },
+    {
+      "file": "P15_study_holdout_grouped_shap.csv",
+      "source": "Hydrogel_MainText_Final_Handoff_v1/04_RESULTS/P15/P15_study_holdout_grouped_shap.csv"
+    },
+    {
+      "file": "P15_study_holdout_delta_shap.csv",
+      "source": "Hydrogel_MainText_Final_Handoff_v1/04_RESULTS/P15/P15_study_holdout_delta_shap.csv"
+    },
+    {
+      "file": "C4_observations.csv",
+      "source": "Hydrogel_MainText_Final_Handoff_v1/05_MAIN_FIGURES/Fig08/source_data/C4_*_absolute.csv",
+      "columns": "Observed values, intervals and source qualifications; private source paths omitted."
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "publication_codebook_version": "frequency_codes_20261019",
+  "eligible_candidates": 224895,
+  "final_profiles": 16,
+  "objective_locations": 14,
+  "representative_ids": {
+    "P1": "A10_1aa126e1142f7ae42d8f",
+    "P2": "A10_40b4f5f8df5f8ae9cc29",
+    "P3": "A10_cd26a0990ac785993dcc"
+  },
+  "axis_limits": {
+    "x": [
+      0.0,
+      2704.989907325143
+    ],
+    "y": [
+      0.0,
+      1895.1004760000073
+    ]
+  },
+  "heatmaps": [
+    {
+      "target": "tnf",
+      "color_limits": [
+        -850.0,
+        850.0
+      ],
+      "column_ids": [
+        "A10_1aa126e1142f7ae42d8f",
+        "A10_40b4f5f8df5f8ae9cc29",
+        "A10_cd26a0990ac785993dcc"
+      ],
+      "row_order": [
+        "material_bioactive_cue_class",
+        "polymer_origin_class",
+        "modulus_value_kPa",
+        "gelation_or_crosslinking_mechanism",
+        "network_density_proxy",
+        "macrophage_model_class",
+        "stimulation_context",
+        "cell_material_interaction_mode",
+        "culture_or_exposure_duration_h",
+        "pore_size_um"
+      ]
+    },
+    {
+      "target": "il10",
+      "color_limits": [
+        -650.0,
+        650.0
+      ],
+      "column_ids": [
+        "A10_1aa126e1142f7ae42d8f",
+        "A10_40b4f5f8df5f8ae9cc29",
+        "A10_cd26a0990ac785993dcc"
+      ],
+      "row_order": [
+        "material_bioactive_cue_class",
+        "polymer_origin_class",
+        "modulus_value_kPa",
+        "gelation_or_crosslinking_mechanism",
+        "network_density_proxy",
+        "macrophage_model_class",
+        "stimulation_context",
+        "cell_material_interaction_mode",
+        "culture_or_exposure_duration_h",
+        "pore_size_um"
+      ]
+    }
+  ],
+  "font": "Times New Roman",
+  "source_sha256": {
+    "ALL_CANDIDATES_AND_PREDICTIONS.csv.gz": "dede6f7226671be4e67f97c007245df00f34c57c1ff3d1bf072b1c74b614fafc",
+    "FINAL_PARETO_PROFILES.csv": "71b273e59d947970bc1f8535f557f51b9f838766c09c49c62c1196bc147e0d40",
+    "FINAL_PARETO_REPRESENTATIVES.csv": "96d5137f1949a4d1a306409ef4f8735eb6d7179f757707e293a8b7f45ae83502",
+    "FINAL_REPRESENTATIVE_SHAP.csv": "bf3661f49cc7c08cd3c0b79f41f26319d605aa3ba1b7005960398c5519929bb5"
+  },
+  "cloud_rasterized": true,
+  "predictions_recalculated": false
+}

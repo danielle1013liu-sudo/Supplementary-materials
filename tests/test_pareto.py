@@ -5,6 +5,12 @@ import pytest
 from src.pareto.common import DATA, FEATURES, NUM, SEEDS, csv, digest, front, read
 from src.pareto.verification import compare_tables, validate_profiles
 from src.case_replay import run as replay_cases
+from src.hydrogel_immune_ml.public_encoding import (
+    PUBLIC_VERSION,
+    VERSION_COLUMN,
+    decode_public_input,
+    encode_public_input,
+)
 
 
 @pytest.mark.parametrize(
@@ -93,6 +99,21 @@ def test_profile_id_cannot_hide_a_changed_feature():
     row.loc[row.index[0], "culture_or_exposure_duration_h"] += 1
     with pytest.raises(ValueError, match="identity does not match"):
         validate_profiles(row, config, {})
+
+
+def test_latest_supplement_profiles_use_current_publication_codes():
+    profiles = csv(DATA / "reference/FINAL_PARETO_PROFILES.csv")
+    representatives = csv(DATA / "reference/FINAL_PARETO_REPRESENTATIVES.csv")
+    assert len(profiles) == 16
+    assert len(profiles[["tnf_mean_pg_ml", "il10_mean_pg_ml"]].drop_duplicates()) == 14
+    coded = encode_public_input(representatives)
+    assert coded[VERSION_COLUMN].eq(PUBLIC_VERSION).all()
+    assert coded.network_density_proxy.tolist() == ["A", "C", "B"]
+    assert coded.gelation_or_crosslinking_mechanism.tolist() == ["B", "A", "A"]
+    assert coded.stimulation_context.tolist() == ["A", "E", "A"]
+    pd.testing.assert_frame_equal(
+        decode_public_input(coded, PUBLIC_VERSION), representatives, check_exact=True
+    )
 
 
 def test_all_ten_inputs_and_full_candidate_identity_order(replay_dir):

@@ -1,0 +1,14 @@
+{
+  "method": "exact",
+  "random_state": 42,
+  "init": "pca",
+  "learning_rate": "auto",
+  "max_iter": 2000,
+  "input": "Unstandardised ten-dimensional signed consensus grouped SHAP",
+  "primary_all_rows_perplexity": 30,
+  "primary_Test_perplexity": 10,
+  "ALL_ROWS_DESCRIPTIVE": "Training-in-sample and Test-out-of-fit; not OOF SHAP",
+  "external_cases_embedded": false,
+  "predictive_fits": 0,
+  "caption_diagnostic": "Ten-neighbour trustworthiness at all-row perplexity 30"
+}

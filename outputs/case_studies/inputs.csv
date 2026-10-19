@@ -1,0 +1,9 @@
+study,target,dataset_row_id,formulation,polymer_origin_class,modulus_value_kPa,pore_size_um,material_bioactive_cue_class,gelation_or_crosslinking_mechanism,network_density_proxy,macrophage_model_class,stimulation_context,cell_material_interaction_mode,culture_or_exposure_duration_h
+P15,tnf,TNF-0035,PEG microgel scaffold,synthetic_polymer,,90.0,none,other,medium,THP_1,unstimulated_or_basal,encapsulated_3D,72.0
+P15,tnf,TNF-0036,PEG microgel scaffold with tethered IL-10,synthetic_polymer,,90.0,anti_inflammatory_material_cue,other,medium,THP_1,unstimulated_or_basal,encapsulated_3D,72.0
+P15,il10,IL10-0029,PEG microgel scaffold,synthetic_polymer,,90.0,none,other,medium,THP_1,unstimulated_or_basal,encapsulated_3D,72.0
+P15,il10,IL10-0030,PEG microgel scaffold with tethered IL-10,synthetic_polymer,,90.0,anti_inflammatory_material_cue,other,medium,THP_1,unstimulated_or_basal,encapsulated_3D,72.0
+C4,tnf,C4_Group2,HPA@SIN-GM,natural_polymer,10.0,7.5,anti_inflammatory_material_cue,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0
+C4,tnf,C4_Group4,HPA@SIN-GM@DR,natural_polymer,10.0,7.5,anti_inflammatory_plus_growth_factor_material_cues,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0
+C4,il10,C4_Group2,HPA@SIN-GM,natural_polymer,10.0,7.5,anti_inflammatory_material_cue,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0
+C4,il10,C4_Group4,HPA@SIN-GM@DR,natural_polymer,10.0,7.5,anti_inflammatory_plus_growth_factor_material_cues,physical_self_assembly,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0

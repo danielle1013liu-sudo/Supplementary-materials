@@ -1,0 +1,20 @@
+[
+  {
+    "target": "il10",
+    "model_realisation": 85,
+    "n": 133,
+    "max_additivity_residual_pg_ml": 8.753886504564434e-12
+  },
+  {
+    "target": "il10",
+    "model_realisation": 115,
+    "n": 133,
+    "max_additivity_residual_pg_ml": 1.2278178473934531e-11
+  },
+  {
+    "target": "il10",
+    "model_realisation": 158,
+    "n": 133,
+    "max_additivity_residual_pg_ml": 7.389644451905042e-12
+  }
+]

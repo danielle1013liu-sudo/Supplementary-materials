@@ -1,0 +1,20 @@
+[
+  {
+    "target": "tnf",
+    "model_realisation": 3089,
+    "n": 2,
+    "max_additivity_residual_pg_ml": 1.0089706847793423e-12
+  },
+  {
+    "target": "tnf",
+    "model_realisation": 4280,
+    "n": 2,
+    "max_additivity_residual_pg_ml": 6.821210263296962e-13
+  },
+  {
+    "target": "tnf",
+    "model_realisation": 5793,
+    "n": 2,
+    "max_additivity_residual_pg_ml": 1.1368683772161603e-13
+  }
+]
