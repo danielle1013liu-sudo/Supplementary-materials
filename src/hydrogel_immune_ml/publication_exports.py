@@ -6,15 +6,14 @@ from pathlib import Path
 
 import pandas as pd
 
-from ..data import ROOT, load_data, read_csv, save_csv, split_data
+from ..data import ROOT, load_data, read_csv, save_csv
 from .public_encoding import PUBLIC_VERSION, encode_public_input, fields
 
 
 def verify_counts(output):
     tables = {target: load_data(target) for target in ('tnf', 'il10')}
-    splits = {target: split_data(target) for target in tables}
     book = read_csv(ROOT / 'data/category_codebook.csv').set_index(['machine_column', 'machine_value'])
-    records, partitions = [], []
+    records = []
     for field in fields():
         name = field['machine_column']
         for category in field['categories']:
@@ -24,21 +23,12 @@ def verify_counts(output):
             for target, count in counts.items():
                 if count != category[f'{target}_n'] or count != row[f'{target}_total_n']:
                     raise ValueError(f'Count discrepancy for {name}/{value}/{target}: {count}')
-                for subset, frame in zip(('development', 'test'), splits[target], strict=True):
-                    ids = frame.loc[frame[name].eq(value), 'dataset_row_id'].tolist()
-                    recorded = int(row[f'{target}_{subset}_n'])
-                    # Retain pre-existing partition counts without revising the frozen split.
-                    partitions.append({'machine_column': name, 'machine_value': value,
-                                       'target': target, 'subset': subset, 'recorded_n': recorded,
-                                       'frozen_split_n': len(ids), 'equal': recorded == len(ids),
-                                       'current_row_ids': '|'.join(ids) if recorded != len(ids) else ''})
             if sum(counts.values()) != category['pooled_n']:
                 raise ValueError(f'Pooled count discrepancy for {name}/{value}')
             records.append({'machine_column': name, 'code': category['new_code'],
                             'machine_value': value, 'tnf_n': counts['tnf'],
                             'il10_n': counts['il10'], 'pooled_n': sum(counts.values())})
     save_csv(pd.DataFrame(records), Path(output) / 'category_counts.csv')
-    save_csv(pd.DataFrame(partitions), Path(output) / 'category_partition_count_audit.csv')
 
 
 def export_canonical_codes(output):

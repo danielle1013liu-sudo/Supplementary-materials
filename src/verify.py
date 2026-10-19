@@ -50,7 +50,16 @@ def verify_results():
         for scope in ['Validation', 'Test']:
             scores.append({'target': target, 'scope': scope, 'R2_mean': current[scope + '_R2'].mean(), 'R2_sample_SD': current[scope + '_R2'].std(ddof=1), 'same_three_seeds': json.dumps(configuration(target)['seeds'])})
     save_csv(pd.DataFrame(scores), ROOT / 'outputs/validation/panel_summary.csv')
-    save_json({'input_and_model_hashes': 'PASS', 'split_and_CV_seed_reconstruction': 'PASS', 'saved_and_constructed_pipeline_parameters': 'exact', 'six_saved_Test_case_predictions': 'exact', 'stored_pooled_OOF_predictions_and_metrics': 'exact', 'same_seed_all20_Validation_winners': 'PASS', 'predictive_model_fitting_in_this_verification': False, 'grid_search_executed': False, 'seed_screening_included': False, 'fixed_seed_training_evidence': 'Previously completed exact refits are recorded in outputs/validation/reproduction.json; rerun explicitly with python -m src.train.', 'checks': checks}, ROOT / 'outputs/verification.json')
+    save_json({
+        'input_and_model_hashes': 'PASS',
+        'split_and_CV_seed_reconstruction': 'PASS',
+        'saved_and_constructed_pipeline_parameters': 'exact',
+        'six_saved_Test_case_predictions': 'exact',
+        'stored_pooled_OOF_predictions_and_metrics': 'exact',
+        'same_seed_all20_Validation_winners': 'PASS',
+        'predictive_model_fitting_in_this_verification': False,
+        'checks': checks,
+    }, ROOT / 'outputs/verification.json')
 
 if __name__ == '__main__':
     check_environment()

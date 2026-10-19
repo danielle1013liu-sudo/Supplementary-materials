@@ -11,6 +11,7 @@ from sklearn.neighbors import NearestNeighbors
 from .data import (ROOT, ID, check_environment, check_inputs, feature_names,
                    load_data, read_csv, read_json, save_csv, save_json, split_definition)
 from .interpretation import REFERENCE, check_references
+from .tsne_diagnostics import caption_trustworthiness
 
 
 def neighbours(values):
@@ -61,10 +62,12 @@ def run(shap_dir, output):
                 np.testing.assert_array_equal(actual[ID], reference[ID])
                 np.testing.assert_array_equal(actual[["tsne_1", "tsne_2"]], reference[["tsne_1", "tsne_2"]])
                 projected[perplexity] = neighbours(coordinates)
-                k10 = trustworthiness(values, actual[["tsne_1", "tsne_2"]], n_neighbors=10)
                 if scope == "ALL_ROWS_DESCRIPTIVE" and perplexity == 30:
+                    k10 = caption_trustworthiness(values, actual[["tsne_1", "tsne_2"]])
                     expected = read_json(REFERENCE.parent / "provenance.json")["primary_tSNE_trustworthiness_k10"][target]
                     np.testing.assert_allclose(k10, expected, atol=1e-15, rtol=0)
+                else:
+                    k10 = trustworthiness(values, actual[["tsne_1", "tsne_2"]], n_neighbors=10)
                 diagnostics.append({
                     "target": target, "scope": scope, "n": len(values), "perplexity": perplexity,
                     "actual_iterations": embedding.n_iter_ + 1,

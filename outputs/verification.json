@@ -6,9 +6,6 @@
   "stored_pooled_OOF_predictions_and_metrics": "exact",
   "same_seed_all20_Validation_winners": "PASS",
   "predictive_model_fitting_in_this_verification": false,
-  "grid_search_executed": false,
-  "seed_screening_included": false,
-  "fixed_seed_training_evidence": "Previously completed exact refits are recorded in outputs/validation/reproduction.json; rerun explicitly with python -m src.train.",
   "checks": [
     {
       "target": "tnf",

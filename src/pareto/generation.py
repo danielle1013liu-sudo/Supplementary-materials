@@ -49,7 +49,7 @@ def verify_models(output):
     assert versions == lock["software_versions"], versions
     for item in lock["datasets"] + [lock["feature_schema"]]:
         assert sha(ROOT / item["path"]) == item["sha256"]
-    # The historical scientific lock retains the byte-identical legacy codebook.
+    # Model verification uses the explicit legacy mapping, not publication order.
     assert sha(ROOT / LEGACY_PATH) == lock["codebook"]["sha256"]
     checks, learned = [], {}
     for target in SEEDS:

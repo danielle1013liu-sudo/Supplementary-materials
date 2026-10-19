@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from .data import ID, ROOT, feature_names, load_data, read_csv
+from .hydrogel_immune_ml.public_encoding import PUBLIC_VERSION, fields
 
 
 LABELS = dict(zip(feature_names(), (
@@ -51,12 +52,13 @@ def save_figure(fig, directory, name):
 
 
 def plot_importance(source, destination):
+    exported = read_csv(source / 'shap/test_importance.csv')
     fig, axes = plt.subplots(1, 2, figsize=(12, 5.4), layout='constrained')
     for ax, (target, title), color in zip(axes, TARGETS.items(), COLORS):
-        values = read_csv(source / f'shap/TEST_ONLY/{target}_consensus.csv')
-        importance = values[feature_names()].abs().mean().sort_values()
-        ax.barh([LABELS[x] for x in importance.index], importance, color=color, height=.65)
-        ax.set(title=f'{title} | Test records (n = {len(values)})',
+        values = exported.loc[exported.target.eq(target)].sort_values('consensus_mean_abs_SHAP_pg_ml')
+        ax.barh([LABELS[x] for x in values.descriptor], values.consensus_mean_abs_SHAP_pg_ml,
+                color=color, height=.65)
+        ax.set(title=f'{title} | Test records (n = {values.n_Test.iloc[0]})',
                xlabel='Mean absolute consensus SHAP (pg/mL)')
         ax.spines[['top', 'right']].set_visible(False)
         ax.grid(axis='x', alpha=.18)
@@ -73,14 +75,15 @@ def landscape_data(source, target):
 
 
 def color_landscape(ax, values, feature, codebook):
-    categories = codebook.loc[codebook.machine_column.eq(feature)]
-    if not categories.empty:
-        for row in categories.itertuples():
-            selected = values.loc[values[feature].eq(row.machine_value)]
+    categories = codebook.get(feature)
+    if categories:
+        for category in categories:
+            machine_value = category['machine_value']
+            selected = values.loc[values[feature].eq(machine_value)]
             if selected.empty:
                 continue
-            code = row.field_specific_code
-            label = f'{code}: {CATEGORY_LABELS[row.machine_value]}'
+            code = category['new_code']
+            label = f'{code}: {CATEGORY_LABELS[machine_value]}'
             ax.scatter(selected.tsne_1, selected.tsne_2, s=22,
                        color=COLORS[ord(code) - ord('A')], label=label, alpha=.85,
                        edgecolors='white', linewidths=.3)
@@ -111,7 +114,7 @@ def color_landscape(ax, values, feature, codebook):
 
 def plot_landscapes(source, destination):
     features = feature_names()
-    codebook = read_csv(ROOT / 'data/category_codebook.csv')
+    codebook = {field['machine_column']: field['categories'] for field in fields()}
     sets = {'tnf': features[:6], 'il10': [features[i] for i in (0, 1, 3, 4, 5, 7)]}
     for target, selected in sets.items():
         values = landscape_data(source, target)
@@ -121,7 +124,7 @@ def plot_landscapes(source, destination):
         fig.suptitle(f'{TARGETS[target]} | SHAP landscape (n = {len(values)})', fontsize=15, y=.98)
         fig.subplots_adjust(left=.06, right=.97, top=.91, bottom=.23, hspace=.93, wspace=.38)
         fig.text(.06, .025, 'All-row descriptive embedding; Training in-sample and Test out-of-fit. '
-                 'Publication codes: frequency_codes_20261019.', fontsize=9, color='#555555')
+                 f'Publication codes: {PUBLIC_VERSION}.', fontsize=9, color='#555555')
         save_figure(fig, destination, f'{target}_shap_landscape')
     fig, axes = plt.subplots(2, 3, figsize=(14, 10))
     for row, target in enumerate(TARGETS):

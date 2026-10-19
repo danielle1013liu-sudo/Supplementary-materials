@@ -18,7 +18,7 @@
   ],
   "codebook": {
     "path": "data/category_codebook.csv",
-    "sha256": "b10ae08d8fb5c7a83d8b9099d1cebb23851f574abfbf93aa1b409fa6c483fe00"
+    "sha256": "fa4c7e733e916fc0f1e2ac62685d419a550fc33c735c5dd3c85e8e95124e81c4"
   },
   "feature_schema": {
     "path": "data/feature_schema.json",

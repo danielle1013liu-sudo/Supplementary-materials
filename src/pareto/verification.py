@@ -70,6 +70,39 @@ def validate_profiles(values, configuration, allowed):
             )
 
 
+def verify_shap_additivity(values, recorded):
+    """Check residuals against the contributions, including every descriptor."""
+    keys = ["target", "candidate_id", "model_realisation"]
+    columns = ["expected_value_pg_ml", "prediction_pg_ml", "grouped_SHAP_pg_ml"]
+    if values.empty or not np.isfinite(values[columns].to_numpy(dtype=float)).all():
+        raise ValueError("SHAP contributions and predictions must be finite and non-empty")
+    rows = []
+    for identity, group in values.groupby(keys):
+        if len(group) != len(FEATURES) or set(group.descriptor_name) != set(FEATURES):
+            raise ValueError(f"Incomplete SHAP descriptors: {identity}")
+        for column in columns[:2]:
+            np.testing.assert_array_equal(group[column], np.repeat(group[column].iloc[0], len(group)))
+        residual = float(group.expected_value_pg_ml.iloc[0] + group.grouped_SHAP_pg_ml.sum() - group.prediction_pg_ml.iloc[0])
+        np.testing.assert_allclose(residual, 0, rtol=0, atol=SHAP_TOLERANCE,
+                                   err_msg=f"SHAP additivity failed: {identity}")
+        rows.append({**dict(zip(keys, identity)), "additivity_residual_pg_ml": residual})
+    residuals = pd.DataFrame(rows)
+    compare_tables(recorded[residuals.columns], residuals, keys, SHAP_TOLERANCE)
+    return float(residuals.additivity_residual_pg_ml.abs().max())
+
+
+def verify_profile_counts(summary, profiles):
+    """Require summary counts to match the checked profile and objective rows."""
+    counts = {
+        "final_profiles": len(profiles),
+        "final_locations": len(profiles[["tnf_mean_pg_ml", "il10_mean_pg_ml"]].drop_duplicates()),
+    }
+    for name, count in counts.items():
+        if summary.get(name) != count:
+            raise ValueError(f"Pareto summary {name} differs from checked tables: {summary.get(name)} != {count}")
+    return counts
+
+
 def run(output):
     output = Path(output)
     reference = DATA / "reference"
@@ -111,6 +144,7 @@ def run(output):
             front(universe[f"tnf_seed_{ts}_pg_ml"], universe[f"il10_seed_{ils}_pg_ml"]),
             masks.loc[eligible, f"front_tnf_{ts}_il10_{ils}"],
         )
+    checked_tables = {}
     for filename, keys, tolerance in [
         ("FINAL_PARETO_PROFILES.csv", ["candidate_id"], ABSOLUTE_TOLERANCE),
         (
@@ -134,26 +168,29 @@ def run(output):
             SHAP_TOLERANCE,
         ),
     ]:
+        checked_tables[filename] = csv(output / "results" / filename)
         differences[filename] = compare_tables(
-            csv(output / "results" / filename),
+            checked_tables[filename],
             csv(reference / filename),
             keys,
             tolerance,
         )
     residuals = csv(output / "checks/SHAP_ADDITIVITY.csv")
+    maximum_residual = verify_shap_additivity(
+        checked_tables["REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv"], residuals
+    )
     summary = read(output / "results/PARETO_SUMMARY.json")
+    counts = verify_profile_counts(summary, checked_tables["FINAL_PARETO_PROFILES.csv"])
     report = {
         "generated": len(inputs),
         "eligible": int(eligible.sum()),
-        "retained_profiles": summary["final_profiles"],
-        "objective_locations": summary["final_locations"],
+        "retained_profiles": counts["final_profiles"],
+        "objective_locations": counts["final_locations"],
         "identity_sets_exact": True,
         "memberships_and_frequencies_exact": True,
         "all_ten_descriptors_vary": True,
         "max_absolute_differences": differences,
-        "max_SHAP_additivity_residual_pg_ml": float(
-            residuals.additivity_residual_pg_ml.abs().max()
-        ),
+        "max_SHAP_additivity_residual_pg_ml": maximum_residual,
         "numeric_absolute_tolerance": ABSOLUTE_TOLERANCE,
         "SHAP_absolute_tolerance": SHAP_TOLERANCE,
         "relative_tolerance": 0,

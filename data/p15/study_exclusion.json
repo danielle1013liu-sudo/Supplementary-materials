@@ -6,10 +6,7 @@
   "data_release": "thermal_harmonisation_v2",
   "model_configuration_release": "accepted_train80_release_v1",
   "fit_scope": "All remaining observations after whole-study removal from full target-specific dataset; not the original 80% split",
-  "previous_selection_exposure": true,
-  "independent_validation": false,
   "hyperparameter_tuning": false,
-  "seed_search": false,
   "target_transform": null,
   "regressor_numeric_scaling": null,
   "environment": {

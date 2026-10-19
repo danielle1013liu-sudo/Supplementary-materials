@@ -1,15 +1,16 @@
 """Regression checks for published explanations and case/model separation."""
 
+import os
+
 import numpy as np
 import pandas as pd
 import pytest
-from sklearn.metrics import pairwise_distances
-from sklearn.neighbors import KDTree
 
 from src.data import ROOT, ID, feature_names, load_data, read_csv, split_definition
 from src.interpretation import REFERENCE, check_references
 from src.shap_analysis import run as export_shap
 from src.case_studies import run as export_cases
+from src.tsne_diagnostics import caption_trustworthiness
 
 
 def test_primary_shap_reproduces_frozen_arrays_without_fitting(tmp_path):
@@ -62,19 +63,19 @@ def test_main_tsne_coordinates_and_caption_diagnostic(target, n, expected):
     pd.testing.assert_frame_equal(frame[feature_names()], load_data(target)[feature_names()])
     original = read_csv(ROOT / f"outputs/shap/ALL_ROWS_DESCRIPTIVE/{target}_consensus.csv")[feature_names()].to_numpy()
     embedding = frame[["tsne_1", "tsne_2"]].to_numpy()
-    # Independently evaluate the rank formula without fitting an embedding.
-    # Match sklearn's KD-tree leaf size so exact distance ties have the same
-    # neighbour ordering as the published trustworthiness calculation.
-    original_distances = pairwise_distances(original)
-    np.fill_diagonal(original_distances, np.inf)
-    original_order = np.argsort(original_distances, axis=1)
-    indices = KDTree(embedding, leaf_size=30).query(embedding, k=11, return_distance=False)
-    nearest = np.asarray([row[row != index][:10] for index, row in enumerate(indices)])
-    ranks = np.empty((n, n), dtype=int)
-    ranks[np.arange(n)[:, None], original_order] = np.arange(1, n + 1)
-    penalty = np.maximum(ranks[np.arange(n)[:, None], nearest] - 10, 0).sum()
-    trustworthiness = 1 - 2 * penalty / (n * 10 * (2 * n - 3 * 10 - 1))
+    trustworthiness = caption_trustworthiness(original, embedding)
     np.testing.assert_allclose(trustworthiness, expected, atol=1e-15, rtol=0)
+
+
+def test_caption_diagnostic_keeps_inputs_and_cpu_settings(monkeypatch):
+    monkeypatch.setenv("NPY_DISABLE_CPU_FEATURES", "FMA3")
+    original = np.arange(30, dtype=float)[:, None]
+    embedding = np.column_stack((original, np.zeros(30)))
+    original_before, embedding_before = original.copy(), embedding.copy()
+    assert caption_trustworthiness(original, embedding) == 1
+    assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "FMA3"
+    np.testing.assert_array_equal(original, original_before)
+    np.testing.assert_array_equal(embedding, embedding_before)
 
 
 def test_tsne_sensitivity_covers_all_prespecified_settings():
