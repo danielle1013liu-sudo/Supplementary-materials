@@ -8,7 +8,7 @@ from sklearn.impute import SimpleImputer, IterativeImputer
 from sklearn.linear_model import BayesianRidge
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from .data import ROOT, configuration, read_json, file_hash
+from .data import ROOT, configuration, read_json, file_hash, serialise_parameters
 
 def numeric_values(values):
     if isinstance(values, dict):
@@ -22,11 +22,13 @@ def numeric_values(values):
 def make_preprocessor(target):
     settings = configuration(target)
     numeric = numeric_values(settings['numeric_imputer'])
-    if target == 'tnf':
+    if settings['imputer'] in ('median', 'mean'):
         imputer = SimpleImputer(**numeric)
-    else:
+    elif settings['imputer'] == 'iterative_bayesian_ridge':
         numeric['estimator'] = BayesianRidge(**numeric['estimator'])
         imputer = IterativeImputer(**numeric)
+    else:
+        raise ValueError(f"Unsupported released imputer: {settings['imputer']}")
     encoder = settings['one_hot_encoder'].copy()
     encoder['dtype'] = np.float64
     categories = Pipeline([
@@ -43,7 +45,8 @@ def make_pipeline(target, seed, parameters=None):
     assert seed in settings['seeds']
     arguments = settings['parameters'].copy() if parameters is None else parameters.copy()
     arguments['random_state'] = seed
-    estimator = GradientBoostingRegressor(**arguments) if target == 'tnf' else RandomForestRegressor(**arguments)
+    families = {'GradientBoostingRegressor': GradientBoostingRegressor, 'RandomForestRegressor': RandomForestRegressor}
+    estimator = families[settings['family']](**arguments)
     return Pipeline([('preprocess', make_preprocessor(target)), ('model', estimator)])
 
 def load_models(target):
@@ -54,7 +57,8 @@ def load_models(target):
         path = ROOT / item['path']
         assert file_hash(path) == item['sha256']
         pipeline = pickle.loads(zlib.decompress(path.read_bytes()))
-        assert pipeline.named_steps['model'].get_params() == make_pipeline(target, item['seed']).named_steps['model'].get_params()
+        constructed = make_pipeline(target, item['seed'])
+        assert serialise_parameters(pipeline.get_params(deep=False)) == serialise_parameters(constructed.get_params(deep=False))
         models.append((item['seed'], pipeline))
     assert [seed for seed, _ in models] == configuration(target)['seeds']
     return models

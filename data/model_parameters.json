@@ -89,20 +89,23 @@
         "transformer_weights": null,
         "verbose": false,
         "verbose_feature_names_out": false
-      }
+      },
+      "imputer": "median",
+      "selection_rule": "each_seed_validation",
+      "validation_evidence_fold_hash": "d82f166c646c40b8ad41d5a3721bab6a798b8641ef6b4486c0f1ec58fd0f571c"
     },
     "il10": {
       "family": "RandomForestRegressor",
       "seeds": [
-        85,
-        115,
-        158
+        18571,
+        28094,
+        30787
       ],
       "parameters": {
         "bootstrap": false,
         "ccp_alpha": 0.0,
         "criterion": "squared_error",
-        "max_depth": 9,
+        "max_depth": 8,
         "max_features": 0.7,
         "max_leaf_nodes": null,
         "max_samples": null,
@@ -133,34 +136,11 @@
       ],
       "numeric_imputer": {
         "add_indicator": false,
-        "estimator": {
-          "alpha_1": 1e-06,
-          "alpha_2": 1e-06,
-          "alpha_init": null,
-          "compute_score": false,
-          "copy_X": true,
-          "fit_intercept": true,
-          "lambda_1": 1e-06,
-          "lambda_2": 1e-06,
-          "lambda_init": null,
-          "max_iter": 300,
-          "tol": 0.001,
-          "verbose": false
-        },
+        "copy": true,
         "fill_value": null,
-        "imputation_order": "ascending",
-        "initial_strategy": "mean",
         "keep_empty_features": false,
-        "max_iter": 20,
-        "max_value": "Infinity",
-        "min_value": "-Infinity",
         "missing_values": "NaN",
-        "n_nearest_features": null,
-        "random_state": 42,
-        "sample_posterior": false,
-        "skip_complete": false,
-        "tol": 0.001,
-        "verbose": 0
+        "strategy": "median"
       },
       "categorical_imputer": {
         "add_indicator": false,
@@ -188,7 +168,11 @@
         "transformer_weights": null,
         "verbose": false,
         "verbose_feature_names_out": false
-      }
+      },
+      "imputer": "median",
+      "selection_rule": "three_seed_mean_validation",
+      "validation_evidence_fold_hash": "514f4f18eb1cf3631d7b56023be454dcaab9ad2e14d4b45b547abacdfb86f3c0"
     }
-  }
+  },
+  "release": "IL10-crosslink7-RF-median-20261020"
 }

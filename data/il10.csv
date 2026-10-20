@@ -1,9 +1,9 @@
-﻿dataset_row_id,polymer_origin_class,modulus_value_kPa,pore_size_um,material_bioactive_cue_class,gelation_or_crosslinking_mechanism,network_density_proxy,macrophage_model_class,stimulation_context,cell_material_interaction_mode,culture_or_exposure_duration_h,corrected_value_pg_ml
+dataset_row_id,polymer_origin_class,modulus_value_kPa,pore_size_um,material_bioactive_cue_class,gelation_or_crosslinking_mechanism,network_density_proxy,macrophage_model_class,stimulation_context,cell_material_interaction_mode,culture_or_exposure_duration_h,corrected_value_pg_ml
 IL10-0001,natural_polymer,,182.8023,none,other,medium,RAW264_7,unclear,direct_surface_contact,48.0,53.7037
 IL10-0002,natural_polymer,,182.8023,none,other,medium,RAW264_7,unclear,direct_surface_contact,96.0,82.0988
-IL10-0003,natural_polymer,19.1869,40.011,none,photo_crosslinking,high,RAW264_7,LPS,hydrogel_extract_or_eluate,48.0,64.8354
-IL10-0004,natural_polymer,16.8094,50.25,anti_inflammatory_plus_growth_factor_material_cues,photo_crosslinking,high,RAW264_7,LPS,hydrogel_extract_or_eluate,48.0,92.6978
-IL10-0005,natural_polymer,13.1193,97.387,anti_inflammatory_plus_growth_factor_material_cues,photo_crosslinking,high,RAW264_7,LPS,hydrogel_extract_or_eluate,48.0,140.56
+IL10-0003,natural_polymer,19.1869,40.011,none,photo_crosslinking,medium,RAW264_7,LPS,hydrogel_extract_or_eluate,48.0,64.8354
+IL10-0004,natural_polymer,16.8094,50.25,anti_inflammatory_plus_growth_factor_material_cues,photo_crosslinking,medium,RAW264_7,LPS,hydrogel_extract_or_eluate,48.0,92.6978
+IL10-0005,natural_polymer,13.1193,97.387,anti_inflammatory_plus_growth_factor_material_cues,photo_crosslinking,medium,RAW264_7,LPS,hydrogel_extract_or_eluate,48.0,140.56
 IL10-0006,natural_polymer,,,none,photo_crosslinking,low,murine_primary_or_in_vivo_context,unstimulated_or_basal,direct_surface_contact,24.0,63.7474
 IL10-0007,natural_polymer,,,none,photo_crosslinking,low,murine_primary_or_in_vivo_context,LPS_IFNg,direct_surface_contact,24.0,205.237
 IL10-0008,natural_polymer,,,none,photo_crosslinking,low,murine_primary_or_in_vivo_context,other_stimulation,direct_surface_contact,24.0,940.15
@@ -14,9 +14,9 @@ IL10-0012,natural_polymer,12.263,142.614,anti_inflammatory_material_cue,photo_cr
 IL10-0013,natural_polymer,16.1507,139.205,anti_inflammatory_material_cue,photo_crosslinking,high,murine_primary_or_in_vivo_context,IL4_IL13,direct_surface_contact,24.0,308.821
 IL10-0014,natural_polymer,29.6548,117.045,anti_inflammatory_plus_growth_factor_material_cues,photo_crosslinking,high,murine_primary_or_in_vivo_context,IL4_IL13,direct_surface_contact,24.0,760.713
 IL10-0015,natural_polymer,0.0841,,none,physical_self_assembly,low,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,81.6
-IL10-0016,natural_polymer,0.4281,,none,other,medium,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,108.8
-IL10-0017,natural_polymer,0.4434,,none,other,medium,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,248.8
-IL10-0018,natural_polymer,0.438,,none,other,medium,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,189.2
+IL10-0016,natural_polymer,0.4281,,none,other,high,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,108.8
+IL10-0017,natural_polymer,0.4434,,none,other,high,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,248.8
+IL10-0018,natural_polymer,0.438,,none,other,high,murine_primary_or_in_vivo_context,other_stimulation,encapsulated_3D,72.0,189.2
 IL10-0019,natural_polymer,26.67,60.0,none,other,medium,RAW264_7,unclear,unclear,,1.55869
 IL10-0020,natural_polymer,36.67,60.0,none,other,medium,RAW264_7,unclear,unclear,,2.02817
 IL10-0021,natural_polymer,0.752,,none,enzymatic_crosslinking,low,murine_primary_or_in_vivo_context,other_stimulation,in_vivo_tissue_or_systemic,72.0,60.9211
@@ -74,7 +74,7 @@ IL10-0074,natural_polymer,0.087,27.8,anti_inflammatory_plus_growth_factor_materi
 IL10-0075,natural_polymer,0.2542,28.6,pro_inflammatory_material_cue,physical_self_assembly,medium,RAW264_7,other_stimulation,unclear,24.0,49.647
 IL10-0076,natural_polymer,0.9287,19.8,combined_pro_and_anti_inflammatory_material_cues,physical_self_assembly,high,RAW264_7,other_stimulation,unclear,24.0,31.8951
 IL10-0077,natural_polymer,,,none,photo_crosslinking,low,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,10.5823
-IL10-0078,natural_polymer,,16.1591,none,photo_crosslinking,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,11.6035
+IL10-0078,natural_polymer,,16.1591,none,photo_crosslinking,low,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,11.6035
 IL10-0079,natural_polymer,,4.5605,anti_inflammatory_plus_growth_factor_material_cues,photo_crosslinking,high,RAW264_7,LPS,hydrogel_extract_or_eluate,24.0,15.1096
 IL10-0080,natural_polymer,2.6997,,anti_inflammatory_material_cue,photo_crosslinking,medium,RAW264_7,LPS,direct_surface_contact,24.0,36.8228
 IL10-0081,natural_polymer,2.6997,,anti_inflammatory_material_cue,photo_crosslinking,medium,RAW264_7,LPS,direct_surface_contact,24.0,26.0622

@@ -3,8 +3,8 @@
   "study": "P15",
   "DOI": "10.1002/btm2.10217",
   "condition": "basal THP-1 medium",
-  "data_release": "thermal_harmonisation_v2",
-  "model_configuration_release": "accepted_train80_release_v1",
+  "data_release": "IL10-crosslink7-RF-median-20261020",
+  "model_configuration_release": "IL10-crosslink7-RF-median-20261020",
   "fit_scope": "All remaining observations after whole-study removal from full target-specific dataset; not the original 80% split",
   "hyperparameter_tuning": false,
   "target_transform": null,
@@ -457,13 +457,12 @@
         "IL10-0029",
         "IL10-0030"
       ],
-      "input_sha256": "8aef2ec5bcae3b966559531c8ecbda9ec939a68686fa300d4a1b70293d03a018",
+      "input_sha256": "87ec0a562440edb7a2138fba7f01385848241e2cec5c6872b69031be3bb54188",
       "fixed_estimator_seeds": [
-        85,
-        115,
-        158
+        18571,
+        28094,
+        30787
       ],
-      "AD_independent_max_difference": 1.9952928198563313e-12,
       "AD_constructor_spec": {
         "__estimator__": "sklearn.compose._column_transformer.ColumnTransformer",
         "parameters": {
@@ -590,7 +589,8 @@
           "verbose": false,
           "verbose_feature_names_out": true
         }
-      }
+      },
+      "AD_recomputed_with_corrected_training_categories": true
     }
   },
   "fitted_models": [
@@ -1109,10 +1109,10 @@
     },
     {
       "target": "il10",
-      "seed": 85,
-      "file": "models/p15/il10_85_P15_excluded.pklz",
-      "sha256": "63fd8993c613fe83f1ca5c1ed5ca12499b80c5c98522cc39cceb3e064eda413b",
-      "accepted_source_model_sha256": "83af1051d11bb9d1e78748b94684ef6c583d7b09698515148e1192a87d9386c7",
+      "seed": 18571,
+      "file": "models/p15/il10_18571_P15_excluded.pklz",
+      "sha256": "d05d5dbe4c389a0fed0029eac96bfb76a5e8e2754cdb0da1220b652db8a67f8e",
+      "accepted_source_model_sha256": "ae1d2442e518d61eb1a8dae34ea27b88b558809c575b8f87b83a67e8b8061d40",
       "complete_constructor_spec": {
         "__estimator__": "sklearn.pipeline.Pipeline",
         "parameters": {
@@ -1142,46 +1142,16 @@
                                   "__tuple__": [
                                     "imputer",
                                     {
-                                      "__estimator__": "sklearn.impute._iterative.IterativeImputer",
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
                                       "parameters": {
                                         "add_indicator": false,
-                                        "estimator": {
-                                          "__estimator__": "sklearn.linear_model._bayes.BayesianRidge",
-                                          "parameters": {
-                                            "alpha_1": 1e-06,
-                                            "alpha_2": 1e-06,
-                                            "alpha_init": null,
-                                            "compute_score": false,
-                                            "copy_X": true,
-                                            "fit_intercept": true,
-                                            "lambda_1": 1e-06,
-                                            "lambda_2": 1e-06,
-                                            "lambda_init": null,
-                                            "max_iter": 300,
-                                            "tol": 0.001,
-                                            "verbose": false
-                                          }
-                                        },
+                                        "copy": true,
                                         "fill_value": null,
-                                        "imputation_order": "ascending",
-                                        "initial_strategy": "mean",
                                         "keep_empty_features": false,
-                                        "max_iter": 20,
-                                        "max_value": {
-                                          "__float__": "inf"
-                                        },
-                                        "min_value": {
-                                          "__float__": "-inf"
-                                        },
                                         "missing_values": {
                                           "__float__": "nan"
                                         },
-                                        "n_nearest_features": null,
-                                        "random_state": 42,
-                                        "sample_posterior": false,
-                                        "skip_complete": false,
-                                        "tol": 0.001,
-                                        "verbose": 0
+                                        "strategy": "median"
                                       }
                                     }
                                   ]
@@ -1276,7 +1246,7 @@
                     "bootstrap": false,
                     "ccp_alpha": 0.0,
                     "criterion": "squared_error",
-                    "max_depth": 9,
+                    "max_depth": 8,
                     "max_features": 0.7,
                     "max_leaf_nodes": null,
                     "max_samples": null,
@@ -1288,7 +1258,7 @@
                     "n_estimators": 250,
                     "n_jobs": 1,
                     "oob_score": false,
-                    "random_state": 85,
+                    "random_state": 18571,
                     "verbose": 0,
                     "warm_start": false
                   }
@@ -1300,17 +1270,17 @@
           "verbose": false
         }
       },
-      "fit_started_utc": "2026-09-29T14:36:54.286992+00:00",
-      "fit_completed_utc": "2026-09-29T14:36:54.473958+00:00",
-      "fit_IDs_sha256": "905e69d687047f51bbe4e32515f77c901c2d59bc57c24c841d6670ca78b74ad4",
+      "fit_started_utc": "2026-10-20T18:19:39.741830+00:00",
+      "fit_completed_utc": "2026-10-20T18:19:39.876496+00:00",
+      "fit_IDs_sha256": "1505dd887155c20ca5f1b26e936d4f87ee85cdd4b37b90daa5d41c4b4a4a7dd8",
       "preprocessor_fitted_from_scratch": true
     },
     {
       "target": "il10",
-      "seed": 115,
-      "file": "models/p15/il10_115_P15_excluded.pklz",
-      "sha256": "e80c9a9bb1a4cba5649c5f6e06c24a097e2c414f9bc3014a62e223a1f1a550b8",
-      "accepted_source_model_sha256": "a2dcefd4e7785f1b10831eab6b14ec206fce9e8f6bda167aca8721a24d5a32b8",
+      "seed": 28094,
+      "file": "models/p15/il10_28094_P15_excluded.pklz",
+      "sha256": "043a56695b161aa18f12d32e7762c7a4db824ef9e48034ea31af45fc56c86bdd",
+      "accepted_source_model_sha256": "ed860dfd6642f825d1a290b574e18c5b0941a4cc390fa3c805cb0bdc0b47dbae",
       "complete_constructor_spec": {
         "__estimator__": "sklearn.pipeline.Pipeline",
         "parameters": {
@@ -1340,46 +1310,16 @@
                                   "__tuple__": [
                                     "imputer",
                                     {
-                                      "__estimator__": "sklearn.impute._iterative.IterativeImputer",
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
                                       "parameters": {
                                         "add_indicator": false,
-                                        "estimator": {
-                                          "__estimator__": "sklearn.linear_model._bayes.BayesianRidge",
-                                          "parameters": {
-                                            "alpha_1": 1e-06,
-                                            "alpha_2": 1e-06,
-                                            "alpha_init": null,
-                                            "compute_score": false,
-                                            "copy_X": true,
-                                            "fit_intercept": true,
-                                            "lambda_1": 1e-06,
-                                            "lambda_2": 1e-06,
-                                            "lambda_init": null,
-                                            "max_iter": 300,
-                                            "tol": 0.001,
-                                            "verbose": false
-                                          }
-                                        },
+                                        "copy": true,
                                         "fill_value": null,
-                                        "imputation_order": "ascending",
-                                        "initial_strategy": "mean",
                                         "keep_empty_features": false,
-                                        "max_iter": 20,
-                                        "max_value": {
-                                          "__float__": "inf"
-                                        },
-                                        "min_value": {
-                                          "__float__": "-inf"
-                                        },
                                         "missing_values": {
                                           "__float__": "nan"
                                         },
-                                        "n_nearest_features": null,
-                                        "random_state": 42,
-                                        "sample_posterior": false,
-                                        "skip_complete": false,
-                                        "tol": 0.001,
-                                        "verbose": 0
+                                        "strategy": "median"
                                       }
                                     }
                                   ]
@@ -1474,7 +1414,7 @@
                     "bootstrap": false,
                     "ccp_alpha": 0.0,
                     "criterion": "squared_error",
-                    "max_depth": 9,
+                    "max_depth": 8,
                     "max_features": 0.7,
                     "max_leaf_nodes": null,
                     "max_samples": null,
@@ -1486,7 +1426,7 @@
                     "n_estimators": 250,
                     "n_jobs": 1,
                     "oob_score": false,
-                    "random_state": 115,
+                    "random_state": 28094,
                     "verbose": 0,
                     "warm_start": false
                   }
@@ -1498,17 +1438,17 @@
           "verbose": false
         }
       },
-      "fit_started_utc": "2026-09-29T14:36:54.532030+00:00",
-      "fit_completed_utc": "2026-09-29T14:36:54.688169+00:00",
-      "fit_IDs_sha256": "905e69d687047f51bbe4e32515f77c901c2d59bc57c24c841d6670ca78b74ad4",
+      "fit_started_utc": "2026-10-20T18:19:40.199364+00:00",
+      "fit_completed_utc": "2026-10-20T18:19:40.332659+00:00",
+      "fit_IDs_sha256": "1505dd887155c20ca5f1b26e936d4f87ee85cdd4b37b90daa5d41c4b4a4a7dd8",
       "preprocessor_fitted_from_scratch": true
     },
     {
       "target": "il10",
-      "seed": 158,
-      "file": "models/p15/il10_158_P15_excluded.pklz",
-      "sha256": "40453f39949ea63339242af152f00918805c136caa0ccfa247e061e1050a5647",
-      "accepted_source_model_sha256": "255d7c62e1e40a66ffd63479519eca93d3a1de6c45db2245d2b2736938982afd",
+      "seed": 30787,
+      "file": "models/p15/il10_30787_P15_excluded.pklz",
+      "sha256": "f4048717c0b5c7203f676d86c3924593f1714621c4c0c23081e167d56b99e005",
+      "accepted_source_model_sha256": "925443afdc334d511fc14446e081df0659a296409eece865d22573857f077f71",
       "complete_constructor_spec": {
         "__estimator__": "sklearn.pipeline.Pipeline",
         "parameters": {
@@ -1538,46 +1478,16 @@
                                   "__tuple__": [
                                     "imputer",
                                     {
-                                      "__estimator__": "sklearn.impute._iterative.IterativeImputer",
+                                      "__estimator__": "sklearn.impute._base.SimpleImputer",
                                       "parameters": {
                                         "add_indicator": false,
-                                        "estimator": {
-                                          "__estimator__": "sklearn.linear_model._bayes.BayesianRidge",
-                                          "parameters": {
-                                            "alpha_1": 1e-06,
-                                            "alpha_2": 1e-06,
-                                            "alpha_init": null,
-                                            "compute_score": false,
-                                            "copy_X": true,
-                                            "fit_intercept": true,
-                                            "lambda_1": 1e-06,
-                                            "lambda_2": 1e-06,
-                                            "lambda_init": null,
-                                            "max_iter": 300,
-                                            "tol": 0.001,
-                                            "verbose": false
-                                          }
-                                        },
+                                        "copy": true,
                                         "fill_value": null,
-                                        "imputation_order": "ascending",
-                                        "initial_strategy": "mean",
                                         "keep_empty_features": false,
-                                        "max_iter": 20,
-                                        "max_value": {
-                                          "__float__": "inf"
-                                        },
-                                        "min_value": {
-                                          "__float__": "-inf"
-                                        },
                                         "missing_values": {
                                           "__float__": "nan"
                                         },
-                                        "n_nearest_features": null,
-                                        "random_state": 42,
-                                        "sample_posterior": false,
-                                        "skip_complete": false,
-                                        "tol": 0.001,
-                                        "verbose": 0
+                                        "strategy": "median"
                                       }
                                     }
                                   ]
@@ -1672,7 +1582,7 @@
                     "bootstrap": false,
                     "ccp_alpha": 0.0,
                     "criterion": "squared_error",
-                    "max_depth": 9,
+                    "max_depth": 8,
                     "max_features": 0.7,
                     "max_leaf_nodes": null,
                     "max_samples": null,
@@ -1684,7 +1594,7 @@
                     "n_estimators": 250,
                     "n_jobs": 1,
                     "oob_score": false,
-                    "random_state": 158,
+                    "random_state": 30787,
                     "verbose": 0,
                     "warm_start": false
                   }
@@ -1696,9 +1606,9 @@
           "verbose": false
         }
       },
-      "fit_started_utc": "2026-09-29T14:36:54.766423+00:00",
-      "fit_completed_utc": "2026-09-29T14:36:54.934461+00:00",
-      "fit_IDs_sha256": "905e69d687047f51bbe4e32515f77c901c2d59bc57c24c841d6670ca78b74ad4",
+      "fit_started_utc": "2026-10-20T18:19:40.667042+00:00",
+      "fit_completed_utc": "2026-10-20T18:19:40.806493+00:00",
+      "fit_IDs_sha256": "1505dd887155c20ca5f1b26e936d4f87ee85cdd4b37b90daa5d41c4b4a4a7dd8",
       "preprocessor_fitted_from_scratch": true
     }
   ],
@@ -1728,5 +1638,6 @@
     "threshold": "linear 0.95 quantile of reference self-excluded mean-five distances; duplicate rows retained",
     "inside_rule": "distance <= threshold",
     "unseen_levels_reported": true
-  }
+  },
+  "revision_note": "IL-10 refitted after seven approved crosslink-level changes, with the accepted median RF parameters and three realisations. TNF fitted objects and predictions are unchanged."
 }

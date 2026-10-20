@@ -1,20 +1,20 @@
 [
   {
     "target": "il10",
-    "model_realisation": 85,
+    "model_realisation": 18571,
     "n": 2,
-    "max_additivity_residual_pg_ml": 8.810729923425242e-13
+    "max_additivity_residual_pg_ml": 1.0231815394945443e-12
   },
   {
     "target": "il10",
-    "model_realisation": 115,
+    "model_realisation": 28094,
     "n": 2,
-    "max_additivity_residual_pg_ml": 1.1084466677857563e-12
+    "max_additivity_residual_pg_ml": 1.2789769243681803e-12
   },
   {
     "target": "il10",
-    "model_realisation": 158,
+    "model_realisation": 30787,
     "n": 2,
-    "max_additivity_residual_pg_ml": 5.115907697472721e-13
+    "max_additivity_residual_pg_ml": 2.2737367544323206e-13
   }
 ]

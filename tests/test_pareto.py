@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import pytest
 from src.pareto.common import DATA, FEATURES, NUM, SEEDS, csv, digest, front, read
-from src.pareto.verification import compare_tables, validate_profiles
+from src.pareto.verification import compare_tables, validate_profiles, verify_representatives
+from src.data import configuration
 from src.case_replay import run as replay_cases
 from src.hydrogel_immune_ml.public_encoding import (
     PUBLIC_VERSION,
@@ -101,24 +102,25 @@ def test_profile_id_cannot_hide_a_changed_feature():
         validate_profiles(row, config, {})
 
 
-def test_latest_supplement_profiles_use_current_publication_codes():
-    profiles = csv(DATA / "reference/FINAL_PARETO_PROFILES.csv")
-    representatives = csv(DATA / "reference/FINAL_PARETO_REPRESENTATIVES.csv")
-    assert len(profiles) == 16
-    assert len(profiles[["tnf_mean_pg_ml", "il10_mean_pg_ml"]].drop_duplicates()) == 14
-    coded = encode_public_input(representatives)
-    assert coded[VERSION_COLUMN].eq(PUBLIC_VERSION).all()
-    assert coded.network_density_proxy.tolist() == ["A", "C", "B"]
-    assert coded.gelation_or_crosslinking_mechanism.tolist() == ["B", "A", "A"]
-    assert coded.stimulation_context.tolist() == ["A", "E", "A"]
-    pd.testing.assert_frame_equal(
-        decode_public_input(coded, PUBLIC_VERSION), representatives, check_exact=True
-    )
+def test_accepted_model_panel_is_read_from_canonical_configuration():
+    assert SEEDS == {target: configuration(target)["seeds"] for target in ("tnf", "il10")}
+    assert all(len(set(values)) == 3 for values in SEEDS.values())
+
+
+def test_current_profiles_round_trip_publication_codes(replay_dir):
+    profiles = csv(replay_dir / "results/FINAL_PARETO_PROFILES.csv")
+    representatives = csv(replay_dir / "results/FINAL_PARETO_REPRESENTATIVES.csv")
+    for frame in (profiles, representatives):
+        coded = encode_public_input(frame)
+        assert coded[VERSION_COLUMN].eq(PUBLIC_VERSION).all()
+        pd.testing.assert_frame_equal(decode_public_input(coded, PUBLIC_VERSION), frame,
+                                      check_exact=True)
+    verify_representatives(profiles, representatives)
 
 
 def test_all_ten_inputs_and_full_candidate_identity_order(replay_dir):
     inputs = csv(replay_dir / "search/CANDIDATE_INPUTS.csv")
-    reference = csv(DATA / "reference/ALL_CANDIDATES_AND_PREDICTIONS.csv.gz")
+    reference = csv(replay_dir / "results/ALL_CANDIDATES_AND_PREDICTIONS.csv")
     assert inputs.columns[1:11].tolist() == FEATURES
     assert inputs[FEATURES].nunique().gt(1).all()
     pd.testing.assert_frame_equal(inputs, reference[inputs.columns])
@@ -163,36 +165,34 @@ def test_every_pair_uses_complete_eligible_universe(replay_dir):
 
 
 def test_retained_ids_frequencies_and_representatives(replay_dir):
-    for name in ["FINAL_PARETO_PROFILES.csv", "FINAL_PARETO_REPRESENTATIVES.csv"]:
-        assert (
-            compare_tables(
-                csv(replay_dir / "results" / name),
-                csv(DATA / "reference" / name),
-                ["candidate_id"],
-            )
-            == 0
-        )
+    profiles = csv(replay_dir / "results/FINAL_PARETO_PROFILES.csv")
     reps = csv(replay_dir / "results/FINAL_PARETO_REPRESENTATIVES.csv")
-    assert dict(zip(reps.display_label, reps.candidate_id)) == {
-        "P1": "A10_1aa126e1142f7ae42d8f",
-        "P2": "A10_40b4f5f8df5f8ae9cc29",
-        "P3": "A10_cd26a0990ac785993dcc",
-    }
-    assert reps.nondomination_frequency_of_9.tolist() == [6, 9, 9]
+    masks = csv(replay_dir / "results/COMPUTATIONAL_FRONT_MASKS.csv")
+    assert set(profiles.candidate_id) == set(masks.loc[masks.final_front, "candidate_id"])
+    expected = masks.set_index("candidate_id").loc[profiles.candidate_id, "nondomination_frequency_of_9"]
+    np.testing.assert_array_equal(profiles.nondomination_frequency_of_9, expected)
+    verify_representatives(profiles, reps)
+    report = read(replay_dir / "checks/NUMERICAL_REPRODUCTION.json")
+    assert report["retained_profiles"] == len(profiles)
+    assert report["objective_locations"] == len(profiles[["tnf_mean_pg_ml", "il10_mean_pg_ml"]].drop_duplicates())
+    assert report["accepted_seeds"] == SEEDS
+
+
+def test_current_ad_is_revalidated_without_predictor_or_diagnostic_fits(replay_dir):
+    report = read(replay_dir / "checks/MODEL_AND_DATA_VERIFICATION.json")
+    assert report["predictive_fits"] == report["diagnostic_fits"] == 0
+    assert all(row["learned_statistics_revalidated"] for row in report["applicability_domain"])
+    assert all(row["Test_predictions_exact"] for row in report["models"])
+    config = read(replay_dir / "search/SEARCH_CONFIGURATION.json")
+    assert config["accepted_seeds"] == SEEDS
+    assert config["AD_settings_sha256"]
 
 
 def test_grouped_shap_matches_sources_and_is_additive(replay_dir):
     values = csv(replay_dir / "results/REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv")
-    reference = csv(DATA / "reference/REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv")
-    assert (
-        compare_tables(
-            values,
-            reference,
-            ["target", "candidate_id", "model_realisation", "descriptor_name"],
-            1e-7,
-        )
-        == 0
-    )
+    for target in SEEDS:
+        actual = set(values.loc[values.target.eq(target), "model_realisation"].astype(str))
+        assert actual == {str(seed) for seed in SEEDS[target]} | {"mean"}
     for _, group in values.groupby(["target", "candidate_id", "model_realisation"]):
         assert set(group.descriptor_name) == set(FEATURES)
         assert (

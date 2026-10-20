@@ -42,10 +42,10 @@ def test_case_studies_use_the_two_distinct_model_populations(tmp_path):
     # Table S7b, at its printed precision. This fails if primary P15 models or
     # the superseded IL-4/IL-13 case are substituted for whole-study exclusion.
     np.testing.assert_allclose(
-        p15.prediction_mean_pg_ml, [422.555, 190.882, 441.690, 486.719], atol=0.0005, rtol=0,
+        p15.prediction_mean_pg_ml, [422.555, 190.882, 624.815, 716.929], atol=0.0005, rtol=0,
     )
     np.testing.assert_allclose(
-        c4.prediction_mean_pg_ml, [590.973, 487.348, 194.933, 228.321], atol=0.0005, rtol=0,
+        c4.prediction_mean_pg_ml, [590.973, 487.348, 167.050, 183.802], atol=0.0005, rtol=0,
     )
     delta = read_csv(tmp_path / "delta_shap.csv")
     for _, group in delta.groupby(["study", "target"]):
@@ -53,7 +53,7 @@ def test_case_studies_use_the_two_distinct_model_populations(tmp_path):
         assert group.raw_descriptor_changed.sum() == 1
 
 
-@pytest.mark.parametrize("target,n,expected", [("tnf", 139, 0.9236769289022223), ("il10", 133, 0.9771300591905295)])
+@pytest.mark.parametrize("target,n,expected", [("tnf", 139, 0.9236769289022223), ("il10", 133, 0.9801951687729963)])
 def test_main_tsne_coordinates_and_caption_diagnostic(target, n, expected):
     check_references()
     frame = read_csv(ROOT / f"outputs/tsne/ALL_ROWS_DESCRIPTIVE/{target}_p30.csv")

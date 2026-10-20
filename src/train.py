@@ -22,9 +22,12 @@ def train_target(target):
         predicted = pipeline.predict(combined)
         np.testing.assert_array_equal(predicted[:-2], reference[f'{target}_{seed}_Test'])
         np.testing.assert_array_equal(predicted[-2:], reference[f'{target}_{seed}_C4'])
-        np.testing.assert_array_equal(pipeline.predict(training[feature_names()]), fitted_reference[seed].predict(training[feature_names()]))
+        training_predictions = pipeline.predict(training[feature_names()])
+        np.testing.assert_array_equal(training_predictions, reference[f'{target}_{seed}_Training'])
+        np.testing.assert_array_equal(training_predictions, fitted_reference[seed].predict(training[feature_names()]))
         record = {'target': target, 'seed': seed, 'fit_n': len(training), 'fit_ID_hash': split_definition(target)['Training_ID_hash'],
                   'OOF_exact': True, 'Test_exact': True, 'case_exact': True, 'Training_predictions_exact': True}
+        record.update({f'Training_{key}': value for key, value in metrics(training[RESPONSE], training_predictions).items()})
         record.update({f'Validation_{key}': value for key, value in metrics(training[RESPONSE], validation).items()})
         record.update({f'Test_{key}': value for key, value in metrics(test[RESPONSE], predicted[:-2]).items()})
         records.append(record)

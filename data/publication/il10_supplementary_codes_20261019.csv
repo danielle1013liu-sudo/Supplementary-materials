@@ -1,9 +1,9 @@
 publication_codebook_version,dataset_row_id,DOI,supplementary_no,polymer_origin_class,modulus_value_kPa,pore_size_um,material_bioactive_cue_class,gelation_or_crosslinking_mechanism,network_density_proxy,macrophage_model_class,stimulation_context,cell_material_interaction_mode,culture_or_exposure_duration_h,corrected_value_pg_ml
 frequency_codes_20261019,IL10-0001,10.1016/j.bioactmat.2024.07.015,1,A,—,182.8023,A,D,A,A,F,A,48.0,53.7037
 frequency_codes_20261019,IL10-0002,10.1016/j.bioactmat.2024.07.015,2,A,—,182.8023,A,D,A,A,F,A,96.0,82.0988
-frequency_codes_20261019,IL10-0003,10.1016/j.mtbio.2025.101686,3,A,19.1869,40.011,A,A,B,A,A,B,48.0,64.8354
-frequency_codes_20261019,IL10-0004,10.1016/j.mtbio.2025.101686,4,A,16.8094,50.25,C,A,B,A,A,B,48.0,92.6978
-frequency_codes_20261019,IL10-0005,10.1016/j.mtbio.2025.101686,5,A,13.1193,97.387,C,A,B,A,A,B,48.0,140.56
+frequency_codes_20261019,IL10-0003,10.1016/j.mtbio.2025.101686,3,A,19.1869,40.011,A,A,A,A,A,B,48.0,64.8354
+frequency_codes_20261019,IL10-0004,10.1016/j.mtbio.2025.101686,4,A,16.8094,50.25,C,A,A,A,A,B,48.0,92.6978
+frequency_codes_20261019,IL10-0005,10.1016/j.mtbio.2025.101686,5,A,13.1193,97.387,C,A,A,A,A,B,48.0,140.56
 frequency_codes_20261019,IL10-0006,10.1038/s41467-024-50072-y,6,A,—,—,A,A,C,B,B,A,24.0,63.7474
 frequency_codes_20261019,IL10-0007,10.1038/s41467-024-50072-y,7,A,—,—,A,A,C,B,D,A,24.0,205.237
 frequency_codes_20261019,IL10-0008,10.1038/s41467-024-50072-y,8,A,—,—,A,A,C,B,E,A,24.0,940.15
@@ -14,9 +14,9 @@ frequency_codes_20261019,IL10-0012,10.1186/s12951-024-02996-2,12,A,12.263,142.61
 frequency_codes_20261019,IL10-0013,10.1186/s12951-024-02996-2,13,A,16.1507,139.205,B,A,B,B,C,A,24.0,308.821
 frequency_codes_20261019,IL10-0014,10.1186/s12951-024-02996-2,14,A,29.6548,117.045,C,A,B,B,C,A,24.0,760.713
 frequency_codes_20261019,IL10-0015,10.1002/smll.202203680,15,A,0.0841,—,A,B,C,B,E,C,72.0,81.6
-frequency_codes_20261019,IL10-0016,10.1002/smll.202203680,16,A,0.4281,—,A,D,A,B,E,C,72.0,108.8
-frequency_codes_20261019,IL10-0017,10.1002/smll.202203680,17,A,0.4434,—,A,D,A,B,E,C,72.0,248.8
-frequency_codes_20261019,IL10-0018,10.1002/smll.202203680,18,A,0.438,—,A,D,A,B,E,C,72.0,189.2
+frequency_codes_20261019,IL10-0016,10.1002/smll.202203680,16,A,0.4281,—,A,D,B,B,E,C,72.0,108.8
+frequency_codes_20261019,IL10-0017,10.1002/smll.202203680,17,A,0.4434,—,A,D,B,B,E,C,72.0,248.8
+frequency_codes_20261019,IL10-0018,10.1002/smll.202203680,18,A,0.438,—,A,D,B,B,E,C,72.0,189.2
 frequency_codes_20261019,IL10-0019,10.34133/bmr.0029,19,A,26.67,60.0,A,D,A,A,F,F,—,1.55869
 frequency_codes_20261019,IL10-0020,10.34133/bmr.0029,20,A,36.67,60.0,A,D,A,A,F,F,—,2.02817
 frequency_codes_20261019,IL10-0021,10.3389/fimmu.2023.1170153,21,A,0.752,—,A,C,C,B,E,D,72.0,60.9211
@@ -74,7 +74,7 @@ frequency_codes_20261019,IL10-0074,10.1038/s41467-026-68318-2,72,A,0.087,27.8,C,
 frequency_codes_20261019,IL10-0075,10.1038/s41467-026-68318-2,73,A,0.2542,28.6,F,B,A,A,E,F,24.0,49.647
 frequency_codes_20261019,IL10-0076,10.1038/s41467-026-68318-2,74,A,0.9287,19.8,E,B,B,A,E,F,24.0,31.8951
 frequency_codes_20261019,IL10-0077,10.1016/j.mtbio.2026.102863,75,A,—,—,A,A,C,A,A,B,24.0,10.5823
-frequency_codes_20261019,IL10-0078,10.1016/j.mtbio.2026.102863,76,A,—,16.1591,A,A,B,A,A,B,24.0,11.6035
+frequency_codes_20261019,IL10-0078,10.1016/j.mtbio.2026.102863,76,A,—,16.1591,A,A,C,A,A,B,24.0,11.6035
 frequency_codes_20261019,IL10-0079,10.1016/j.mtbio.2026.102863,77,A,—,4.5605,C,A,B,A,A,B,24.0,15.1096
 frequency_codes_20261019,IL10-0080,10.1186/s13018-025-06631-0,78,A,2.6997,—,B,A,A,A,A,A,24.0,36.8228
 frequency_codes_20261019,IL10-0081,10.1186/s13018-025-06631-0,79,A,2.6997,—,B,A,A,A,A,A,24.0,26.0622

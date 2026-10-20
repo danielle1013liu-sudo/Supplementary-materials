@@ -1,11 +1,11 @@
 {
   "publication_codebook_version": "frequency_codes_20261019",
-  "eligible_candidates": 224895,
-  "final_profiles": 16,
-  "objective_locations": 14,
+  "eligible_candidates": 225406,
+  "final_profiles": 18,
+  "objective_locations": 17,
   "representative_ids": {
-    "P1": "A10_1aa126e1142f7ae42d8f",
-    "P2": "A10_40b4f5f8df5f8ae9cc29",
+    "P1": "A10_747a0430c92081245387",
+    "P2": "A10_5ddf33313c74338a3cae",
     "P3": "A10_cd26a0990ac785993dcc"
   },
   "axis_limits": {
@@ -15,7 +15,7 @@
     ],
     "y": [
       0.0,
-      1895.1004760000073
+      1891.6431651391738
     ]
   },
   "heatmaps": [
@@ -26,8 +26,8 @@
         850.0
       ],
       "column_ids": [
-        "A10_1aa126e1142f7ae42d8f",
-        "A10_40b4f5f8df5f8ae9cc29",
+        "A10_747a0430c92081245387",
+        "A10_5ddf33313c74338a3cae",
         "A10_cd26a0990ac785993dcc"
       ],
       "row_order": [
@@ -46,12 +46,12 @@
     {
       "target": "il10",
       "color_limits": [
-        -650.0,
-        650.0
+        -1050.0,
+        1050.0
       ],
       "column_ids": [
-        "A10_1aa126e1142f7ae42d8f",
-        "A10_40b4f5f8df5f8ae9cc29",
+        "A10_747a0430c92081245387",
+        "A10_5ddf33313c74338a3cae",
         "A10_cd26a0990ac785993dcc"
       ],
       "row_order": [
@@ -70,10 +70,10 @@
   ],
   "font": "Times New Roman",
   "source_sha256": {
-    "ALL_CANDIDATES_AND_PREDICTIONS.csv.gz": "dede6f7226671be4e67f97c007245df00f34c57c1ff3d1bf072b1c74b614fafc",
-    "FINAL_PARETO_PROFILES.csv": "71b273e59d947970bc1f8535f557f51b9f838766c09c49c62c1196bc147e0d40",
-    "FINAL_PARETO_REPRESENTATIVES.csv": "96d5137f1949a4d1a306409ef4f8735eb6d7179f757707e293a8b7f45ae83502",
-    "FINAL_REPRESENTATIVE_SHAP.csv": "bf3661f49cc7c08cd3c0b79f41f26319d605aa3ba1b7005960398c5519929bb5"
+    "ALL_CANDIDATES_AND_PREDICTIONS.csv": "5a5a75ec2fd2701476a2549008aebfa1d4ec04435e27086a821165e0084baa01",
+    "FINAL_PARETO_PROFILES.csv": "78a067643be7614ac2b98589a4f876d144cd5bbec6e7105775db32cf7d5103e3",
+    "FINAL_PARETO_REPRESENTATIVES.csv": "6c8937e8ef7227c62d7a959429a6f578bc35a38235ff08d2e40c732f3d6a00af",
+    "FINAL_REPRESENTATIVE_SHAP.csv": "be9b1f9672b56ab74b9e8646307939112cfa2b08362eab18cb4387bd5792f9a7"
   },
   "cloud_rasterized": true,
   "predictions_recalculated": false

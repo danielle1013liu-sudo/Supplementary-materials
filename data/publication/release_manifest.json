@@ -1,0 +1,10 @@
+{
+  "dataset_version": "crosslink7_rfmedian_20261020",
+  "publication_codebook_version": "frequency_codes_20261019",
+  "canonical_sha256": {
+    "tnf": "289d85de602cf9277ba2cbce368439db2019df78b58bada7200fa9e855397429",
+    "il10": "87ec0a562440edb7a2138fba7f01385848241e2cec5c6872b69031be3bb54188"
+  },
+  "mapping_sha256": "afa443c81e305faa91820d553f838f5e7cc84574191557a99ecc473434b7e16d",
+  "note": "Filename dates identify the fixed letter mapping; dataset_version identifies the data revision."
+}

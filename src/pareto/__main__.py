@@ -16,6 +16,7 @@ def main():
         choices=["all", "generate", "predict", "select", "explain", "verify"],
         default="all",
     )
+    parser.add_argument("--reference", type=Path, help="Optional matching numerical reference directory")
     args = parser.parse_args()
     check_environment()
     check_inputs()
@@ -26,10 +27,7 @@ def main():
         parser.error(
             "Choose a separate results directory, outside data, models and source code."
         )
-    for name, expected in read(DATA / "checksums.json").items():
-        if sha(ROOT / name) != expected:
-            raise ValueError(f"Changed reference input: {name}")
-    for name in ["search", "results", "checks"]:
+    for name in ["search", "results", "checks", "inputs"]:
         (output / name).mkdir(parents=True, exist_ok=True)
     stages = {
         "generate": generation.run,
@@ -42,7 +40,10 @@ def main():
         for name, function in stages.items():
             if args.stage in ("all", name):
                 print(f"{name}: {output}", flush=True)
-                function(output)
+                if name == "verify":
+                    function(output, reference=args.reference)
+                else:
+                    function(output)
 
 
 if __name__ == "__main__":

@@ -7,3 +7,14 @@ outputs/runtime_provenance/
 outputs/all10_replay/
 .pytest_cache/
 tmp/
+
+outputs/release_build/
+
+outputs/pareto/
+
+outputs/test_runs/
+outputs/validation/*.log
+results/release_tests_*.xml
+results/IL10_update_*.txt
+results/publication_codes_*/
+docs/supplementary_visual_qa_*.json

@@ -5,7 +5,7 @@ import pickle
 import zlib
 from pathlib import Path
 import numpy as np
-from .data import check_inputs, configuration
+from .data import check_inputs, configuration, split_data, load_cases, load_data
 from .models import make_pipeline
 from .pareto.common import (
     ROOT,
@@ -28,40 +28,22 @@ def run(output):
     output = Path(output)
     check_inputs()
     checks = []
-    records = read(DATA / "original_model_records.json")
-    external = csv(ROOT / "data/external_cases.csv")
-    for target in SEEDS:
-        context = read(DATA / f"{target}_context.json")
-        values = dataset(target).set_index(KEY)
-        test = values.loc[context["Test_IDs"], FEATURES]
-        cases = external.loc[external.target.eq(target)].sort_values("hydrogel_group")
-        for seed, model in models(target):
-            record = next(
-                r
-                for r in records["models"]
-                if r["target"] == target and r["seed"] == seed
-            )
-            if describe(model) != describe(make_pipeline(target, seed)):
-                raise ValueError(
-                    f"Optional training configuration differs: {target}, {seed}"
-                )
-            for scope, frame, expected in [
-                ("Test", test, record["accepted_Test_predictions"]),
-                ("C4", cases[FEATURES], record["accepted_case_predictions"]),
-            ]:
-                prediction = model.predict(frame)
-                np.testing.assert_array_equal(prediction, np.asarray(expected))
-                checks.append(
-                    {
-                        "target": target,
-                        "realisation": seed,
-                        "scope": scope,
+    with np.load(ROOT / "data/reference/accepted_predictions.npz") as reference:
+        for target in SEEDS:
+            _, test = split_data(target)
+            cases = load_cases(target)
+            for seed, model in models(target):
+                if describe(model) != describe(make_pipeline(target, seed)):
+                    raise ValueError(f"Training configuration differs: {target}, {seed}")
+                for scope, frame in [("Test", test[FEATURES]), ("C4", cases[FEATURES])]:
+                    expected = reference[f"{target}_{seed}_{scope}"]
+                    prediction = model.predict(frame)
+                    np.testing.assert_array_equal(prediction, expected)
+                    checks.append({
+                        "target": target, "realisation": seed, "scope": scope,
                         "n": len(frame),
-                        "max_absolute_difference_pg_ml": float(
-                            np.max(np.abs(prediction - expected))
-                        ),
-                    }
-                )
+                        "max_absolute_difference_pg_ml": float(np.max(np.abs(prediction - expected))),
+                    })
     p15 = ROOT / "data/p15"
     for path, expected_hash in read(p15 / "checksums.json").items():
         if sha(ROOT / path) != expected_hash:
@@ -69,7 +51,7 @@ def run(output):
     manifest = read(p15 / "study_exclusion.json")
     reference = csv(p15 / "study_holdout_predictions.csv")
     for target, settings in manifest["targets"].items():
-        values = dataset(target).set_index(KEY, drop=False)
+        values = load_data(target).set_index(KEY, drop=False)
         if set(settings["fit_IDs_ordered"]) & set(settings["excluded_IDs"]):
             raise ValueError("P15 source rows occur in the fitting membership")
         if set(values.index) - set(settings["excluded_IDs"]) != set(

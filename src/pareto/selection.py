@@ -32,6 +32,8 @@ def run(output):
         len(data) == config["declared_finite_grid_size"] and data.candidate_id.is_unique
     )
     eligible = data.loc[data.eligible].copy()
+    if eligible.empty:
+        raise ValueError("No candidates pass the current model and applicability gates")
     universe = digest(eligible.candidate_id.tolist())
     masks = pd.DataFrame(
         {
@@ -105,6 +107,7 @@ def run(output):
             },
         )
         representatives = final.iloc[:0].copy()
+        representatives.insert(0, "display_label", pd.Series(dtype=str))
     else:
         first = final.sort_values(
             XY + ["candidate_id"], ascending=[True, False, True]
@@ -189,6 +192,7 @@ def run(output):
         "prediction_source_sha256": sha(OUT / "ALL_CANDIDATES_AND_PREDICTIONS.csv"),
         "all_pairings_used_same_complete_universe": True,
         "frequency_threshold": 6,
+        "accepted_seeds": SEEDS,
         "model_refits": 0,
     }
     dump(OUT / "PARETO_SUMMARY.json", summary)

@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 from .common import (
     DATA,
+    ROOT,
+    joblib,
+    sha,
+    training,
     FEATURES,
     NUM,
     SEEDS,
@@ -103,99 +107,140 @@ def verify_profile_counts(summary, profiles):
     return counts
 
 
-def run(output):
+def verify_predictions(predictions, output):
+    """Replay saved models and independently reconstruct nearest-neighbor AD."""
+    from sklearn.metrics import pairwise_distances
+    settings = {row["target"]: row for row in read(output / "inputs/APPLICABILITY_DOMAIN_SETTINGS.json")}
+    maximum = 0.0
+    for target in SEEDS:
+        item = settings[target]
+        assert sha(ROOT / item["path"]) == item["sha256"]
+        prep = joblib.load(ROOT / item["path"])
+        train = prep.transform(training(target)[FEATURES])
+        primary = models(target)
+        for start in range(0, len(predictions), 16384):
+            values = predictions.iloc[start:start + 16384]
+            distances = pairwise_distances(prep.transform(values[FEATURES]), train)
+            # Partition finds the same nearest five without the inference sort.
+            mean5 = np.partition(distances, 4, axis=1)[:, :5].mean(axis=1)
+            np.testing.assert_allclose(values[target + "_AD_mean5_distance"], mean5,
+                                       rtol=0, atol=ABSOLUTE_TOLERANCE)
+            np.testing.assert_allclose(values[target + "_AD_ratio"], mean5 / item["threshold_q95"],
+                                       rtol=0, atol=ABSOLUTE_TOLERANCE)
+            for seed, pipe in primary:
+                actual = pipe.predict(values[FEATURES])
+                saved = values[f"{target}_seed_{seed}_pg_ml"].to_numpy()
+                np.testing.assert_allclose(actual, saved, rtol=0, atol=ABSOLUTE_TOLERANCE)
+                maximum = max(maximum, float(np.max(np.abs(actual - saved))))
+        columns = [f"{target}_seed_{seed}_pg_ml" for seed in SEEDS[target]]
+        np.testing.assert_array_equal(predictions[target + "_mean_pg_ml"], predictions[columns].mean(axis=1))
+        np.testing.assert_array_equal(predictions[target + "_sample_SD_pg_ml"], predictions[columns].std(axis=1, ddof=1))
+    return maximum
+
+
+def verify_representatives(profiles, representatives):
+    """Reconstruct endpoint and half-normalized-arc selection from checked rows."""
+    xy = ["tnf_mean_pg_ml", "il10_mean_pg_ml"]
+    locations = profiles.sort_values(xy + ["candidate_id"]).drop_duplicates(xy)
+    if len(locations) < 3:
+        if len(representatives):
+            raise ValueError("Representatives cannot be invented for fewer than three locations")
+        return
+    values = locations[xy].to_numpy()
+    scaled = (values - values.min(axis=0)) / np.ptp(values, axis=0)
+    arc = np.r_[0., np.cumsum(np.linalg.norm(np.diff(scaled, axis=0), axis=1))]
+    interior = locations.iloc[1:-1].copy()
+    interior["distance"] = np.abs(arc[1:-1] - arc[-1] / 2.)
+    first = profiles.sort_values(xy + ["candidate_id"], ascending=[True, False, True]).iloc[0]
+    middle = interior.sort_values(["distance", "candidate_id"]).iloc[0]
+    last = profiles.sort_values([xy[1], xy[0], "candidate_id"], ascending=[False, True, True]).iloc[0]
+    assert representatives.display_label.tolist() == ["P1", "P2", "P3"]
+    assert representatives.candidate_id.tolist() == [first.candidate_id, middle.candidate_id, last.candidate_id]
+    compare_tables(representatives[profiles.columns], profiles.set_index("candidate_id", drop=False)
+                   .loc[representatives.candidate_id], ["candidate_id"])
+
+
+def run(output, reference=None):
+    """Verify the current release; compare a matching saved reference if supplied."""
     output = Path(output)
-    reference = DATA / "reference"
+    if reference is not None:
+        reference = Path(reference)
     inputs = csv(output / "search/CANDIDATE_INPUTS.csv")
     predictions = csv(output / "results/ALL_CANDIDATES_AND_PREDICTIONS.csv")
     masks = csv(output / "results/COMPUTATIONAL_FRONT_MASKS.csv")
     configuration = read(output / "search/SEARCH_CONFIGURATION.json")
+    provenance = read(output / "checks/MODEL_AND_DATA_VERIFICATION.json")
+    for name, expected in provenance["source_sha256"].items():
+        if sha(ROOT / name) != expected:
+            raise ValueError(f"Accepted source changed during Pareto replay: {name}")
+    assert configuration["accepted_seeds"] == SEEDS
+    assert configuration["AD_settings_sha256"] == sha(output / "inputs/APPLICABILITY_DOMAIN_SETTINGS.json")
     levels = csv(output / "search/CATEGORICAL_LEVEL_SUPPORT.csv")
-    allowed = {
-        f: list(q.value) for f, q in levels.loc[levels.included].groupby("descriptor")
-    }
+    allowed = {f: list(q.value) for f, q in levels.loc[levels.included].groupby("descriptor")}
     validate_profiles(inputs, configuration, allowed)
     if not inputs[FEATURES].nunique().gt(1).all():
         raise ValueError("All ten descriptors must vary before inference")
+    assert len(inputs) == configuration["declared_finite_grid_size"]
     pd.testing.assert_frame_equal(inputs, predictions[inputs.columns])
-    expected = csv(reference / "ALL_CANDIDATES_AND_PREDICTIONS.csv.gz")
-    differences = {
-        "candidate_predictions_and_AD": compare_tables(
-            predictions, expected, ["candidate_id"]
-        )
-    }
-    pd.testing.assert_frame_equal(
-        masks, csv(reference / "COMPUTATIONAL_FRONT_MASKS.csv.gz")
-    )
-    columns = [f"{t}_seed_{s}_pg_ml" for t in SEEDS for s in SEEDS[t]]
-    eligible = (
-        predictions.tnf_AD_ratio.le(1)
-        & predictions.il10_AD_ratio.le(1)
-        & predictions[columns].ge(0).all(axis=1)
-    )
+    np.testing.assert_array_equal(masks.candidate_id, predictions.candidate_id)
+    differences = {"saved_model_prediction_replay": verify_predictions(predictions, output)}
+    columns = [f"{t}_seed_{seed}_pg_ml" for t in SEEDS for seed in SEEDS[t]]
+    eligible = (predictions.tnf_AD_ratio.le(1) & predictions.il10_AD_ratio.le(1)
+                & predictions[columns].ge(0).all(axis=1))
     np.testing.assert_array_equal(eligible, predictions.eligible)
+    np.testing.assert_array_equal(eligible, masks.eligible)
     universe = predictions.loc[eligible]
-    np.testing.assert_array_equal(
-        front(universe.tnf_mean_pg_ml, universe.il10_mean_pg_ml),
-        masks.loc[eligible, "mean_front"],
-    )
+    mean_front = front(universe.tnf_mean_pg_ml, universe.il10_mean_pg_ml)
+    np.testing.assert_array_equal(mean_front, masks.loc[eligible, "mean_front"])
+    frequency = np.zeros(len(universe), dtype=int)
     for ts, ils in itertools.product(SEEDS["tnf"], SEEDS["il10"]):
-        np.testing.assert_array_equal(
-            front(universe[f"tnf_seed_{ts}_pg_ml"], universe[f"il10_seed_{ils}_pg_ml"]),
-            masks.loc[eligible, f"front_tnf_{ts}_il10_{ils}"],
-        )
+        expected = front(universe[f"tnf_seed_{ts}_pg_ml"], universe[f"il10_seed_{ils}_pg_ml"])
+        np.testing.assert_array_equal(expected, masks.loc[eligible, f"front_tnf_{ts}_il10_{ils}"])
+        frequency += expected
+    np.testing.assert_array_equal(frequency, masks.loc[eligible, "nondomination_frequency_of_9"])
+    np.testing.assert_array_equal(mean_front & (frequency >= 6), masks.loc[eligible, "final_front"])
+    assert not masks.loc[~eligible, ["mean_front", "final_front"]].to_numpy().any()
     checked_tables = {}
-    for filename, keys, tolerance in [
+    table_specs = [
         ("FINAL_PARETO_PROFILES.csv", ["candidate_id"], ABSOLUTE_TOLERANCE),
-        (
-            "FINAL_PARETO_REPRESENTATIVES.csv",
-            ["display_label", "candidate_id"],
-            ABSOLUTE_TOLERANCE,
-        ),
-        (
-            "FINAL_REPRESENTATIVE_SHAP.csv",
-            ["target", "candidate_id", "descriptor_name"],
-            SHAP_TOLERANCE,
-        ),
-        (
-            "REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv",
-            ["target", "candidate_id", "model_realisation", "descriptor_name"],
-            SHAP_TOLERANCE,
-        ),
-        (
-            "REPRESENTATIVE_SHAP_TRANSFORMED.csv",
-            ["target", "candidate_id", "model_realisation", "transformed_feature"],
-            SHAP_TOLERANCE,
-        ),
-    ]:
+        ("FINAL_PARETO_REPRESENTATIVES.csv", ["display_label", "candidate_id"], ABSOLUTE_TOLERANCE),
+        ("FINAL_REPRESENTATIVE_SHAP.csv", ["target", "candidate_id", "descriptor_name"], SHAP_TOLERANCE),
+        ("REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv", ["target", "candidate_id", "model_realisation", "descriptor_name"], SHAP_TOLERANCE),
+        ("REPRESENTATIVE_SHAP_TRANSFORMED.csv", ["target", "candidate_id", "model_realisation", "transformed_feature"], SHAP_TOLERANCE),
+    ]
+    for filename, keys, tolerance in table_specs:
         checked_tables[filename] = csv(output / "results" / filename)
-        differences[filename] = compare_tables(
-            checked_tables[filename],
-            csv(reference / filename),
-            keys,
-            tolerance,
-        )
+        if reference is not None:
+            differences[filename] = compare_tables(checked_tables[filename], csv(reference / filename), keys, tolerance)
+    if reference is not None:
+        for filename, values in [("ALL_CANDIDATES_AND_PREDICTIONS.csv", predictions), ("COMPUTATIONAL_FRONT_MASKS.csv", masks)]:
+            path = reference / filename
+            if not path.exists():
+                path = path.with_suffix(path.suffix + ".gz")
+            differences[filename] = compare_tables(values, csv(path), ["candidate_id"])
+    profiles = checked_tables["FINAL_PARETO_PROFILES.csv"]
+    compare_tables(profiles[predictions.columns], predictions.loc[masks.final_front], ["candidate_id"])
+    expected_frequency = masks.set_index("candidate_id").loc[profiles.candidate_id, "nondomination_frequency_of_9"]
+    np.testing.assert_array_equal(profiles.nondomination_frequency_of_9, expected_frequency)
+    verify_representatives(profiles, checked_tables["FINAL_PARETO_REPRESENTATIVES.csv"])
     residuals = csv(output / "checks/SHAP_ADDITIVITY.csv")
-    maximum_residual = verify_shap_additivity(
-        checked_tables["REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv"], residuals
-    )
+    shap_values = checked_tables["REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv"]
+    maximum_residual = verify_shap_additivity(shap_values, residuals)
+    for target in SEEDS:
+        actual = set(shap_values.loc[shap_values.target.eq(target), "model_realisation"].astype(str))
+        assert actual == {str(seed) for seed in SEEDS[target]} | {"mean"}
     summary = read(output / "results/PARETO_SUMMARY.json")
-    counts = verify_profile_counts(summary, checked_tables["FINAL_PARETO_PROFILES.csv"])
+    counts = verify_profile_counts(summary, profiles)
     report = {
-        "generated": len(inputs),
-        "eligible": int(eligible.sum()),
-        "retained_profiles": counts["final_profiles"],
-        "objective_locations": counts["final_locations"],
-        "identity_sets_exact": True,
-        "memberships_and_frequencies_exact": True,
-        "all_ten_descriptors_vary": True,
-        "max_absolute_differences": differences,
-        "max_SHAP_additivity_residual_pg_ml": maximum_residual,
-        "numeric_absolute_tolerance": ABSOLUTE_TOLERANCE,
-        "SHAP_absolute_tolerance": SHAP_TOLERANCE,
-        "relative_tolerance": 0,
-        "model_fits": 0,
-        "preprocessing_fits": 0,
+        "generated": len(inputs), "eligible": int(eligible.sum()),
+        "retained_profiles": counts["final_profiles"], "objective_locations": counts["final_locations"],
+        "accepted_seeds": SEEDS, "identity_sets_exact": True,
+        "memberships_and_frequencies_exact": True, "all_ten_descriptors_vary": True,
+        "current_model_predictions_replayed": True,
+        "reference_comparison": str(reference) if reference is not None else None,
+        "max_absolute_differences": differences, "max_SHAP_additivity_residual_pg_ml": maximum_residual,
+        "numeric_absolute_tolerance": ABSOLUTE_TOLERANCE, "SHAP_absolute_tolerance": SHAP_TOLERANCE,
+        "relative_tolerance": 0, "model_fits": 0, "preprocessing_fits": 0,
         "figures_generated": 0,
     }
     dump(output / "checks/NUMERICAL_REPRODUCTION.json", report)

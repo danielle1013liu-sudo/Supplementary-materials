@@ -16,7 +16,7 @@ EXPECTED = {
     'polymer_origin_class': (['natural_polymer', 'hybrid_natural_synthetic', 'synthetic_polymer'], [168, 82, 22]),
     'material_bioactive_cue_class': (['none', 'anti_inflammatory_material_cue', 'anti_inflammatory_plus_growth_factor_material_cues', 'growth_factor_or_neuropeptide_material_cue', 'combined_pro_and_anti_inflammatory_material_cues', 'pro_inflammatory_material_cue'], [124, 81, 44, 10, 9, 4]),
     'gelation_or_crosslinking_mechanism': (['photo_crosslinking', 'physical_self_assembly', 'enzymatic_crosslinking', 'other'], [145, 34, 18, 75]),
-    'network_density_proxy': (['medium', 'high', 'low'], [129, 123, 20]),
+    'network_density_proxy': (['medium', 'high', 'low'], [129, 122, 21]),
     'macrophage_model_class': (['RAW264_7', 'murine_primary_or_in_vivo_context', 'THP_1', 'human_monocyte_derived_macrophage', 'BMDM'], [185, 64, 16, 6, 1]),
     'stimulation_context': (['LPS', 'unstimulated_or_basal', 'IL4_IL13', 'LPS_IFNg', 'other_stimulation', 'unclear'], [121, 48, 14, 11, 51, 27]),
     'cell_material_interaction_mode': (['direct_surface_contact', 'hydrogel_extract_or_eluate', 'encapsulated_3D', 'in_vivo_tissue_or_systemic', 'transwell_or_indirect', 'unclear'], [144, 62, 29, 15, 8, 14]),
@@ -40,13 +40,13 @@ def test_shared_complete_bijective_mapping_and_frequency_order():
         assert ordinary == sorted(ordinary, reverse=True)
 
 
-def test_codebook_only_changes_letters_and_presentation_order():
+def test_codebook_preserves_category_definitions_and_letter_mapping():
     legacy = read_csv(ROOT / LEGACY_PATH)
     revised = read_csv(ROOT / 'data/category_codebook.csv')
     keys = ['machine_column', 'machine_value']
     pd.testing.assert_frame_equal(
-        legacy.drop(columns='field_specific_code').set_index(keys).sort_index(),
-        revised.drop(columns='field_specific_code').set_index(keys).sort_index(),
+        legacy.drop(columns=['field_specific_code'] + [c for c in legacy if c.endswith('_n')]).set_index(keys).sort_index(),
+        revised.drop(columns=['field_specific_code'] + [c for c in revised if c.endswith('_n')]).set_index(keys).sort_index(),
     )
     changes = read_csv(ROOT / 'data/public_codebooks/category_code_changes_20261019.csv')
     expected_rows = [(f['machine_column'], c['machine_value'], c['new_code']) for f in fields() for c in f['categories']]

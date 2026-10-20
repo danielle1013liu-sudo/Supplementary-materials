@@ -25,6 +25,7 @@ from ..models import load_models
 from ..pareto import verification
 from ..pareto.common import CAT, DATA, FEATURES, SCHEMA, SEEDS, csv, table, training
 from ..pareto.generation import verify_models
+from ..pareto.release import validate_snapshot
 from .public_encoding import PUBLIC_VERSION, decode_public_input, encode_public_input
 
 
@@ -50,8 +51,13 @@ def capture_hashes(output):
     destination = output / 'protected_hashes_before.csv'
     if destination.exists():
         raise FileExistsError(f'Baseline already exists: {destination}')
-    paths = [p for folder in ('data', 'models', 'outputs')
-             for p in (ROOT / folder).rglob('*') if p.is_file()]
+    # Check published artifacts, not ignored local fits or full search caches.
+    folders = ('data', 'models', 'outputs/predictions', 'outputs/validation',
+               'outputs/shap', 'outputs/tsne', 'outputs/case_studies', 'outputs/figures')
+    paths = [p for folder in folders
+             for p in (ROOT / folder).rglob('*') if p.is_file() and p.suffix != '.log']
+    if (ROOT / 'outputs/verification.json').is_file():
+        paths.append(ROOT / 'outputs/verification.json')
     paths.extend([ROOT / 'environment.yml', *ROOT.glob('requirements*.txt')])
     presentation = {'data/category_codebook.csv', 'data/checksums.json'}
     rows = [{'path': p.relative_to(ROOT).as_posix(), 'sha256': file_hash(p),
@@ -111,9 +117,11 @@ def verify_round_trips(output):
 
 def verify_domain_round_trips(output):
     rows = []
-    for setting in read_json(DATA / 'APPLICABILITY_DOMAIN_SETTINGS.json'):
+    snapshot = validate_snapshot()
+    for setting in read_json(snapshot / 'inputs/APPLICABILITY_DOMAIN_SETTINGS.json'):
         target = setting['target']
-        preprocessor = joblib.load(ROOT / f'models/{target}_DIAGNOSTIC_AD_PREPROCESSOR.joblib')
+        assert file_hash(ROOT / setting['path']) == setting['sha256']
+        preprocessor = joblib.load(ROOT / setting['path'])
         state = joblib.hash(preprocessor)
         frame = load_data(target)
         recovered = round_trip(frame)
@@ -136,8 +144,9 @@ def verify_domain_round_trips(output):
 
 def verify_original_outputs(workspace, output):
     isolated = workspace / 'verify'
-    for folder in ('data/reference', 'data/validation_evidence', 'outputs'):
+    for folder in ('data/reference', 'data/validation_evidence', 'outputs/validation'):
         shutil.copytree(ROOT / folder, isolated / folder, dirs_exist_ok=True)
+    shutil.copy2(ROOT / 'data/locked_comparators.json', isolated / 'data/locked_comparators.json')
     # Only the verifier's outputs are redirected; dataset and model loaders stay frozen.
     with patch.object(verify, 'ROOT', isolated), patch.object(predict, 'ROOT', isolated):
         verify.verify_results()
@@ -163,34 +172,19 @@ def verify_original_outputs(workspace, output):
 
 
 def prepare_reference_replay(workspace):
+    """Expand the current checked snapshot; historical release tables stay archival."""
+    source_directory = validate_snapshot()
     replay = workspace / 'pareto'
-    for folder in ('search', 'results', 'checks'):
+    for folder in ('inputs', 'search', 'results', 'checks'):
         (replay / folder).mkdir(parents=True, exist_ok=True)
-    for path in (DATA / 'reference').iterdir():
-        destination = replay / 'results' / path.stem if path.suffix == '.gz' else replay / 'results' / path.name
-        if path.suffix == '.gz':
-            with gzip.open(path, 'rb') as source, destination.open('wb') as output:
-                shutil.copyfileobj(source, output)
-        else:
-            shutil.copy2(path, destination)
-    values = csv(replay / 'results/ALL_CANDIDATES_AND_PREDICTIONS.csv')
-    table(replay / 'search/CANDIDATE_INPUTS.csv',
-          values[['candidate_id'] + FEATURES + ['material_tuple_id', 'experimental_tuple_id', 'profile_sha256']])
-    shutil.copy2(DATA / 'reference/SEARCH_CONFIGURATION.json', replay / 'search/SEARCH_CONFIGURATION.json')
-    learned, _ = verify_models(replay)
-    levels = []
-    for field in CAT:
-        for value in SCHEMA['allowed_categories'][field]:
-            included = value.lower() not in ('unclear', 'missing', 'unreported', 'unknown', '__missing__', '**missing**')
-            included = included and all(training(target)[field].eq(value).any() and value in learned[target][field] for target in SEEDS)
-            levels.append({'descriptor': field, 'value': value, 'included': included})
-    table(replay / 'search/CATEGORICAL_LEVEL_SUPPORT.csv', levels)
-    shap = csv(DATA / 'reference/REPRESENTATIVE_SHAP_ALL_REALISATIONS.csv')
-    residuals = []
-    for (target, candidate, realisation), group in shap.groupby(['target', 'candidate_id', 'model_realisation']):
-        residuals.append({'target': target, 'candidate_id': candidate, 'model_realisation': realisation,
-                          'additivity_residual_pg_ml': group.expected_value_pg_ml.iloc[0] + group.grouped_SHAP_pg_ml.sum() - group.prediction_pg_ml.iloc[0]})
-    table(replay / 'checks/SHAP_ADDITIVITY.csv', residuals)
+        for path in (source_directory / folder).iterdir():
+            destination = replay / folder / (path.stem if path.suffix == '.gz' else path.name)
+            if path.suffix == '.gz':
+                with gzip.open(path, 'rb') as source, destination.open('wb') as output:
+                    shutil.copyfileobj(source, output)
+            else:
+                shutil.copy2(path, destination)
+    verify_models(replay)
     return replay
 
 
@@ -203,12 +197,12 @@ def run(output, workspace):
         domain_rows = verify_domain_round_trips(output)
         original = verify_original_outputs(workspace, output)
         replay = prepare_reference_replay(workspace)
-        verification.run(replay)
+        verification.run(replay, reference=validate_snapshot() / "results")
         cases = replay_cases(replay / 'checks')
     report = read_json(replay / 'checks/NUMERICAL_REPRODUCTION.json')
     save_csv(pd.DataFrame(cases), output / 'case_and_test_replay.csv')
     rows = [
-        {'check': 'frozen_primary_predictions_round_trip', 'maximum_absolute_difference': max(r['max_prediction_difference_pg_ml'] for r in model_rows), 'scope': 'fresh predictions from each of six original pipelines, endpoint rows and C4'},
+        {'check': 'frozen_primary_predictions_round_trip', 'maximum_absolute_difference': max(r['max_prediction_difference_pg_ml'] for r in model_rows), 'scope': 'fresh predictions from each of six released pipelines, endpoint rows and C4'},
         {'check': 'frozen_primary_transforms_round_trip', 'maximum_absolute_difference': max(r['max_transformed_difference'] for r in model_rows), 'scope': 'exact arrays and unchanged learned state'},
         {'check': 'frozen_AD_round_trip', 'maximum_absolute_difference': max(r['max_AD_ratio_difference'] for r in domain_rows), 'scope': 'fresh saved diagnostic transforms and distances'},
         {'check': 'stored_validation_and_primary_Test_C4', 'maximum_absolute_difference': max(r['max_absolute_difference_pg_ml'] for r in original), 'scope': 'existing src.verify plus explicit OOF/Test/C4 deltas for six pipelines in isolated output directory'},
@@ -220,13 +214,13 @@ def run(output, workspace):
     rows.append({'check': 'stored_SHAP_additivity_residual', 'maximum_absolute_difference': report['max_SHAP_additivity_residual_pg_ml'], 'scope': 'residual from unchanged stored SHAP table; tolerance 1e-7'})
     save_csv(pd.DataFrame(rows), output / 'numerical_checks.csv')
     count = verify_hashes(output)
-    print(f'Verified {count} protected hashes; six primary models, separate P15, stored Pareto/SHAP, and exact publication round trips. Replay directory: {replay.resolve()}')
+    print(f'Verified {count} protected hashes; six primary models, separate P15, current Pareto/SHAP, and exact publication round trips. Replay directory: {replay.resolve()}')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=ROOT / 'results/publication_codes_20261019')
-    parser.add_argument('--workspace', type=Path, default=ROOT / 'tmp/publication_codes_20261019')
+    parser.add_argument('--output', type=Path, default=ROOT / 'results/publication_codes_20261020')
+    parser.add_argument('--workspace', type=Path, default=ROOT / 'tmp/publication_codes_20261020')
     parser.add_argument('--capture', action='store_true')
     args = parser.parse_args()
     if args.capture:

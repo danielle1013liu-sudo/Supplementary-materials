@@ -33,7 +33,11 @@ EXPERIMENT = [
     "stimulation_context",
     "cell_material_interaction_mode",
 ]
-SEEDS = {"tnf": [3089, 4280, 5793], "il10": [85, 115, 158]}
+from ..data import configuration, split_definition
+
+SEEDS = {target: configuration(target)["seeds"] for target in ("tnf", "il10")}
+if any(len(values) != 3 or len(set(values)) != 3 for values in SEEDS.values()):
+    raise ValueError("The paired Pareto protocol requires three distinct accepted models per target")
 KEY = "dataset_row_id"
 
 
@@ -115,11 +119,12 @@ def describe(obj):
 
 
 def dataset(target):
-    return csv(ROOT / f"data/{target}.csv")
+    from ..data import load_data
+    return load_data(target)
 
 
 def training(target):
-    context = read(DATA / f"{target}_context.json")
+    context = split_definition(target)
     return (
         dataset(target)
         .set_index(KEY, drop=False)
@@ -129,15 +134,9 @@ def training(target):
 
 
 def models(target):
-    return [
-        (
-            seed,
-            pickle.loads(
-                zlib.decompress((ROOT / f"models/{target}_{seed}.pklz").read_bytes())
-            ),
-        )
-        for seed in SEEDS[target]
-    ]
+    """Use the accepted release manifest and its parameter/hash checks."""
+    from ..models import load_models
+    return load_models(target)
 
 
 def front(x, y):

@@ -1,7 +1,7 @@
 """Draw the all-ten-descriptor Pareto front and representative SHAP heatmaps.
 
-Run after numerical replay with ``--input outputs/all10_replay/results``, or
-omit --input to draw the checked reference tables shipped with the repository.
+Run after numerical replay with ``--input outputs/pareto/results``.
+An older reference directory can be selected explicitly.
 """
 
 import argparse
@@ -210,7 +210,7 @@ def run(source, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=DATA / "reference")
+    parser.add_argument("--input", type=Path, default=ROOT / "outputs/pareto/results")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     run(args.input, args.output)

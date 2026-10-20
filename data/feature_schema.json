@@ -1,6 +1,6 @@
 {
-  "revision": "thermal_harmonisation_v2",
-  "scope": "Only thermal_gelation is merged in the primary branch. No estimator or numeric imputer has been fitted here.",
+  "revision": "IL10-crosslink7-RF-median-20261020",
+  "scope": "Retains the thermal_harmonisation_v2 descriptor definitions. Applies seven approved IL10 network_density_proxy corrections only; TNF data, responses, row identities, Training/Test membership and Validation folds are unchanged. The revised IL10 primary models are refitted with median imputation; TNF models are retained.",
   "target_column": "corrected_value_pg_ml",
   "id_column": "dataset_row_id",
   "target_unit": "pg/mL",
@@ -110,5 +110,6 @@
   },
   "not_changed": "All target values, record membership, other feature cells, splits and folds. Existing categorical-missing sentinels differ across historical target pipelines, but current categorical data contain no blanks; do not introduce a separate unlogged change.",
   "unresolved_exceptions_preserved": true,
-  "alias_applicability_scope": "Apply the thermal-to-physical merge to the documented P05 C-only records and the C4 HPA case in this package. For future materials, confirm non-covalent physical gelation; heating-induced covalent chemistry is not automatically physical self-assembly."
+  "alias_applicability_scope": "Apply the thermal-to-physical merge to the documented P05 C-only records and the C4 HPA case in this package. For future materials, confirm non-covalent physical gelation; heating-induced covalent chemistry is not automatically physical self-assembly.",
+  "revision_ledger": "data/validation_evidence/il10_20261020/release_provenance.json"
 }

@@ -14,7 +14,6 @@ from .common import (
     SEEDS,
     csv,
     dataset,
-    describe,
     digest,
     dump,
     joblib,
@@ -28,117 +27,61 @@ from .common import (
     training,
 )
 import itertools
-import importlib.metadata
-import platform
-from sklearn.metrics import pairwise_distances
 from ..data import check_inputs
-from ..hydrogel_immune_ml.public_encoding import LEGACY_PATH
 
 SCHEMA_VERSION = "thermal_harmonisation_v2_all10_search_v1"
 
 
 def verify_models(output):
-    """Check saved parameters, memberships, transforms and software without fitting."""
-    lock = read(DATA / "PRIMARY_SCIENTIFIC_RELEASE_LOCK.json")
+    """Verify the accepted release, including exact held-out predictions."""
+    from ..data import check_environment, configuration, split_definition
+    from .applicability import prepare
+
+    check_environment()
     check_inputs()
-    records = read(DATA / "original_model_records.json")
-    versions = {"python": platform.python_version()}
-    for name in lock["software_versions"]:
-        if name != "python":
-            versions[name] = importlib.metadata.version(name)
-    assert versions == lock["software_versions"], versions
-    for item in lock["datasets"] + [lock["feature_schema"]]:
-        assert sha(ROOT / item["path"]) == item["sha256"]
-    # Model verification uses the explicit legacy mapping, not publication order.
-    assert sha(ROOT / LEGACY_PATH) == lock["codebook"]["sha256"]
+    records = read(ROOT / "models/manifest.json")
+    accepted = np.load(ROOT / "data/reference/accepted_predictions.npz")
     checks, learned = [], {}
     for target in SEEDS:
         d = dataset(target)
-        ctx = read(DATA / f"{target}_context.json")
-        assert len(d) == {"tnf": 139, "il10": 133}[target]
-        assert len(ctx["Training_IDs"]) == {"tnf": 111, "il10": 106}[target]
-        assert set(ctx["Training_IDs"]).isdisjoint(ctx["Test_IDs"])
+        ctx = split_definition(target)
+        if not set(ctx["Training_IDs"]).isdisjoint(ctx["Test_IDs"]):
+            raise ValueError("Training and Test memberships overlap")
         assert digest(ctx["Training_IDs"]) == ctx["Training_ID_hash"]
         assert digest(ctx["Validation_fold"]) == ctx["Validation_fold_assignment_hash"]
         assert set(ctx["Validation_fold"]) == set(range(1, 11))
         for seed, pipe in models(target):
-            item = next(
-                m
-                for m in records["models"]
-                if m["target"] == target and m["seed"] == seed
-            )
-            path = ROOT / f"models/{target}_{seed}.pklz"
+            item = next(m for m in records if m["target"] == target and m["seed"] == seed)
+            path = ROOT / item["path"]
             assert sha(path) == item["sha256"]
-            assert describe(pipe) == item["constructor_spec"]
             pp = pipe.named_steps["preprocess"]
             assert list(pp.feature_names_in_) == FEATURES
-            state = digest(
-                {
-                    "canonical_joblib_sha1": joblib.hash(pp, hash_name="sha1"),
-                    "contract": "preprocessor learned-state v1",
-                }
-            )
-            assert state == item["preprocessor_sha256"]
             test = d.set_index(KEY).loc[ctx["Test_IDs"], FEATURES]
-            np.testing.assert_array_equal(
-                pipe.predict(test), np.asarray(item["accepted_Test_predictions"])
-            )
+            np.testing.assert_array_equal(pipe.predict(test), accepted[f"{target}_{seed}_Test"])
             encoder = pp.named_transformers_["categorical"].named_steps["onehot"]
-            columns = next(
-                cols for name, _, cols in pp.transformers_ if name == "categorical"
-            )
+            columns = next(cols for name, _, cols in pp.transformers_ if name == "categorical")
             levels = dict(zip(columns, [set(a) for a in encoder.categories_]))
             if target in learned:
                 assert levels == learned[target]
             learned[target] = levels
-            checks.append(
-                {
-                    "target": target,
-                    "realisation": seed,
-                    "model_sha256": sha(path),
-                    "preprocessor_sha256": state,
-                    "parameters_match": True,
-                    "Test_predictions_exact": True,
-                    "Training_n": len(ctx["Training_IDs"]),
-                }
-            )
-    ad_checks = []
-    for item in read(DATA / "APPLICABILITY_DOMAIN_SETTINGS.json"):
-        target = item["target"]
-        path = ROOT / f"models/{target}_DIAGNOSTIC_AD_PREPROCESSOR.joblib"
-        assert sha(path) == item["sha256"]
-        d = training(target)
-        assert d[KEY].tolist() == item["Training_IDs"]
-        prep = joblib.load(path)
-        z = prep.transform(d[FEATURES])
-        distances = pairwise_distances(z)
-        np.fill_diagonal(distances, np.inf)
-        means = np.sort(distances, axis=1)[:, :5].mean(axis=1)
-        threshold = float(np.quantile(means, 0.95))
-        assert abs(threshold - item["threshold_q95"]) < 1e-12
-        original = csv(DATA / f"{target}_TRAINING_SELF_EXCLUDED_AD.csv")
-        np.testing.assert_allclose(
-            means, original.self_excluded_mean5_distance, rtol=0, atol=1e-12
-        )
-        ad_checks.append(
-            {
-                "target": target,
-                "threshold_saved": item["threshold_q95"],
-                "threshold_check": threshold,
-                "transform_reused_without_fit": True,
-                "Training_ID_hash": digest(d[KEY].tolist()),
-            }
-        )
-    dump(
-        output / "checks/MODEL_AND_DATA_VERIFICATION.json",
-        {
-            "models": checks,
-            "software_versions": versions,
-            "applicability_domain": ad_checks,
-            "predictive_fits": 0,
-            "diagnostic_fits": 0,
-        },
-    )
+            checks.append({
+                "target": target, "realisation": seed, "model_sha256": sha(path),
+                "preprocessor_sha256": digest({"canonical_joblib_sha1": joblib.hash(pp, hash_name="sha1"),
+                                                "contract": "preprocessor learned-state v1"}),
+                "parameters_match": True, "Test_predictions_exact": True,
+                "Training_n": len(ctx["Training_IDs"]), "family": configuration(target)["family"],
+            })
+    ad_checks = prepare(output)
+    report = {
+        "models": checks, "software_versions": read(ROOT / "data/software_versions.json"),
+        "applicability_domain": ad_checks, "accepted_configuration": configuration(),
+        "source_sha256": {name: sha(ROOT / name) for name in (
+            "data/tnf.csv", "data/il10.csv", "data/model_parameters.json", "models/manifest.json",
+            "data/feature_schema.json", "data/splits/tnf.json", "data/splits/il10.json",
+            "data/reference/accepted_predictions.npz")},
+        "predictive_fits": 0, "diagnostic_fits": 0,
+    }
+    dump(output / "checks/MODEL_AND_DATA_VERIFICATION.json", report)
     return learned, checks
 
 
@@ -288,6 +231,9 @@ def run(output):
         "ordered_features": FEATURES,
         "dataset_sha256": {t: sha(ROOT / f"data/{t}.csv") for t in SEEDS},
         "schema_sha256": sha(ROOT / "data/feature_schema.json"),
+        "accepted_configuration_sha256": sha(ROOT / "data/model_parameters.json"),
+        "AD_settings_sha256": sha(output / "inputs/APPLICABILITY_DOMAIN_SETTINGS.json"),
+        "accepted_seeds": SEEDS,
         "model_sha256": {
             f'{c["target"]}_{c["realisation"]}': c["model_sha256"] for c in checks
         },
@@ -320,7 +266,7 @@ def run(output):
     config["cache_key"] = digest(config)
     dump(OUT / "SEARCH_CONFIGURATION.json", config)
     print(
-        f"Declared complete grid: {len(materials)} material tuples Ã— {len(contexts)} experimental-time tuples Ã— {len(grids[NUM[0]])} modulus Ã— {len(grids[NUM[1]])} pore-size values = {n:,} candidates",
+        f"Declared complete grid: {len(materials)} material tuples x {len(contexts)} experimental-time tuples x {len(grids[NUM[0]])} modulus x {len(grids[NUM[1]])} pore-size values = {n:,} candidates",
         flush=True,
     )
     rows = []

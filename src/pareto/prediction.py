@@ -30,11 +30,14 @@ def run(output):
     assert sha(search / "CANDIDATE_INPUTS.csv") == complete["candidate_table_sha256"]
     assert sha(search / "SEARCH_SPACE_COVERAGE.csv") == complete["coverage_sha256"]
     config = read(search / "SEARCH_CONFIGURATION.json")
+    assert config["accepted_seeds"] == SEEDS
+    assert config["AD_settings_sha256"] == sha(output / "inputs/APPLICABILITY_DOMAIN_SETTINGS.json")
     models_by_target = {t: models(t) for t in SEEDS}
     ad = {}
-    for item in read(DATA / "APPLICABILITY_DOMAIN_SETTINGS.json"):
+    for item in read(output / "inputs/APPLICABILITY_DOMAIN_SETTINGS.json"):
         t = item["target"]
-        prep = joblib.load(ROOT / f"models/{t}_DIAGNOSTIC_AD_PREPROCESSOR.joblib")
+        assert sha(ROOT / item["path"]) == item["sha256"]
+        prep = joblib.load(ROOT / item["path"])
         ad[t] = (prep, prep.transform(training(t)[FEATURES]), item["threshold_q95"])
     batch_dir = search / "prediction_batches"
     batch_dir.mkdir(exist_ok=True)
@@ -55,10 +58,13 @@ def run(output):
         )
         path = batch_dir / f"batch_{index:04d}.csv"
         meta = path.with_suffix(".json")
+        reuse = False
         if meta.exists() and path.exists():
             cached = read(meta)
-            assert cached["cache_key"] == key and cached["sha256"] == sha(path)
-        else:
+            if cached["cache_key"] == key:
+                assert cached["sha256"] == sha(path)
+                reuse = True
+        if not reuse:
             columns = []
             for target in SEEDS:
                 prep, z, threshold = ad[target]

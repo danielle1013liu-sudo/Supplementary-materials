@@ -1,0 +1,109 @@
+{
+  "generated_n": 385237,
+  "predicted_n": 385237,
+  "eligible_n": 225406,
+  "excluded_n": 159831,
+  "negative_prediction_n": 48450,
+  "outside_TNF_AD_n": 119362,
+  "outside_IL10_AD_n": 88848,
+  "mean_front_profiles": 44,
+  "mean_front_locations": 41,
+  "final_profiles": 18,
+  "final_locations": 17,
+  "nine_of_nine_profiles": 4,
+  "nine_of_nine_locations": 4,
+  "representatives": [
+    {
+      "display_label": "P1",
+      "candidate_id": "A10_747a0430c92081245387",
+      "polymer_origin_class": "natural_polymer",
+      "modulus_value_kPa": 0.2800578947368421,
+      "pore_size_um": 5.409473684210526,
+      "material_bioactive_cue_class": "anti_inflammatory_plus_growth_factor_material_cues",
+      "gelation_or_crosslinking_mechanism": "physical_self_assembly",
+      "network_density_proxy": "medium",
+      "macrophage_model_class": "RAW264_7",
+      "stimulation_context": "LPS",
+      "cell_material_interaction_mode": "hydrogel_extract_or_eluate",
+      "culture_or_exposure_duration_h": 24,
+      "tnf_mean_pg_ml": 17.992455500914208,
+      "il10_mean_pg_ml": 1017.6349759333316
+    },
+    {
+      "display_label": "P2",
+      "candidate_id": "A10_5ddf33313c74338a3cae",
+      "polymer_origin_class": "natural_polymer",
+      "modulus_value_kPa": 0.4262768421052631,
+      "pore_size_um": 84.437,
+      "material_bioactive_cue_class": "anti_inflammatory_plus_growth_factor_material_cues",
+      "gelation_or_crosslinking_mechanism": "other",
+      "network_density_proxy": "high",
+      "macrophage_model_class": "RAW264_7",
+      "stimulation_context": "LPS",
+      "cell_material_interaction_mode": "hydrogel_extract_or_eluate",
+      "culture_or_exposure_duration_h": 12,
+      "tnf_mean_pg_ml": 675.4830754322,
+      "il10_mean_pg_ml": 1609.490648322227
+    },
+    {
+      "display_label": "P3",
+      "candidate_id": "A10_cd26a0990ac785993dcc",
+      "polymer_origin_class": "natural_polymer",
+      "modulus_value_kPa": 3.004,
+      "pore_size_um": 84.437,
+      "material_bioactive_cue_class": "anti_inflammatory_plus_growth_factor_material_cues",
+      "gelation_or_crosslinking_mechanism": "photo_crosslinking",
+      "network_density_proxy": "high",
+      "macrophage_model_class": "RAW264_7",
+      "stimulation_context": "LPS",
+      "cell_material_interaction_mode": "hydrogel_extract_or_eluate",
+      "culture_or_exposure_duration_h": 24,
+      "tnf_mean_pg_ml": 2130.142166355921,
+      "il10_mean_pg_ml": 1776.1907653888957
+    }
+  ],
+  "final_composition_counts": {
+    "natural_polymer": 17,
+    "hybrid_natural_synthetic": 1
+  },
+  "final_context_values": {
+    "macrophage_model_class": [
+      "RAW264_7",
+      "murine_primary_or_in_vivo_context"
+    ],
+    "stimulation_context": [
+      "LPS",
+      "LPS_IFNg",
+      "other_stimulation",
+      "unstimulated_or_basal"
+    ],
+    "cell_material_interaction_mode": [
+      "direct_surface_contact",
+      "hydrogel_extract_or_eluate"
+    ],
+    "culture_or_exposure_duration_h": [
+      12,
+      24,
+      36,
+      48,
+      120
+    ]
+  },
+  "eligible_universe_sha256": "dd98922647d11e27719e3fc07155816f4c3d68d627461e1d04a399cb42a079b8",
+  "prediction_source_sha256": "5a5a75ec2fd2701476a2549008aebfa1d4ec04435e27086a821165e0084baa01",
+  "all_pairings_used_same_complete_universe": true,
+  "frequency_threshold": 6,
+  "accepted_seeds": {
+    "tnf": [
+      3089,
+      4280,
+      5793
+    ],
+    "il10": [
+      18571,
+      28094,
+      30787
+    ]
+  },
+  "model_refits": 0
+}

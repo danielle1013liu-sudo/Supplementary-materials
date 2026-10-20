@@ -5,6 +5,7 @@ import pandas as pd
 from ..data import ROOT, configuration, feature_names, read_json
 
 PUBLIC_VERSION = 'frequency_codes_20261019'
+DATASET_VERSION = 'crosslink7_rfmedian_20261020'
 LEGACY_VERSION = 'legacy_codes_v1'
 VERSION_COLUMN = 'publication_codebook_version'
 LEGACY_PATH = 'data/public_codebooks/legacy_codes_v1.csv'

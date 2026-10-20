@@ -1,0 +1,33 @@
+{
+  "generated": 385237,
+  "eligible": 225406,
+  "retained_profiles": 18,
+  "objective_locations": 17,
+  "accepted_seeds": {
+    "tnf": [
+      3089,
+      4280,
+      5793
+    ],
+    "il10": [
+      18571,
+      28094,
+      30787
+    ]
+  },
+  "identity_sets_exact": true,
+  "memberships_and_frequencies_exact": true,
+  "all_ten_descriptors_vary": true,
+  "current_model_predictions_replayed": true,
+  "reference_comparison": null,
+  "max_absolute_differences": {
+    "saved_model_prediction_replay": 0.0
+  },
+  "max_SHAP_additivity_residual_pg_ml": 1.0231815394945443e-11,
+  "numeric_absolute_tolerance": 1e-10,
+  "SHAP_absolute_tolerance": 1e-07,
+  "relative_tolerance": 0,
+  "model_fits": 0,
+  "preprocessing_fits": 0,
+  "figures_generated": 0
+}

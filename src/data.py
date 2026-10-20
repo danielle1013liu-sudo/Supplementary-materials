@@ -20,6 +20,7 @@ def value_hash(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 def read_csv(path):
+    # Keep the parser used for model fitting. Changing float_precision alters some inputs by one ULP.
     return pd.read_csv(path, keep_default_na=False, na_values=[''])
 
 def configuration(target=None):

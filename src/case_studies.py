@@ -108,6 +108,19 @@ def run(output):
                 })
     for name, rows in [("summary", summary), ("local_shap", local), ("delta_shap", delta), ("inputs", inputs)]:
         save_csv(pd.DataFrame(rows), output / f"{name}.csv")
+    error_metrics = []
+    for (study, target), rows in pd.DataFrame(summary).groupby(["study", "target"], sort=False):
+        observed_change = rows.observed_pg_ml.iloc[1] - rows.observed_pg_ml.iloc[0]
+        predicted_change = rows.prediction_mean_pg_ml.iloc[1] - rows.prediction_mean_pg_ml.iloc[0]
+        error_metrics.append({
+            "study": study, "target": target, "n_formulations": len(rows),
+            "MAE_of_ensemble_mean_pg_ml": rows.absolute_error_pg_ml.mean(),
+            "mean_individual_model_MAE_pg_ml": rows.mean_individual_absolute_error_pg_ml.mean(),
+            "observed_pair_change_pg_ml": observed_change,
+            "predicted_pair_change_pg_ml": predicted_change,
+            "absolute_pair_change_error_pg_ml": abs(predicted_change - observed_change),
+        })
+    save_csv(pd.DataFrame(error_metrics), output / "error_metrics.csv")
     save_json({
         **settings(), "supplementary_table": "S7a,b",
         "P15": "Basal THP-1 at 72 h; whole-study-excluded objects; retrospective analysis; both formulations outside their corresponding applicability domains.",

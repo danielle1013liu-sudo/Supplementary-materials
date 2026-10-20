@@ -2,7 +2,7 @@
   "display_codebook_version": "frequency_codes_20261019",
   "legacy_version": "legacy_codes_v1",
   "count_basis": "Pooled target-specific records in Tables S8-S9: all 139 TNF-alpha and 133 IL-10 records, without deduplication. Not independent studies or unique formulations.",
-  "policy": "Descending pooled occurrence, with other/mixed then unclear residual categories placed last. Letters are nominal identifiers, including crosslink level; low/medium/high scoring criteria are unchanged. None and unstimulated/basal are valid categories.",
+  "policy": "The frequency_codes_20261019 letter mapping is fixed. Letters are nominal identifiers, including crosslink level. Counts reflect the corrected 20261020 dataset; categories are not reassigned when counts change. None and basal conditions are valid categories.",
   "fields": [
     {
       "feature": "Hydrogel composition",
@@ -179,8 +179,8 @@
           "display_label": "High",
           "display_rank": 2,
           "tnf_n": 58,
-          "il10_n": 65,
-          "pooled_n": 123
+          "il10_n": 64,
+          "pooled_n": 122
         },
         {
           "new_code": "C",
@@ -189,8 +189,8 @@
           "display_label": "Low",
           "display_rank": 3,
           "tnf_n": 13,
-          "il10_n": 7,
-          "pooled_n": 20
+          "il10_n": 8,
+          "pooled_n": 21
         }
       ]
     },
@@ -390,5 +390,6 @@
         }
       ]
     }
-  ]
+  ],
+  "dataset_version": "crosslink7_rfmedian_20261020"
 }

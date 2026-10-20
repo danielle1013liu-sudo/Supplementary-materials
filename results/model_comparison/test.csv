@@ -1,3 +1,3 @@
 target,family,imputer,scope,model_scope,Test_R2_mean,Test_R2_sample_SD,Test_RMSE_mean_pg_ml,Test_RMSE_sample_SD_pg_ml,Test_MAE_mean_pg_ml,Test_MAE_sample_SD_pg_ml
 tnf,GradientBoostingRegressor,median,Test,primary_frozen_models,0.7306192576613233,0.01111945296953502,290.0586989317733,5.966277181781549,205.41842999212585,3.9022760195001993
-il10,RandomForestRegressor,iterative_bayesian_ridge,Test,primary_frozen_models,0.9678951166726555,0.0001316216906171436,75.79689194766449,0.15546492465803466,47.493390287085276,0.6146574037126056
+il10,RandomForestRegressor,median,Test,primary_frozen_models,0.9555594260309505,0.0011276093236104617,89.17293873679425,1.1291283856870213,53.47693698350941,0.1149637329964427

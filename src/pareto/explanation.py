@@ -9,7 +9,8 @@ def run(output):
     output = Path(output)
     out = output / "results"
     representatives = csv(out / "FINAL_PARETO_REPRESENTATIVES.csv")
-    assert representatives.display_label.tolist() == ["P1", "P2", "P3"]
+    if representatives.display_label.tolist() != ["P1", "P2", "P3"]:
+        raise ValueError("Three distinct retained objective locations are needed for representative SHAP; see REPRESENTATIVE_LIMITATION.json")
     grouped_rows, individual_rows, residuals, mappings = [], [], [], []
     for target in SEEDS:
         arrays, bases, predictions = [], [], []
@@ -150,7 +151,8 @@ def run(output):
             "approximate": False,
             "check_additivity": True,
             "grouping": "Signed sum of transformed-feature contributions per canonical descriptor",
-            "model_average": "Arithmetic mean over the three unchanged saved models per target",
+            "model_average": "Arithmetic mean over the three accepted saved models per target",
+            "accepted_seeds": SEEDS,
             "max_absolute_residual_pg_ml": max(
                 abs(r["additivity_residual_pg_ml"]) for r in residuals
             ),

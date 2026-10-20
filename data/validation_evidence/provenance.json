@@ -23,5 +23,13 @@
   ],
   "implementation": "Refactored executable local-grid and preprocessing logic; these files are not represented as the original executed scripts.",
   "archived_grid": "Previously executed reference comparison, not rerun for this submission.",
-  "optional_execution": "The same declared candidates, fold pooling and ranking, evaluated only at the three accepted final estimator seeds; historical grid scores are evidence and are not claimed to be the output of this optional final-seed rerun."
+  "optional_execution": "The same declared candidates, fold pooling and ranking, evaluated only at the three accepted final estimator seeds; historical grid scores are evidence and are not claimed to be the output of this optional final-seed rerun.",
+  "current_IL10_release": {
+    "release": "IL10-crosslink7-RF-median-20261020",
+    "provenance": "data/validation_evidence/il10_20261020/release_provenance.json",
+    "reference_grid": "data/validation_evidence/il10_20261020/reference_grid.csv",
+    "selection": "Family and imputer jointly selected by highest three-realisation mean pooled OOF R2 across all 20 locked configurations.",
+    "panel_selection": "Accepted trio selected after C4 case-error ranking; C4 is selection-informed."
+  },
+  "historical_scope": "historical_local_grid.csv, grid_original_checkpoint_comparisons.csv and controlled_grid_* retain the pre-crosslink-revision dataset/configuration scope. Their IL10 rows do not describe the revised release. final_seed_all20_comparisons.csv and final_family_benchmarks.csv contain the current accepted models for both targets."
 }

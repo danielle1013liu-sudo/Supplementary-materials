@@ -2,9 +2,76 @@
   "input_and_model_hashes": "PASS",
   "split_and_CV_seed_reconstruction": "PASS",
   "saved_and_constructed_pipeline_parameters": "exact",
-  "six_saved_Test_case_predictions": "exact",
+  "six_saved_Training_Test_case_predictions": "exact",
   "stored_pooled_OOF_predictions_and_metrics": "exact",
-  "same_seed_all20_Validation_winners": "PASS",
+  "Validation_selection": {
+    "tnf": {
+      "rule": "each_seed_validation",
+      "configuration_count": 20,
+      "realisations": [
+        3089,
+        4280,
+        5793
+      ],
+      "mean_Validation_winner": {
+        "family": "GradientBoostingRegressor",
+        "imputer": "median"
+      },
+      "individual_Validation_winners": [
+        {
+          "seed": 3089,
+          "family": "GradientBoostingRegressor",
+          "imputer": "median",
+          "accepted_pipeline_wins": true
+        },
+        {
+          "seed": 4280,
+          "family": "GradientBoostingRegressor",
+          "imputer": "median",
+          "accepted_pipeline_wins": true
+        },
+        {
+          "seed": 5793,
+          "family": "GradientBoostingRegressor",
+          "imputer": "median",
+          "accepted_pipeline_wins": true
+        }
+      ]
+    },
+    "il10": {
+      "rule": "three_seed_mean_validation",
+      "configuration_count": 20,
+      "realisations": [
+        18571,
+        28094,
+        30787
+      ],
+      "mean_Validation_winner": {
+        "family": "RandomForestRegressor",
+        "imputer": "median"
+      },
+      "individual_Validation_winners": [
+        {
+          "seed": 18571,
+          "family": "RandomForestRegressor",
+          "imputer": "median",
+          "accepted_pipeline_wins": true
+        },
+        {
+          "seed": 28094,
+          "family": "XGBRegressor",
+          "imputer": "mean",
+          "accepted_pipeline_wins": false
+        },
+        {
+          "seed": 30787,
+          "family": "RandomForestRegressor",
+          "imputer": "mean",
+          "accepted_pipeline_wins": false
+        }
+      ]
+    }
+  },
   "predictive_model_fitting_in_this_verification": false,
   "checks": [
     {
@@ -14,8 +81,7 @@
       "Test_n": 28,
       "parameters_equal_saved_pipeline": true,
       "stored_OOF_exact": true,
-      "fresh_Test_case_predictions_exact": true,
-      "all20_Validation_winner": true
+      "fresh_Training_Test_case_predictions_exact": true
     },
     {
       "target": "tnf",
@@ -24,8 +90,7 @@
       "Test_n": 28,
       "parameters_equal_saved_pipeline": true,
       "stored_OOF_exact": true,
-      "fresh_Test_case_predictions_exact": true,
-      "all20_Validation_winner": true
+      "fresh_Training_Test_case_predictions_exact": true
     },
     {
       "target": "tnf",
@@ -34,38 +99,34 @@
       "Test_n": 28,
       "parameters_equal_saved_pipeline": true,
       "stored_OOF_exact": true,
-      "fresh_Test_case_predictions_exact": true,
-      "all20_Validation_winner": true
+      "fresh_Training_Test_case_predictions_exact": true
     },
     {
       "target": "il10",
-      "seed": 85,
+      "seed": 18571,
       "Training_n": 106,
       "Test_n": 27,
       "parameters_equal_saved_pipeline": true,
       "stored_OOF_exact": true,
-      "fresh_Test_case_predictions_exact": true,
-      "all20_Validation_winner": true
+      "fresh_Training_Test_case_predictions_exact": true
     },
     {
       "target": "il10",
-      "seed": 115,
+      "seed": 28094,
       "Training_n": 106,
       "Test_n": 27,
       "parameters_equal_saved_pipeline": true,
       "stored_OOF_exact": true,
-      "fresh_Test_case_predictions_exact": true,
-      "all20_Validation_winner": true
+      "fresh_Training_Test_case_predictions_exact": true
     },
     {
       "target": "il10",
-      "seed": 158,
+      "seed": 30787,
       "Training_n": 106,
       "Test_n": 27,
       "parameters_equal_saved_pipeline": true,
       "stored_OOF_exact": true,
-      "fresh_Test_case_predictions_exact": true,
-      "all20_Validation_winner": true
+      "fresh_Training_Test_case_predictions_exact": true
     }
   ]
 }
