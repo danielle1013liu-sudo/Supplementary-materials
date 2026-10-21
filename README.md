@@ -18,3 +18,28 @@ python -m src.train --target both
 ```
 
 Data are in `data/`, fitted pipelines in `models/`, and model and analysis code in `src/`.
+
+## Hydrogel Cytokine Explorer
+
+The Streamlit interface uses the saved 2026-10-20 pipelines and current public
+category codes. It provides TNF-alpha and IL-10 predictions, the spread across
+the three fitted models for each target, applicability-domain distances, and
+grouped SHAP contributions. Inputs and results can be downloaded as CSV files.
+Running the website does not train models.
+
+```bash
+python -m pip install -r requirements-app.txt
+python -m streamlit run app.py
+```
+
+The website retains the three-column scientific illustration, Arial typography
+and pale pink-purple theme. Navigation contains Home and Model Prediction;
+descriptor definitions and the current supplementary document are available
+from the prediction page. The approved transparent artwork is in `assets/`.
+Its 3D icons are raster illustrations embedded alongside vector artwork and
+editable SVG text; they represent descriptor concepts rather than measured
+microstructures.
+
+See [deployment instructions](docs/deployment.md) for Streamlit Community Cloud.
+Model selection and evaluation records remain in
+`data/validation_evidence/il10_20261020/release_provenance.json`.

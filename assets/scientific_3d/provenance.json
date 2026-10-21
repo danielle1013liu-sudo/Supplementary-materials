@@ -1,0 +1,58 @@
+{
+  "source": "Illustrator 2025 native export",
+  "background": "transparent",
+  "medium": "Native vector geometry and live SVG text with seven approved embedded 3D raster icons",
+  "native_export_sha256": "eff2f84e2909a3a95eec8e98d3ef8680247c1a6fa26b60ba187839674937d05b",
+  "icons": {
+    "logo_hydrogel": {
+      "sha256": "4ad092fbfaf58513fba19e317073798d965a704aa084cc642c82023248419ad7",
+      "pixels": [
+        320,
+        320
+      ]
+    },
+    "composition": {
+      "sha256": "868ea89aae6265e05eb090a1613195f08ad0d5dc8f07ccb3a09806b075467477",
+      "pixels": [
+        320,
+        320
+      ]
+    },
+    "bioactive": {
+      "sha256": "e4d280c5f332207fbbe8ceb42a63266bb39159aac1eb43b5351533b70014042d",
+      "pixels": [
+        320,
+        320
+      ]
+    },
+    "method": {
+      "sha256": "4e9f60859b5ecb2e7aef683e8bb9a649a599d3912b5d7135fca84b37f2e13ec3",
+      "pixels": [
+        320,
+        320
+      ]
+    },
+    "level": {
+      "sha256": "b55a092f3cb178f4ae9169856326807447525fbbee19d9cc0b86d37abcf516ac",
+      "pixels": [
+        320,
+        320
+      ]
+    },
+    "modulus": {
+      "sha256": "738f9b6d7db41c439c226d334b74b6997aedfb441210e029e3f110b839033075",
+      "pixels": [
+        320,
+        320
+      ]
+    },
+    "pore": {
+      "sha256": "90a47d9b916396b2767d18ba797b6809086910655be8b90d0766bb69c73fc4c2",
+      "pixels": [
+        320,
+        320
+      ]
+    }
+  },
+  "hero_source_sha256": "91940fcd71f8f2bc16750acba9b8b9ed8f6941510f17c9fef3aef11ae5e93f60"
+}

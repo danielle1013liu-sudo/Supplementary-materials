@@ -1,0 +1,7 @@
+target,seed,estimator,numeric_imputer
+tnf,3089,GradientBoostingRegressor,median
+tnf,4280,GradientBoostingRegressor,median
+tnf,5793,GradientBoostingRegressor,median
+il10,18571,RandomForestRegressor,median
+il10,28094,RandomForestRegressor,median
+il10,30787,RandomForestRegressor,median

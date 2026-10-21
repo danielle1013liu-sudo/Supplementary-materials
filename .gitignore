@@ -18,3 +18,9 @@ results/release_tests_*.xml
 results/IL10_update_*.txt
 results/publication_codes_*/
 docs/supplementary_visual_qa_*.json
+
+# Per-session website outputs and local tooling.
+results/app/
+results/runtime/
+node_modules/
+.streamlit/secrets.toml
