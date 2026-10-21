@@ -10,6 +10,10 @@ under `results/cloud_deployment/`; desktop and mobile screenshots are in
 document bytes. Platform telemetry failures are logged separately from application
 errors by the browser checks.
 
+The concise Tutorial, feature help and model-label update is verified in
+`results/ui_simplification/cloud/`, with screenshots in
+`docs/ui_simplification/cloud/`.
+
 Deploy the website branch with **`deploy/streamlit_app.py`** as the main file and **Python 3.13** selected in Advanced settings. No API key or other secret is required for the saved-model predictions.
 
 The entrypoint runs the existing `app.py` and explicitly selects the `community-cloud` runtime profile. It preserves the layout, theme and inference inputs. Run the same entrypoint locally from the repository root:
@@ -39,7 +43,7 @@ The website also requires `web/`, `assets/banner.svg`, the optional `assets/bann
 
 ## Operations
 
-On the deployed site, open Home and Model Prediction, submit a known profile, and download Inputs and Predictions together. Verify the downloaded predictions against the saved pipelines on those downloaded inputs. Confirm that the supplementary document downloads and that the mobile layout remains usable.
+On the deployed site, open Home, Tutorial and Model Prediction, submit a known profile, and download Inputs and Predictions together. Verify the downloaded predictions against the saved pipelines on those downloaded inputs. Confirm that the supplementary document downloads and that the mobile layout remains usable.
 
 Saved-model loading and TreeSHAP consume server memory. Model resources are shared by Streamlit's resource cache, and numerical thread pools are limited during replay and prediction. Local memory measurements are deployment diagnostics, not a guarantee of Linux server memory use or concurrent-user capacity.
 
