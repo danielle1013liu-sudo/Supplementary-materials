@@ -43,6 +43,23 @@ async function checkImages(frame){
   });
   assert.deepEqual(broken,[]);
 }
+async function noSeedLabels(frame){
+  const visible=await frame.locator('body').innerText();
+  assert.doesNotMatch(visible,/\b(?:seed|realisation)\s+\d+/i);
+  for(const model of models)assert.doesNotMatch(visible,new RegExp(`\\b${model.seed}\\b`));
+}
+async function tutorial(page,frame,name){
+  await frame.getByRole('button',{name:'Tutorial',exact:true}).click();
+  assert.equal(await frame.locator('.tutorial-step').count(),4);
+  assert.equal(await frame.locator('.tutorial-body img').count(),0);
+  assert.equal(await frame.locator('body').evaluate(el=>el.scrollWidth>el.clientWidth),false);
+  assert.equal(await frame.locator('.sidebar.mobile-open').count(),0);
+  assert.ok((await frame.locator('.card-header').boundingBox()).y>=0);
+  await noSeedLabels(frame);
+  await page.screenshot({path:path.join(out,name+'.png')});
+  await frame.getByRole('button',{name:'Start predicting',exact:true}).click();
+  assert.equal(await frame.locator('.choice').count(),7);
+}
 async function captureHomeMobile(page,frame){
   await page.setViewportSize({width:390,height:844});
   await resized(frame);
@@ -57,6 +74,9 @@ async function captureHomeMobile(page,frame){
   await panel.evaluate(el=>el.scrollTop=el.scrollHeight);
   await page.screenshot({path:path.join(out,'home_mobile_introduction.png')});
   await panel.evaluate(el=>el.scrollTop=0);
+  await tutorial(page,frame,'tutorial_mobile');
+  await frame.getByRole('button',{name:'Landing / Home',exact:true}).click();
+  record('mobile Home Tutorial has four steps and opens prediction');
   await page.setViewportSize({width:1440,height:900});
   await resized(frame);
   record('desktop/mobile hero images decode and mobile Home has no horizontal overflow');
@@ -85,15 +105,14 @@ async function run(){
   assert.equal(await frame.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(246, 240, 246)');
   assert.equal(await frame.locator('body').evaluate(el=>getComputedStyle(el).fontFamily),'Arial, Helvetica, sans-serif');
   record('original pale pink-lavender theme and Arial typography');
-  assert.equal(await frame.locator('[data-page="tutorial"]').count(),0);
-  assert.equal(await frame.getByRole('button',{name:'Tutorial',exact:true}).count(),0);
-  record('Home navigation contains no Tutorial');
+  assert.equal(await frame.getByRole('button',{name:'Tutorial',exact:true}).count(),1);
   await checkImages(frame);
   await page.screenshot({path:path.join(out,'home_1440.png')});
   await captureHomeMobile(page,frame);
-  await frame.getByRole('button',{name:'Model Prediction',exact:true}).click();
+  await tutorial(page,frame,'tutorial_1440');
+  record('desktop Home Tutorial has four steps and opens prediction');
   assert.equal(await frame.locator('.choice').count(),7);
-  assert.equal(await frame.getByRole('button',{name:'Tutorial',exact:true}).count(),0);
+  assert.equal(await frame.getByRole('button',{name:'Tutorial',exact:true}).count(),1);
   assert.equal(await frame.locator('.results').count(),0);record('navigation; seven categories; no invented initial results');
   await capture(page,frame,'prediction_initial_1440');
   await page.screenshot({path:path.join(out,'open_step.png')});
@@ -108,6 +127,14 @@ async function run(){
   await frame.getByRole('button',{name:'Expand sidebar'}).click();record('sidebar collapse and expansion');
   await frame.getByRole('button',{name:'Open descriptor help'}).click();
   assert.equal(await frame.locator('.help-panel').count(),1);
+  assert.equal(await frame.locator('.help-panel h2').textContent(),'Features');
+  assert.equal(await frame.locator('.help-panel h3').count(),10);
+  const featureDescriptions=await frame.locator('.help-panel p').allTextContents();
+  assert.equal(featureDescriptions.length,10);
+  assert.ok(featureDescriptions.every(text=>text.length>0&&text.length<120));
+  assert.equal(await frame.locator('.help-panel ul').count(),0);
+  await page.screenshot({path:path.join(out,'features_1440.png')});
+  record('Features help gives ten brief descriptions without category lists');
   const supplementLink=frame.getByRole('link',{name:'Download the current release supplement',exact:true});
   const supplementName=await supplementLink.getAttribute('download');
   const [supplement]=await Promise.all([page.waitForEvent('download'),supplementLink.click()]);
@@ -145,9 +172,10 @@ async function run(){
   await frame.locator('.results').evaluate(el=>el.scrollIntoView({block:"center"}));
   assert.equal(await frame.locator('.result-card').count(),2);
   assert.equal(await frame.locator('.realisation').count(),6);
-  for(const model of models)assert.match(await frame.locator('.results').innerText(),new RegExp(`Realisation ${model.seed}`));
+  assert.deepEqual(await frame.locator('.realisation span:first-child').allTextContents(),['Model 1','Model 2','Model 3','Model 1','Model 2','Model 3']);
+  await noSeedLabels(frame);
   assert.match(await frame.locator('.results').innerText(),/TNF-α/);
-  assert.match(await frame.locator('.results').innerText(),/pg\/mL/);record('two real target cards, all six predictions, units and SD');
+  assert.match(await frame.locator('.results').innerText(),/pg\/mL/);record('two target cards retain six predictions with Model 1–3 labels and no seed IDs');
   await capture(page,frame,'results_1440');
   await page.screenshot({path:path.join(out,'results_step.png')});
   const [download]=await Promise.all([page.waitForEvent('download'),frame.getByRole('link',{name:'Download predictions',exact:true}).click()]);
@@ -175,14 +203,21 @@ async function run(){
   await choose(frame,'macrophage_model_class','BMDM');
   await frame.getByRole('button',{name:'Predict',exact:true}).click();
   await frame.locator('.results').waitFor({timeout:60000});
-  assert.match(await frame.locator('.results').innerText(),/unseen/);record('missing numeric inference and fitted-encoder warning');
+  assert.match(await frame.locator('.results').innerText(),/unseen/);
+  await noSeedLabels(frame);
+  const warnings=(await frame.locator('.results > .alert').innerText()).split('\n');
+  assert.equal(new Set(warnings).size,warnings.length);
+  await frame.locator('.results > .alert').evaluate(el=>el.scrollIntoView({block:'center'}));
+  await page.screenshot({path:path.join(out,'unseen_warning_1440.png')});
+  record('missing numeric inference retains deduplicated BMDM warning without seed IDs');
   await frame.getByRole('button',{name:'Reset All',exact:true}).click();
   assert.equal(await frame.locator('.results').count(),0);assert.equal(await frame.locator('.choice.placeholder').count(),7);
   for(const field of ['modulus_value_kPa','pore_size_um','culture_or_exposure_duration_h'])assert.equal(await frame.locator(`[data-number="${field}"]`).inputValue(),'');
   await frame.locator('.reset').evaluate(el=>el.scrollIntoView({block:"center"}));
   await page.screenshot({path:path.join(out,'reset_step.png')});record('reset clears all inputs and results');
-  assert.equal(await frame.locator('[data-page="tutorial"],.tutorial-body').count(),0);
-  record('prediction sidebar contains no Tutorial page');
+  await tutorial(page,frame,'tutorial_from_sidebar');
+  assert.equal(await frame.locator('.choice.placeholder').count(),7);
+  record('prediction sidebar Tutorial is accessible and preserves reset inputs');
   await frame.getByRole('button',{name:'Landing / Home',exact:true}).click();
   for(const [width,height,name] of [[1875,1143,'reference_home'],[2048,1011,'reference_prediction_top'],[2048,1058,'reference_prediction_bottom'],[390,844,'mobile']]){
     await page.setViewportSize({width,height});
@@ -205,6 +240,12 @@ async function run(){
         const cards=await frame.locator('.result-card').evaluateAll(nodes=>nodes.map(n=>({x:n.getBoundingClientRect().x,y:n.getBoundingClientRect().y})));
         assert.equal(cards[0].x,cards[1].x);assert.ok(cards[1].y>cards[0].y);
         await capture(page,frame,'mobile_results');record('390×844 stacked form and results without horizontal overflow');
+        await page.setViewportSize({width:390,height:667});
+        await resized(frame);
+        await frame.locator('.collapse').click();
+        assert.equal(await frame.locator('.sidebar.mobile-open').count(),1);
+        await tutorial(page,frame,'tutorial_mobile_after_results');
+        record('390×667 Tutorial navigation closes expanded sidebar and shows the top');
       }
     }
   }
@@ -212,7 +253,7 @@ async function run(){
   fs.writeFileSync(path.join(out,'browser_errors.json'),JSON.stringify(browserErrors,null,2));
   fs.writeFileSync(path.join(out,'platform_errors.json'),JSON.stringify(platformErrors,null,2));
   assert.deepEqual(browserErrors,[]);
-  record('no browser JavaScript or console errors');
+  record('no application JavaScript or console errors');
   fs.writeFileSync(path.join(numerical,'browser_checks.csv'),'check,status\n'+checks.map(c=>`"${c.check.replaceAll('"','""')}",${c.status}`).join('\n')+'\n');
   fs.writeFileSync(path.join(numerical,'browser_anchors.csv'),'view,anchor,x,y,width,height\n'+anchors.map(a=>[a.view,a.anchor,a.x,a.y,a.width,a.height].join(',')).join('\n')+'\n');
   fs.rmSync(path.join(numerical,'browser_failure.txt'),{force:true});

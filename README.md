@@ -35,9 +35,9 @@ python -m streamlit run app.py
 ```
 
 The website retains the three-column scientific illustration, Arial typography
-and pale pink-purple theme. Navigation contains Home and Model Prediction;
-descriptor definitions and the current supplementary document are available
-from the prediction page. The approved transparent artwork is in `assets/`.
+and pale pink-purple theme. Navigation contains Home, Model Prediction and a
+short Tutorial. Brief feature definitions and the current supplementary
+document are available from the prediction page. The approved transparent artwork is in `assets/`.
 Its 3D icons are raster illustrations embedded alongside vector artwork and
 editable SVG text; they represent descriptor concepts rather than measured
 microstructures.
