@@ -1,0 +1,25 @@
+check,status
+"original pale pink-lavender theme and Arial typography",PASS
+"Home navigation contains no Tutorial",PASS
+"desktop/mobile hero images decode and mobile Home has no horizontal overflow",PASS
+"navigation; seven categories; no invented initial results",PASS
+"all dropdown orders and canonical choices",PASS
+"sidebar collapse and expansion",PASS
+"release supplement download matches repository bytes",PASS
+"descriptor help tab",PASS
+"precise numeric entry preserved",PASS
+"typed values outside slider range are not clamped",PASS
+"slider synchronises the numeric field",PASS
+"explicit unreported control",PASS
+"malformed input is rejected",PASS
+"two real target cards, all six predictions, units and SD",PASS
+"current six release realisations in CSV download",PASS
+"grouped SHAP presentation",PASS
+"separate sessions do not share inputs or results",PASS
+"changing inputs invalidates stale results",PASS
+"missing numeric inference and fitted-encoder warning",PASS
+"reset clears all inputs and results",PASS
+"prediction sidebar contains no Tutorial page",PASS
+"390×844 stacked form and results without horizontal overflow",PASS
+"1440×900 and supplied-reference-size captures",PASS
+"no browser JavaScript or console errors",PASS

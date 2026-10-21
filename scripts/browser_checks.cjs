@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
+const {createHash} = require('node:crypto');
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const out = path.resolve(process.env.BROWSER_EVIDENCE_DIR || 'docs/revision/browser');
 const numerical = path.resolve(process.env.BROWSER_RESULTS_DIR || 'results/revision');
@@ -12,16 +13,26 @@ assert.match(bookVersion,/^frequency_codes_[a-zA-Z0-9_]+$/);
 const book = JSON.parse(fs.readFileSync(`data/public_codebooks/${bookVersion}.json`,'utf8'));
 const models = JSON.parse(fs.readFileSync('models/manifest.json','utf8'));
 const profile = JSON.parse(fs.readFileSync('results/revision/browser_case.json','utf8'));
-const checks=[], anchors=[], browserErrors=[];
+const checks=[], anchors=[], browserErrors=[], platformErrors=[];
 const appUrl=process.env.BROWSER_APP_URL||'http://127.0.0.1:8501';
 function record(name){checks.push({check:name,status:'PASS'});console.log('PASS',name);}
+function isPlatformResource(url){
+  const resource=new URL(url||appUrl,appUrl);
+  return resource.hostname==='sdk.us.heap-api.com'||(resource.origin===new URL(appUrl).origin&&['/api/v1/app/event/open','/api/v2/user/details'].includes(resource.pathname));
+}
+async function resized(frame){
+  await frame.waitForFunction(()=>innerHeight>0&&Math.abs(innerHeight-window.parent.innerHeight)<2);
+}
 async function open(context){
   const page=await context.newPage();
   page.on('pageerror',error=>browserErrors.push(error.message));
-  page.on('console',entry=>{if(entry.type()==='error')browserErrors.push(entry.text());});
+  page.on('console',entry=>{if(entry.type()==='error'){
+    const issue={message:entry.text(),url:entry.location().url};
+    (isPlatformResource(issue.url)?platformErrors:browserErrors).push(issue);
+  }});
   await page.goto(appUrl);
-  await page.locator('iframe').waitFor();
-  const frame=await page.locator('iframe').contentFrame();
+  const isComponent=frame=>frame.url().includes('/component/app.hydrogel_explorer/index.html');
+  const frame=page.frames().find(isComponent)||await page.waitForEvent('framenavigated',{predicate:isComponent,timeout:60000});
   await frame.getByRole('button',{name:'Model Prediction',exact:true}).waitFor({timeout:60000});
   return {page,frame};
 }
@@ -34,7 +45,7 @@ async function checkImages(frame){
 }
 async function captureHomeMobile(page,frame){
   await page.setViewportSize({width:390,height:844});
-  await page.waitForFunction(()=>Math.abs(document.querySelector('iframe').getBoundingClientRect().height-window.innerHeight)<2);
+  await resized(frame);
   await checkImages(frame);
   assert.equal(await frame.locator('body').evaluate(el=>el.scrollWidth>el.clientWidth),false);
   await page.screenshot({path:path.join(out,'home_mobile_top.png')});
@@ -47,7 +58,7 @@ async function captureHomeMobile(page,frame){
   await page.screenshot({path:path.join(out,'home_mobile_introduction.png')});
   await panel.evaluate(el=>el.scrollTop=0);
   await page.setViewportSize({width:1440,height:900});
-  await page.waitForFunction(()=>Math.abs(document.querySelector('iframe').getBoundingClientRect().height-window.innerHeight)<2);
+  await resized(frame);
   record('desktop/mobile hero images decode and mobile Home has no horizontal overflow');
 }
 async function choose(frame,field,value){
@@ -97,6 +108,14 @@ async function run(){
   await frame.getByRole('button',{name:'Expand sidebar'}).click();record('sidebar collapse and expansion');
   await frame.getByRole('button',{name:'Open descriptor help'}).click();
   assert.equal(await frame.locator('.help-panel').count(),1);
+  const supplementLink=frame.getByRole('link',{name:'Download the current release supplement',exact:true});
+  const supplementName=await supplementLink.getAttribute('download');
+  const [supplement]=await Promise.all([page.waitForEvent('download'),supplementLink.click()]);
+  const supplementPath=path.join(out,supplementName);
+  await supplement.saveAs(supplementPath);
+  const digest=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  assert.equal(digest(supplementPath),digest(path.join('docs',supplementName)));
+  record('release supplement download matches repository bytes');
   await frame.getByRole('button',{name:'Close descriptor help'}).click();record('descriptor help tab');
   for(const field of ['modulus_value_kPa','pore_size_um','culture_or_exposure_duration_h'])await input(frame,field,profile[field]);
   await input(frame,'modulus_value_kPa','1.2345678901234567');
@@ -135,6 +154,9 @@ async function run(){
   await download.saveAs(path.join(numerical,'browser_predictions.csv'));
   const [inputDownload]=await Promise.all([page.waitForEvent('download'),frame.getByRole('link',{name:'Download inputs',exact:true}).click()]);
   await inputDownload.saveAs(path.join(numerical,'browser_inputs.csv'));
+  const [contributionDownload]=await Promise.all([page.waitForEvent('download'),frame.getByRole('link',{name:'Download contributions',exact:true}).click()]);
+  await contributionDownload.saveAs(path.join(numerical,'browser_contributions.csv'));
+  assert.match(fs.readFileSync(path.join(numerical,'browser_contributions.csv'),'utf8'),/SHAP_pg_ml/);
   const predictionCsv=fs.readFileSync(path.join(numerical,'browser_predictions.csv'),'utf8');
   for(const model of models)assert.match(predictionCsv,new RegExp(`${model.target},${model.seed},`));
   record('current six release realisations in CSV download');
@@ -164,7 +186,7 @@ async function run(){
   await frame.getByRole('button',{name:'Landing / Home',exact:true}).click();
   for(const [width,height,name] of [[1875,1143,'reference_home'],[2048,1011,'reference_prediction_top'],[2048,1058,'reference_prediction_bottom'],[390,844,'mobile']]){
     await page.setViewportSize({width,height});
-    await page.waitForFunction(() => Math.abs(document.querySelector('iframe').getBoundingClientRect().height - window.innerHeight) < 2);
+    await resized(frame);
     if(name==='reference_home')await page.screenshot({path:path.join(out,name+'.png')});
     else {
       if(await frame.getByRole('button',{name:'Model Prediction',exact:true}).count())await frame.getByRole('button',{name:'Model Prediction',exact:true}).click();
@@ -188,6 +210,7 @@ async function run(){
   }
   record('1440×900 and supplied-reference-size captures');
   fs.writeFileSync(path.join(out,'browser_errors.json'),JSON.stringify(browserErrors,null,2));
+  fs.writeFileSync(path.join(out,'platform_errors.json'),JSON.stringify(platformErrors,null,2));
   assert.deepEqual(browserErrors,[]);
   record('no browser JavaScript or console errors');
   fs.writeFileSync(path.join(numerical,'browser_checks.csv'),'check,status\n'+checks.map(c=>`"${c.check.replaceAll('"','""')}",${c.status}`).join('\n')+'\n');

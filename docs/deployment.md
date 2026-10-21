@@ -1,5 +1,15 @@
 # Streamlit Community Cloud deployment
 
+Live app: [Hydrogel Cytokine Explorer](https://hydrogel-cytokine-explorer.streamlit.app/).
+The deployment follows the `codex/publish-hydrogel-explorer` branch of
+`danielle1013liu-sudo/Supplementary-materials`.
+
+Anonymous browser verification and downloaded-prediction comparisons are saved
+under `results/cloud_deployment/`; desktop and mobile screenshots are in
+`docs/cloud_deployment/browser/`. The supplement download matches the release
+document bytes. Platform telemetry failures are logged separately from application
+errors by the browser checks.
+
 Deploy the website branch with **`deploy/streamlit_app.py`** as the main file and **Python 3.13** selected in Advanced settings. No API key or other secret is required for the saved-model predictions.
 
 The entrypoint runs the existing `app.py` and explicitly selects the `community-cloud` runtime profile. It preserves the layout, theme and inference inputs. Run the same entrypoint locally from the repository root:

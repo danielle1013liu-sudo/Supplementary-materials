@@ -24,3 +24,4 @@ results/app/
 results/runtime/
 node_modules/
 .streamlit/secrets.toml
+docs/cloud_deployment/browser/*.docx

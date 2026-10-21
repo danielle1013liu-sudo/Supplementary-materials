@@ -21,6 +21,8 @@ Data are in `data/`, fitted pipelines in `models/`, and model and analysis code 
 
 ## Hydrogel Cytokine Explorer
 
+[Open the website](https://hydrogel-cytokine-explorer.streamlit.app/)
+
 The Streamlit interface uses the saved 2026-10-20 pipelines and current public
 category codes. It provides TNF-alpha and IL-10 predictions, the spread across
 the three fitted models for each target, applicability-domain distances, and
