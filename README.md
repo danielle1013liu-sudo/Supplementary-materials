@@ -1,47 +1,37 @@
-# Hydrogel cytokine prediction
+# Hydrogel cytokine models
 
-Code and curated data for predicting macrophage TNF-alpha and IL-10 responses to hydrogels from ten material and experimental descriptors. The project compares four regression models and five imputation methods, with SHAP interpretation, t-SNE visualisation, case studies and Pareto optimisation.
+## Background
+
+This project models macrophage TNF-alpha and IL-10 concentrations from hydrogel properties and experimental conditions. The curated datasets contain 150 TNF-alpha observations and 131 IL-10 observations. Each observation has ten descriptors: hydrogel composition, storage modulus, pore size, bioactive cue, crosslinking method, crosslinking level, macrophage model, activation stimulus, exposure mode and exposure time.
+
+The implementation includes Gradient Boosting, Random Forest, XGBoost and LightGBM regression. Cytokine concentrations are modelled in pg/mL without a target transformation.
+
+## Selected models
 
 | Target | Model | Numerical imputation |
 | --- | --- | --- |
-| TNF-alpha | GradientBoostingRegressor | Median |
-| IL-10 | RandomForestRegressor | Median |
+| TNF-alpha | Random Forest | Median |
+| IL-10 | LightGBM | Iterative Bayesian ridge |
 
-Model release: **2026-10-20**. The datasets contain 139 TNF-alpha and 133 IL-10 observations. Model settings are in `data/model_parameters.json`.
+## Model parameters
 
-Python **3.13.9** · scikit-learn **1.7.2** · NumPy **2.3.5** · pandas **2.3.3** · SHAP **0.49.1**. Dependencies are pinned in `requirements.txt`; optional comparison models use XGBoost **3.4.1** and LightGBM **4.7.0**.
+| Target | Model | Main parameters |
+| --- | --- | --- |
+| TNF-alpha | Gradient Boosting | 500 estimators; learning rate 0.04; depth 4; minimum leaf size 2; subsample 0.9; feature fraction 0.8 |
+| TNF-alpha | Random Forest | 400 estimators; depth 10; minimum leaf size 1; feature fraction 0.5; bootstrap disabled |
+| TNF-alpha | XGBoost | 500 estimators; learning rate 0.04; depth 4; minimum child weight 1; row/column fractions 0.9; L2 penalty 3; histogram tree method |
+| TNF-alpha | LightGBM | 500 estimators; learning rate 0.035; 15 leaves; minimum child size 3; row/column fractions 0.9; L2 penalty 2 |
+| IL-10 | Gradient Boosting | 600 estimators; learning rate 0.06; depth 5; minimum leaf size 4; subsample 0.9; squared-error loss |
+| IL-10 | Random Forest | 400 estimators; depth 10; minimum leaf size 1; feature fraction 0.6; bootstrap disabled |
+| IL-10 | XGBoost | 1,200 estimators; learning rate 0.08; depth 4; minimum child weight 3; row/column fractions 0.6; L1 penalty 0.1; L2 penalty 5 |
+| IL-10 | LightGBM | 800 estimators; learning rate 0.04; 15 leaves; minimum child size 3; row fraction 0.9; tree/node feature fractions 0.5; L2 penalty 1; maximum bins 15; minimum bin size 1 |
 
-```bash
-python -m pip install -r requirements.txt
-python -m src.predict
-python -m src.train --target both
-```
+| Target | Partition random state | CV random state | Model random states |
+| --- | --- | --- | --- |
+| TNF-alpha | 3815 | 7 | 397, 106028, 154913 |
+| IL-10 | 94641 | 99065 | 4247, 15433, 15645 |
 
-Data are in `data/`, fitted pipelines in `models/`, and model and analysis code in `src/`.
+The partition ratio is 80:20, with ten-fold cross-validation within Training. All four families use the same partitions and model random states for a given target. The three numerical descriptors use median, mean, iterative Bayesian ridge, or distance-weighted KNN imputation with three or five neighbours. Iterative imputation uses 20 iterations and random state 42. KNN distances are standardised within the fitting population. The seven categorical descriptors use a fixed one-hot schema, producing 35 model inputs in total.
 
-## Hydrogel Cytokine Explorer
+Complete estimator arguments and family-specific imputation settings are recorded in [TNF-alpha configuration](config/tnf.json) and [IL-10 configuration](config/il10.json).
 
-[Open the website](https://hydrogel-cytokine-explorer.streamlit.app/)
-
-The Streamlit interface uses the saved 2026-10-20 pipelines and current public
-category codes. It provides TNF-alpha and IL-10 predictions, the spread across
-the three fitted models for each target, applicability-domain distances, and
-grouped SHAP contributions. Inputs and results can be downloaded as CSV files.
-Running the website does not train models.
-
-```bash
-python -m pip install -r requirements-app.txt
-python -m streamlit run app.py
-```
-
-The website retains the three-column scientific illustration, Arial typography
-and pale pink-purple theme. Navigation contains Home, Model Prediction and a
-short Tutorial. Brief feature definitions and the current supplementary
-document are available from the prediction page. The approved transparent artwork is in `assets/`.
-Its 3D icons are raster illustrations embedded alongside vector artwork and
-editable SVG text; they represent descriptor concepts rather than measured
-microstructures.
-
-See [deployment instructions](docs/deployment.md) for Streamlit Community Cloud.
-Model selection and evaluation records remain in
-`data/validation_evidence/il10_20261020/release_provenance.json`.

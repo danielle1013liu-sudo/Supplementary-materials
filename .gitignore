@@ -1,27 +1,13 @@
 __pycache__/
-*.pyc
-.venv/
-outputs/retrained_models/
-outputs/optional_grid_search/
-outputs/runtime_provenance/
-outputs/all10_replay/
+*.py[cod]
 .pytest_cache/
-tmp/
+.ruff_cache/
+.venv/
+*.egg-info/
+build/
+dist/
+runs/
+*.joblib
+!deployment_assets/**/*.joblib
+.DS_Store
 
-outputs/release_build/
-
-outputs/pareto/
-
-outputs/test_runs/
-outputs/validation/*.log
-results/release_tests_*.xml
-results/IL10_update_*.txt
-results/publication_codes_*/
-docs/supplementary_visual_qa_*.json
-
-# Per-session website outputs and local tooling.
-results/app/
-results/runtime/
-node_modules/
-.streamlit/secrets.toml
-docs/cloud_deployment/browser/*.docx

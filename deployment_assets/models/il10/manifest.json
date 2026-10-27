@@ -1,0 +1,35 @@
+{
+  "target": "il10",
+  "family": "LGBM",
+  "imputer": "iterative_bayesian_ridge",
+  "fit_scope": "Training",
+  "features": [
+    "hydrogel_composition_code",
+    "Gprime_kPa",
+    "pore_size_um",
+    "bioactive_cue_code",
+    "crosslink_method_code",
+    "crosslink_level_code",
+    "macrophage_model_code",
+    "activation_stimulus_code",
+    "exposure_mode_code",
+    "exposure_time_h"
+  ],
+  "models": [
+    {
+      "seed": 4247,
+      "path": "model_4247.joblib",
+      "sha256": "cfa725ee3bd19f45fd3cb891a912c7c9f924e1cdb14e5690949477fb69aeccd3"
+    },
+    {
+      "seed": 15433,
+      "path": "model_15433.joblib",
+      "sha256": "b690aee6f66b0616874522305a68c591c9dc5078f1afb8fd823a66b66776b360"
+    },
+    {
+      "seed": 15645,
+      "path": "model_15645.joblib",
+      "sha256": "b46cfa7b9fe852dbecac9f520f7db7683c6eac05506915a45df6e9d661ad53d9"
+    }
+  ]
+}

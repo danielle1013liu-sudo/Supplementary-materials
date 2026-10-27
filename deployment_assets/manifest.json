@@ -1,0 +1,26 @@
+{
+  "version": "paired-v2-20261026",
+  "training_n": {
+    "tnf": 120,
+    "il10": 104
+  },
+  "sha256": {
+    "models/tnf/manifest.json": "ea5363f859ba7a835f09fa102c659d2f74d58177e49d5d108c55bf09f0324fe4",
+    "models/tnf/model_397.joblib": "6858410e865b75c1f8954d6c6789a0de7e48b80354d5d09d5c9e1687501269c3",
+    "models/tnf/model_106028.joblib": "0bff1981e94905679e3347ec63f234ce9aef490f2545ac7f134bcf5d7b08b2aa",
+    "models/tnf/model_154913.joblib": "54e0de7c1515277521ad33d7928585373b5f1a9ddfcab3086df1d25296e573ac",
+    "diagnostics/tnf/preprocessor.joblib": "7acbb9e3b0a1afd0bb03401654014de49139e251eb0e44af2e979f2dfae3d897",
+    "diagnostics/tnf/reference.npz": "7526199bb33775f2b02e8cd32d369507026a239f53375867c7fc80c53822a8c1",
+    "diagnostics/tnf/settings.json": "cc50e5a943e9539f8e6bd8b5973e5b32c0c98ca73b9e728704e53913f291bfce",
+    "diagnostics/tnf/Training_reference_distances.csv": "11c76ae25102bb7983e4dcf50154cfcbfac7b56a4fb074c86b2ac2e0f05e15a2",
+    "models/il10/manifest.json": "8370663c7f1e134b877105abe8c0ff83b5e6f1226778289196c9635a1428037c",
+    "models/il10/model_4247.joblib": "cfa725ee3bd19f45fd3cb891a912c7c9f924e1cdb14e5690949477fb69aeccd3",
+    "models/il10/model_15433.joblib": "b690aee6f66b0616874522305a68c591c9dc5078f1afb8fd823a66b66776b360",
+    "models/il10/model_15645.joblib": "b46cfa7b9fe852dbecac9f520f7db7683c6eac05506915a45df6e9d661ad53d9",
+    "diagnostics/il10/preprocessor.joblib": "42fae9912d8ec52ffd4918a8b940c55bc605abf5fd8a6d97beb371c11de9be6d",
+    "diagnostics/il10/reference.npz": "8d522ff00d0977f36d8f7793c323668f102d3d64d8f28c4002884f2717fa66b4",
+    "diagnostics/il10/settings.json": "577417e6a90c6cbe07a1b7e9ee38a4bd080beb1177c83588e8d7e1b905452581",
+    "diagnostics/il10/Training_reference_distances.csv": "47a223fb96c64e891b0b8d0b5797fc17a26f18c6ba7f32266ecf554f7778ce8f"
+  },
+  "reference_predictions_sha256": "1ce9fc01dc7f542860a5200f271fb5d5637b09ae54ba044af2dfe6000ba2995d"
+}
