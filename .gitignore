@@ -11,3 +11,35 @@ runs/
 !deployment_assets/**/*.joblib
 .DS_Store
 
+# Generated analyses and local diagnostics
+/outputs/
+/results/
+/logs/
+/tmp/
+/temp/
+.coverage
+htmlcov/
+pytestdebug.log
+pip-log.txt
+
+# Manuscript submissions and publication exports
+/manuscripts/
+/submission/
+/submission_figures/
+/review_packages/
+/manuscript*.docx
+/manuscript*.pdf
+/cover_letter*.docx
+/cover_letter*.pdf
+/Supplementary*.docx
+/Supplementary*.pdf
+/Hydrogel_*_Package_*/
+/Hydrogel_*_Package_*.zip
+
+# Local working notes and deployment credentials
+/HANDOFF*.md
+/PROGRESS*.md
+/REVIEW_NOTES*.md
+.streamlit/secrets.toml
+~$*.docx
+
