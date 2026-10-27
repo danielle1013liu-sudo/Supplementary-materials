@@ -101,7 +101,12 @@ if st.session_state.get("release_key") != release_key:
     st.session_state.last_event = None
 
 fields, numeric = descriptor_controls(release_key)
-component = components.declare_component("hydrogel_explorer", path=str(ROOT / "web"))
+frontend_version = hashlib.sha256(
+    b"".join((ROOT / "web" / asset).read_bytes() for asset in ("index.html", "app.js", "style.css"))
+).hexdigest()[:12]
+component = components.declare_component(
+    f"hydrogel_explorer_{frontend_version}", path=str(ROOT / "web"),
+)
 mobile_banner = ROOT / "assets/banner_mobile.svg"
 event = component(
     name=APP_NAME,
