@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hydrogel-cytokine-models"
+version = "0.2.0"
+description = "Regression models for macrophage cytokine responses to hydrogels"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy==2.3.5",
+    "pandas==2.3.3",
+    "scipy==1.16.3",
+    "scikit-learn==1.7.2",
+    "lightgbm==4.7.0",
+    "xgboost==3.4.1",
+    "joblib==1.5.2",
+    "threadpoolctl==3.5.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+hydrogel = "hydrogel.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+

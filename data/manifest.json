@@ -1,0 +1,14 @@
+{
+  "sha256": {
+    "config/il10.json": "05ae324e9aff8f3629e23670e7474c9a3405cb3aa7f360e8e95af5516c58516a",
+    "config/tnf.json": "c6be3e6bc9eba35c809c78565c1ffc2273f79ff35f6f2b6341c50013e96743eb",
+    "data/cases/c4.csv": "9d7cb005dabd5df5e379dae73e44911f6ae9db8fc408f4c5c4a0bb87961d21be",
+    "data/feature_schema.json": "4ea7e0144447da0c7560cb5801749d37ce7ddeb4fa96461b0d1a1fbbfc6a8d50",
+    "data/il10.csv": "c3372d82d990edff57acbbf07852c7e6e3916994cfc5174ee7e2e88f50313af5",
+    "data/splits/il10.json": "e6ebfe4e76dbfdf0eb717c38d1afe09eb006845aa127c985e16c3f1336fc24f7",
+    "data/splits/il10_p32.json": "b3e9ba45a4275a151b0f974d8ae00b7be941f995d58652e0ce4a11459d14f3e9",
+    "data/splits/tnf.json": "febf537ca4bd7b75663024f3c65eead037e2592d18e324b100e45d1a1f690048",
+    "data/splits/tnf_p32.json": "6e959c4c3af6edd1b2c6675c0bb4c1ad888aef6291dece7e410341bee5ded8f4",
+    "data/tnf.csv": "325e48cef0ef5f583d20f82a0d8d3c5a8b1f7786475b1bab94914a9c6604411f"
+  }
+}

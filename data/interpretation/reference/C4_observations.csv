@@ -1,5 +1,0 @@
-target,dataset_row_id,formulation,observed_pg_ml,experimental_error_lower_pg_ml,experimental_error_upper_pg_ml,uncertainty_basis
-tnf,C4_Group2,HPA@SIN-GM,612.0,137.56567543234948,137.56567543234948,Existing source-figure upper-cap SD estimate; exact numerical SD not recovered
-tnf,C4_Group4,HPA@SIN-GM@DR,488.963,119.95300000000005,179.31,"Previously user-fixed asymmetric endpoints, retained exactly; not labelled SD"
-il10,C4_Group2,HPA@SIN-GM,155.0,26.474946929947482,26.474946929947482,Existing source-figure upper-cap SD estimate; exact numerical SD not recovered
-il10,C4_Group4,HPA@SIN-GM@DR,188.06,21.642,18.65600000000001,"Previously user-fixed asymmetric endpoints, retained exactly; not labelled SD"

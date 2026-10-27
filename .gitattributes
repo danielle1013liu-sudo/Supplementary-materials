@@ -1,1 +1,8 @@
-* -text
+* text=auto eol=lf
+*.csv text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.gz binary
+config/** -text
+data/** -text
+

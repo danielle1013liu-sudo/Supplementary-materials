@@ -1,0 +1,5 @@
+target,case_id,formulation,hydrogel_composition_code,Gprime_kPa,pore_size_um,bioactive_cue_code,crosslink_method_code,crosslink_level_code,macrophage_model_code,activation_stimulus_code,exposure_mode_code,exposure_time_h,observed_pg_ml
+tnf,C4_Group2,HPA@SIN-GM,A,10.0,7.5,A,B,C,A,A,B,24.0,612.0
+tnf,C4_Group4,HPA@SIN-GM@DR,A,10.0,7.5,E,B,C,A,A,B,24.0,488.963
+il10,C4_Group2,HPA@SIN-GM,A,10.0,7.5,A,B,C,A,A,B,24.0,155.0
+il10,C4_Group4,HPA@SIN-GM@DR,A,10.0,7.5,E,B,C,A,A,B,24.0,188.06

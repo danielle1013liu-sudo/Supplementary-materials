@@ -1,7 +1,0 @@
-target,seed,rows,max_prediction_difference_pg_ml,row_identity_and_order_exact
-tnf,3089,139,0.0,True
-tnf,4280,139,0.0,True
-tnf,5793,139,0.0,True
-il10,85,133,0.0,True
-il10,115,133,0.0,True
-il10,158,133,0.0,True
