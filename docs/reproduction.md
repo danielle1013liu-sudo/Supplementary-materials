@@ -46,3 +46,11 @@ python -m hydrogel verify --run runs/four_models
 Prediction output contains the mean and sample standard deviation across the three saved models. When an input table includes a `target` column, only rows matching the saved model's target are used. Load only model bundles created by this project or another trusted source.
 
 Use the global `--root` argument before the command to specify a repository directory from another working location. Output directories and prediction files must be new paths.
+
+## Web application
+
+Install `requirements-app.txt` and run `python -m streamlit run app.py` from the repository directory. The `deploy/streamlit_app.py` entry point starts the same application for Community Cloud. The tested runtime is Python 3.13.
+
+The application loads the six saved Training-fitted models in `deployment_assets/`; it does not fit models when a user submits a formulation. Its categorical options come directly from the current feature schema. Results include the three individual predictions, their mean and sample standard deviation, grouped SHAP contributions and an applicability-domain assessment using the saved Training reference populations. The domain assessment requires both a mean five-neighbour distance within the recorded threshold and categorical levels observed in the target's Training population.
+
+Model and diagnostic assets are checked against their recorded hashes. Numerical predictions are checked against the selected configurations in `reference/` when the resources are loaded. Input values and results can be downloaded directly from the interface.

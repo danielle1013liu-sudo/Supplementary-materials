@@ -1,0 +1,35 @@
+{
+  "target": "tnf",
+  "family": "RF",
+  "imputer": "median",
+  "fit_scope": "Training",
+  "features": [
+    "hydrogel_composition_code",
+    "Gprime_kPa",
+    "pore_size_um",
+    "bioactive_cue_code",
+    "crosslink_method_code",
+    "crosslink_level_code",
+    "macrophage_model_code",
+    "activation_stimulus_code",
+    "exposure_mode_code",
+    "exposure_time_h"
+  ],
+  "models": [
+    {
+      "seed": 397,
+      "path": "model_397.joblib",
+      "sha256": "6858410e865b75c1f8954d6c6789a0de7e48b80354d5d09d5c9e1687501269c3"
+    },
+    {
+      "seed": 106028,
+      "path": "model_106028.joblib",
+      "sha256": "0bff1981e94905679e3347ec63f234ce9aef490f2545ac7f134bcf5d7b08b2aa"
+    },
+    {
+      "seed": 154913,
+      "path": "model_154913.joblib",
+      "sha256": "54e0de7c1515277521ad33d7928585373b5f1a9ddfcab3086df1d25296e573ac"
+    }
+  ]
+}

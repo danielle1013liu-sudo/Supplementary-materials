@@ -8,5 +8,6 @@ build/
 dist/
 runs/
 *.joblib
+!deployment_assets/**/*.joblib
 .DS_Store
 
