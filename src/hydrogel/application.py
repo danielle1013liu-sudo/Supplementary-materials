@@ -16,6 +16,7 @@ from sklearn.metrics import pairwise_distances
 from threadpoolctl import threadpool_limits
 
 from .data import ROOT, load_c4, load_config, load_dataset, load_schema, load_split
+from .data import numerical_descriptor
 
 TARGET_LABELS = {"tnf": "TNF-alpha", "il10": "IL-10"}
 AD_NEIGHBOURS = 5
@@ -177,18 +178,7 @@ def form_frame(form: Mapping[str, Any], root: Path | str | None = None) -> pd.Da
     for name in schema["predictors"]:
         value = form[name]
         if name in schema["numeric"]:
-            if value is None or (isinstance(value, str) and value.strip().lower() == "unreported"):
-                row[name] = np.nan
-                continue
-            if isinstance(value, (bool, np.bool_)):
-                raise ValueError(f"{name} must be a non-negative number or unreported.")
-            try:
-                numeric = float(value)
-            except (TypeError, ValueError):
-                raise ValueError(f"{name} must be a non-negative number or unreported.") from None
-            if not np.isfinite(numeric) or numeric < 0:
-                raise ValueError(f"{name} must be finite and non-negative, or explicitly unreported.")
-            row[name] = numeric
+            row[name] = numerical_descriptor(value, name)
         else:
             if not isinstance(value, str) or value.strip() not in schema["categorical"][name]["labels"]:
                 raise ValueError(f"Unknown category for {name}: {value!r}.")
@@ -283,5 +273,14 @@ def predict_form(form: Mapping[str, Any], resources: dict[str, Any]) -> dict[str
         "inputs_csv": frame.to_csv(index=False, float_format="%.17g"),
         "predictions_csv": pd.DataFrame(prediction_rows).to_csv(index=False, float_format="%.17g"),
         "contributions_csv": pd.DataFrame(contribution_rows).to_csv(index=False, float_format="%.17g"),
+        "summary_csv": pd.DataFrame([
+            {
+                "target": TARGET_LABELS[item["target"]],
+                "prediction_mean_pg_ml": item["mean"],
+                "prediction_SD_pg_ml": item["sd"],
+                "applicability_domain": "Within" if item["domain_pass"] else "Outside",
+            }
+            for item in targets
+        ]).to_csv(index=False, float_format="%.17g"),
     }
     return {"targets": targets, "warnings": warnings, "downloads": downloads}

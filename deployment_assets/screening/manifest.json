@@ -1,0 +1,232 @@
+{
+  "format": "hydrogel-candidate-columns-v1",
+  "asset": "candidates.npz",
+  "asset_sha256": "6a82b0d223fb85a100e5a31b24e50ef8181c3b03511cac0f56dd09e7f3bc197f",
+  "asset_bytes": 87571394,
+  "source_csv": "pareto/final/results/ALL_CANDIDATES_AND_PREDICTIONS.csv",
+  "source_csv_sha256": "a337cd4fc819d8e630d0be403e09c7dd955dd6fb6c5ad950d24d5c9bf5f9fba4",
+  "source_csv_bytes": 329561775,
+  "source_package": "Hydrogel_P32_Figure_Data_Package_20261026",
+  "schema_sha256": "4ea7e0144447da0c7560cb5801749d37ce7ddeb4fa96461b0d1a1fbbfc6a8d50",
+  "features": [
+    "hydrogel_composition_code",
+    "Gprime_kPa",
+    "pore_size_um",
+    "bioactive_cue_code",
+    "crosslink_method_code",
+    "crosslink_level_code",
+    "macrophage_model_code",
+    "activation_stimulus_code",
+    "exposure_mode_code",
+    "exposure_time_h"
+  ],
+  "counts": {
+    "generated_n": 722000,
+    "predicted_n": 695722,
+    "eligible_n": 656792,
+    "mean_front_profiles": 24,
+    "final_profiles": 13
+  },
+  "columns": {
+    "candidate_id": {
+      "encoding": "direct",
+      "dtype": "|S24"
+    },
+    "hydrogel_composition_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "Gprime_kPa": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "pore_size_um": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "bioactive_cue_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "crosslink_method_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "crosslink_level_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "macrophage_model_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "activation_stimulus_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "exposure_mode_code": {
+      "encoding": "dictionary",
+      "dtype": "|S1"
+    },
+    "exposure_time_h": {
+      "encoding": "direct",
+      "dtype": "<i8"
+    },
+    "material_tuple_id": {
+      "encoding": "dictionary",
+      "dtype": "|S13"
+    },
+    "experimental_tuple_id": {
+      "encoding": "dictionary",
+      "dtype": "|S13"
+    },
+    "profile_sha256": {
+      "encoding": "direct",
+      "dtype": "|S64"
+    },
+    "tnf_AD_mean5_distance": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "tnf_AD_ratio": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "tnf_all_categories_observed_in_Training": {
+      "encoding": "direct",
+      "dtype": "|b1"
+    },
+    "il10_AD_mean5_distance": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_AD_ratio": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_all_categories_observed_in_Training": {
+      "encoding": "direct",
+      "dtype": "|b1"
+    },
+    "prediction_evaluated": {
+      "encoding": "direct",
+      "dtype": "|b1"
+    },
+    "tnf_seed_397_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "tnf_seed_106028_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "tnf_seed_154913_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "tnf_mean_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "tnf_sample_SD_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_seed_4247_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_seed_15433_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_seed_15645_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_mean_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "il10_sample_SD_pg_ml": {
+      "encoding": "direct",
+      "dtype": "<f8"
+    },
+    "all_six_nonnegative": {
+      "encoding": "direct",
+      "dtype": "|b1"
+    },
+    "eligible": {
+      "encoding": "direct",
+      "dtype": "|b1"
+    },
+    "exclusion_reason": {
+      "encoding": "dictionary",
+      "dtype": "|S19"
+    }
+  },
+  "member_prediction_columns": {
+    "tnf": [
+      "tnf_seed_397_pg_ml",
+      "tnf_seed_106028_pg_ml",
+      "tnf_seed_154913_pg_ml"
+    ],
+    "il10": [
+      "il10_seed_4247_pg_ml",
+      "il10_seed_15433_pg_ml",
+      "il10_seed_15645_pg_ml"
+    ]
+  },
+  "canonical_retained_candidate_ids": [
+    "A10_64e5d1d9810de646b4db",
+    "A10_6ab3dc75560d9e6d543d",
+    "A10_d6d82010df480a9610d5",
+    "A10_aac47bc003483925b524",
+    "A10_cdef5a73362370074519",
+    "A10_82b4a57490761856d677",
+    "A10_514702fa56ba25702a13",
+    "A10_ac5ee457eacb7b7e82be",
+    "A10_df48949c8af54f8b88ae",
+    "A10_67f6e43186e85913959c",
+    "A10_1c2cce9e970a312ad2e4",
+    "A10_8bb6352fe3f1283de8a7",
+    "A10_6bf6eb82d311b2bc9701"
+  ],
+  "canonical_representatives": [
+    {
+      "display_label": "P1",
+      "candidate_id": "A10_64e5d1d9810de646b4db"
+    },
+    {
+      "display_label": "P2",
+      "candidate_id": "A10_df48949c8af54f8b88ae"
+    },
+    {
+      "display_label": "P3",
+      "candidate_id": "A10_6bf6eb82d311b2bc9701"
+    }
+  ],
+  "selection": {
+    "minimise": "tnf_mean_pg_ml",
+    "maximise": "il10_mean_pg_ml",
+    "minimum_pairing_fronts": 6,
+    "total_pairings": 9,
+    "ties": "Preserve distinct profiles with exactly equal objective values; no tolerance.",
+    "eligibility": "Both AD ratios <= 1 and category support in both Training populations; all six recorded predictions non-negative.",
+    "universe": "The same complete eligible subset for the mean front and every target-model pairing."
+  },
+  "source_verification": {
+    "all_columns_losslessly_recovered": true,
+    "source_artifact_sha256": {
+      "results/ALL_CANDIDATES_AND_PREDICTIONS.csv": "a337cd4fc819d8e630d0be403e09c7dd955dd6fb6c5ad950d24d5c9bf5f9fba4",
+      "results/PARETO_SUMMARY.json": "f6e299ee38cb97b5515baaddac1f03d9a3d92b72b8bd64f9086c416748a6971a",
+      "results/FINAL_PARETO_PROFILES.csv": "6979fe9bf326af71275dc7d421a9102ea7d50f59c1578c0aeeecd1004d435bea",
+      "results/FINAL_PARETO_REPRESENTATIVES.csv": "0b7e13a6852d27563096b86759007cd93ba2ea1710a58447a17436fa620813b4",
+      "inputs/feature_schema_v4p2.json": "cc6a673c803b09e294dda39e66253e83d3144e48e4dfef45ef8ae0a29892976d"
+    },
+    "candidate_generation_performed": false,
+    "model_inference_performed": false,
+    "source_manifest_sha256": "676992a68549f001b642f5a6d53a73c2078245700f4cd1094d0f6338df8d4835",
+    "pareto_implementation_sha256": "ae23d1b35e8740cde57271884bdbf56c76d5104b97372c26f0738e131903849d"
+  }
+}

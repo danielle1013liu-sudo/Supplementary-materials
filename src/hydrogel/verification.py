@@ -8,6 +8,12 @@ import pandas as pd
 from .data import ROOT
 
 KEYS = ["target", "family", "imputer", "model_seed", "scope"]
+SUMMARY_KEYS = ["target", "family", "imputer", "scope"]
+SUMMARY_VALUES = [
+    f"{metric}_{statistic}"
+    for metric in ("R2", "RMSE_pg_ml", "MAE_pg_ml")
+    for statistic in ("mean", "SD")
+]
 
 
 def _check_rows(actual: pd.DataFrame, reference: pd.DataFrame,
@@ -31,6 +37,31 @@ def _check_rows(actual: pd.DataFrame, reference: pd.DataFrame,
         raise ValueError("A result table contains non-finite values.")
     np.testing.assert_allclose(observed, expected, rtol=0, atol=atol)
     return float(np.max(np.abs(observed - expected)))
+
+
+def _check_summary(summary: pd.DataFrame, metrics: pd.DataFrame, atol: float) -> float:
+    """Check every summary identity and its mean and sample SD against the fits."""
+    from .evaluation import summarize_metrics
+
+    required = SUMMARY_KEYS + ["n_models"] + SUMMARY_VALUES
+    missing = set(required) - set(summary.columns)
+    if missing:
+        raise ValueError(f"Missing summary columns: {sorted(missing)}.")
+    if summary.empty or summary.duplicated(SUMMARY_KEYS).any():
+        raise ValueError("The summary is empty or contains duplicate configuration identities.")
+    expected = summarize_metrics(metrics).set_index(SUMMARY_KEYS)
+    actual = summary.set_index(SUMMARY_KEYS)
+    if len(actual) != len(expected) or set(actual.index) != set(expected.index):
+        raise ValueError("Summary identities do not match every configuration and scope in metrics.csv.")
+    expected = expected.reindex(actual.index)
+    if not np.array_equal(actual["n_models"].to_numpy(), expected["n_models"].to_numpy()):
+        raise ValueError("Summary counts do not match the individual model metrics.")
+    values = actual[SUMMARY_VALUES].to_numpy(dtype=float)
+    reference = expected[SUMMARY_VALUES].to_numpy(dtype=float)
+    if not np.isfinite(values).all():
+        raise ValueError("The summary contains non-finite values.")
+    np.testing.assert_allclose(values, reference, rtol=0, atol=atol)
+    return float(np.max(np.abs(values - reference)))
 
 
 def verify_run(run: Path, root: Path | None = None, atol: float = 1e-7) -> dict:
@@ -65,12 +96,18 @@ def verify_run(run: Path, root: Path | None = None, atol: float = 1e-7) -> dict:
     metric_error = _check_rows(
         metrics, reference_metrics, KEYS, ["R2", "RMSE_pg_ml", "MAE_pg_ml"], atol,
     )
+    if not (run / "summary.csv").is_file():
+        raise ValueError("The run is missing summary.csv.")
+    summary = pd.read_csv(run / "summary.csv", float_precision="round_trip")
+    summary_error = _check_summary(summary, metrics, atol)
     return {
         "verified": True,
         "prediction_rows": len(predictions),
         "metric_rows": len(metrics),
+        "summary_rows": len(summary),
         "max_prediction_difference": prediction_error,
         "max_metric_difference": metric_error,
+        "max_summary_difference": summary_error,
         "absolute_tolerance": atol,
     }
 

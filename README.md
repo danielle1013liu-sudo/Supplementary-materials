@@ -17,9 +17,11 @@ Random forest was selected for TNF-α prediction and LightGBM for IL-10 predicti
 | TNF-α | Random forest | 0.9090 ± 0.0027 | 141.98 ± 2.13 | 98.38 ± 2.05 |
 | IL-10 | LightGBM | 0.7749 ± 0.0181 | 208.85 ± 8.40 | 136.93 ± 1.52 |
 
-Values are mean ± SD across three fitted model realisations.
+Values are reported as mean ± SD.
 
 Hydrogel Cytokine Explorer provides an interactive interface for predicting both cytokines, inspecting feature contributions and comparing outputs from user-specified formulations. The interface also reports training-data applicability-domain status and provides downloadable inputs, predictions and feature contributions. These functions support the prioritisation of hydrogel formulations for further experimental testing.
+
+Design Screening retrieves non-dominated candidate profiles from the recorded candidate library under user-selected experimental and material constraints.
 
 [Installation and reproduction](docs/reproduction.md).
 

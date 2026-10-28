@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from numbers import Real
 from pathlib import Path
 from typing import Any
 
@@ -67,6 +68,34 @@ def load_p32_scope(target: str, root: Path | str | None = None) -> dict[str, Any
     return scope
 
 
+def numerical_descriptor(value: Any, name: str) -> float:
+    """Parse one non-negative measurement, preserving explicit missing values.
+
+    Blank CSV cells and the form's Unreported option both represent missing
+    measurements. Conversion never supplies an imputed or default value.
+    """
+    if isinstance(value, (bool, np.bool_)):
+        raise ValueError(f"{name} must be a non-negative number or unreported.")
+    if value is None or value is pd.NA:
+        return np.nan
+    if isinstance(value, str):
+        value = value.strip()
+        if value.lower() in {"", "unreported", "\u2014"}:
+            return np.nan
+    elif isinstance(value, Real):
+        if isinstance(value, (float, np.floating)) and np.isnan(value):
+            return np.nan
+    else:
+        raise ValueError(f"{name} must be a non-negative number or unreported.")
+    try:
+        number = float(value)
+    except (TypeError, ValueError, OverflowError):
+        raise ValueError(f"{name} must be a non-negative number or unreported.") from None
+    if not np.isfinite(number) or number < 0:
+        raise ValueError(f"{name} must be finite and non-negative, or explicitly unreported.")
+    return number
+
+
 def validate_features(frame: pd.DataFrame, schema: dict[str, Any]) -> pd.DataFrame:
     """Validate raw descriptors without filling missing numerical measurements."""
     missing = set(schema["predictors"]) - set(frame.columns)
@@ -74,9 +103,7 @@ def validate_features(frame: pd.DataFrame, schema: dict[str, Any]) -> pd.DataFra
         raise ValueError(f"Missing descriptor columns: {sorted(missing)}")
     result = frame.copy()
     for name in schema["numeric"]:
-        result[name] = pd.to_numeric(result[name], errors="raise")
-        if not np.isfinite(result[name].dropna()).all():
-            raise ValueError(f"Non-finite numerical descriptor: {name}")
+        result[name] = result[name].map(lambda value: numerical_descriptor(value, name))
     for name in schema["predictors"]:
         if name not in schema["categorical"]:
             continue

@@ -58,9 +58,14 @@ def test_c4_predictions_match_references_with_additive_contributions(resources, 
     assert len(pd.read_csv(StringIO(downloads["inputs_csv"]))) == 1
     assert len(pd.read_csv(StringIO(downloads["predictions_csv"]))) == 6
     assert len(pd.read_csv(StringIO(downloads["contributions_csv"]))) == 20
+    summary = pd.read_csv(StringIO(downloads["summary_csv"]), float_precision="round_trip")
+    assert len(summary) == 2
+    assert "model_seed" not in summary and "n_models" not in summary
+    np.testing.assert_array_equal(summary.prediction_mean_pg_ml, [row["mean"] for row in output["targets"]])
+    np.testing.assert_array_equal(summary.prediction_SD_pg_ml, [row["sd"] for row in output["targets"]])
 
 
-@pytest.mark.parametrize("value", [-1, float("inf"), float("nan"), True, "", "invalid"])
+@pytest.mark.parametrize("value", [-1, float("inf"), True, "invalid"])
 def test_invalid_numerical_input_is_rejected(form, value):
     form["Gprime_kPa"] = value
     with pytest.raises(ValueError, match="Gprime_kPa"):
